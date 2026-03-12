@@ -404,7 +404,6 @@ DPIF is structured as a suite of normative documents. All instruments conform to
 | **Posthumous and Incapacitated Principal Governance** | v1.0 | Normative | Extends consent and authority controls to scenarios where the principal cannot exercise consent functions. |
 | **Scoring Rubric** | v1.0 | Normative | Defines SPC maturity methodology, composite scoring, and certification tier mapping. |
 | **Control Checklist** | v1.0 | Normative | The operative assessment instrument. Lists all 16 controls (12 CPCs, 4 SPCs) with evidence requirements for each. Used by assessors to determine Met/Unmet status before the Scoring Rubric is applied. |
-| **Future Development Register** | v1.1 | Operational | Structured backlog of identified governance gaps, scope boundary items, and strategic development questions. Includes deployment register template (Section 6). |
 
 In the event of conflict between any instrument and the Control Model, the Control Model prevails.
 
