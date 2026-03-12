@@ -1,5 +1,5 @@
 # Digital Presence Integrity Framework (DPIF)
-### White Paper — Version 1.1 | 12 March 2026
+### White Paper — Version 1.2 | 12 March 2026
 
 ---
 
@@ -178,6 +178,10 @@ DPIF uses three assessment types, in order of precedence:
 3. **Organisational Maturity Assessment** *(Subordinate)* — evaluates governance practices across all deployments. Informs but does not replace deployment-level certification.
 
 A tool may satisfy all tool-level controls and still fail deployment-level assessment if organisational governance, consent, or context risk controls are absent.
+
+### The Control Checklist
+
+The **DPIF Control Checklist** is the operative assessment instrument. It lists all 16 controls — 12 CPCs and 4 SPCs — with the specific evidence requirements for each. Assessors work through the checklist to determine Met or Unmet status for every CPC before any maturity scoring begins. A deployment cannot proceed to SPC scoring until the checklist confirms all 12 CPCs as Met. The checklist is the document that makes the non-compensatory failure model operational in practice.
 
 ### Evidence Discipline
 
@@ -399,6 +403,7 @@ DPIF is structured as a suite of normative documents. All instruments conform to
 | **Inter-Deployment Conflict Resolution Framework** | v1.0 | Normative | Addresses scenarios where multiple deployments of the same principal produce contradictory outputs. |
 | **Posthumous and Incapacitated Principal Governance** | v1.0 | Normative | Extends consent and authority controls to scenarios where the principal cannot exercise consent functions. |
 | **Scoring Rubric** | v1.0 | Normative | Defines SPC maturity methodology, composite scoring, and certification tier mapping. |
+| **Control Checklist** | v1.0 | Normative | The operative assessment instrument. Lists all 16 controls (12 CPCs, 4 SPCs) with evidence requirements for each. Used by assessors to determine Met/Unmet status before the Scoring Rubric is applied. |
 | **Future Development Register** | v1.1 | Operational | Structured backlog of identified governance gaps, scope boundary items, and strategic development questions. Includes deployment register template (Section 6). |
 
 In the event of conflict between any instrument and the Control Model, the Control Model prevails.
@@ -424,6 +429,7 @@ White paper version history:
 |---|---|---|
 | v1.0 | 11 Mar 2026 | Initial release |
 | v1.1 | 12 Mar 2026 | Document suite updated to include Future Development Register v1.1 (includes deployment register template) |
+| v1.2 | 12 Mar 2026 | Control Checklist added to document suite table and Section 6 |
 
 ---
 
@@ -437,4 +443,4 @@ DPIF exists to make these failures visible, manageable, and preventable. Its con
 
 ---
 
-*DPIF White Paper v1.1 | 12 March 2026 | All documents normatively reference the DPIF Control Model v1.1*
+*DPIF White Paper v1.2 | 12 March 2026 | All documents normatively reference the DPIF Control Model v1.1*
