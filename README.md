@@ -1,5 +1,5 @@
 # Digital Presence Integrity Framework (DPIF)
-### White Paper — Version 1.2 | 12 March 2026
+### White Paper — Version 1.3 | 12 March 2026
 
 ---
 
