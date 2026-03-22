@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DPIF White Paper v1.3 — The Presence Authority</title>
+<meta name="description" content="The DPIF White Paper sets out the rationale, threat model, and governance architecture for the Digital Presence Integrity Framework — the deployment-level governance standard for AI-mediated digital representations of real persons.">
+<link rel="canonical" href="https://thepresenceauthority.pages.dev/white-paper">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ScholarlyArticle","name":"Digital Presence Integrity Framework — White Paper v1.3","description":"Rationale, threat model, and governance architecture for the Digital Presence Integrity Framework.","author":{"@type":"Organization","name":"The Presence Authority","url":"https://thepresenceauthority.pages.dev"},"datePublished":"2026-03-12","version":"1.3","license":"https://creativecommons.org/licenses/by/4.0/","url":"https://thepresenceauthority.pages.dev/white-paper","publisher":{"@type":"Organization","name":"The Presence Authority"}}
+</script>
+<style>
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
+:root{
+  --mid:#0e0b1a;--mid1:#17122e;--mid2:#1f1840;
+  --v:#4a3870;--vm:#6b5b8e;--vs:#9888c0;--vp:#f0ecf8;
+  --gk:#3d7a5c;--gm:#5a9e7a;--gl:#7ab89a;--gp:#e8f4ef;
+  --rm:#c9a8b8;--rl:#e8c8d8;
+  --om:#c8b890;--ol:#d4c8a0;
+  --tx:#ede8f8;--td:rgba(220,215,240,0.88);--tm:rgba(190,176,228,0.82);--ts:rgba(176,162,216,0.68);
+  --br:rgba(152,136,192,0.12);--brm:rgba(152,136,192,0.22);--brh:rgba(152,136,192,0.38);
+  --fd:'EB Garamond',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;--fm:'DM Mono',monospace;
+  --gl-left:80px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--mid);color:var(--td);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* ═══════════════════════════════════════
+   TOPBAR
+═══════════════════════════════════════ */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;display:flex;align-items:center;padding:0 var(--gl-left);background:rgba(14,11,26,0.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:0.5px solid var(--br);transition:background 0.3s}
+.topbar.scrolled{background:rgba(14,11,26,0.97)}
+.topbar-logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
+.topbar-mark{width:28px;height:28px;object-fit:contain}
+.topbar-name{font-family:var(--fd);font-size:11px;letter-spacing:2.5px;color:#c8c0e0;text-transform:uppercase;line-height:1.2}
+.topbar-nav{display:flex;align-items:center;margin-left:auto}
+.topbar-link{padding:8px 16px;font-size:12.5px;font-weight:400;letter-spacing:0.4px;color:var(--tm);text-decoration:none;transition:all 0.2s}
+.topbar-link:hover{color:var(--tx)}
+.topbar-link-active{color:var(--vs)!important}
+.topbar-cta{margin-left:20px;padding:8px 22px;font-family:var(--fb);font-size:12px;font-weight:500;letter-spacing:0.5px;background:var(--vm);color:#f0ecf8;border:none;border-radius:100px;cursor:pointer;transition:all 0.25s;text-decoration:none;white-space:nowrap}
+.topbar-cta:hover{background:#7d6ca0;color:#fff;transform:translateY(-1px)}
+.nav-toggle{display:none;background:none;border:none;color:var(--tm);cursor:pointer;padding:8px;margin-left:auto}
+.nav-toggle svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.5}
+.mob-menu{display:none;position:fixed;top:64px;right:0;bottom:0;width:280px;background:rgba(14,11,26,0.98);backdrop-filter:blur(24px);border-left:0.5px solid var(--br);padding:32px 28px;flex-direction:column;z-index:499;transform:translateX(100%);transition:transform 0.3s ease}
+.mob-menu.open{transform:translateX(0)}
+.mob-menu .topbar-link{display:block;padding:14px 0;font-size:15px;border-bottom:0.5px solid var(--br)}
+.mob-menu .topbar-cta{margin:24px 0 0;text-align:center;display:block;padding:14px}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+.footer{border-top:0.5px solid var(--br);padding:64px 0 40px;background:var(--mid)}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand{font-family:var(--fd);font-size:12px;letter-spacing:2px;color:#c8c0e0;text-transform:uppercase;margin-bottom:12px}
+.footer-desc{font-size:13px;color:var(--ts);line-height:1.7;max-width:280px}
+.footer-heading{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(176,162,216,0.55);margin-bottom:16px}
+.footer-link{display:block;padding:4px 0;font-size:13px;color:rgba(190,176,228,0.65);text-decoration:none;transition:color 0.2s}
+.footer-link:hover{color:var(--tx)}
+.footer-bottom{padding-top:24px;border-top:0.5px solid var(--br);display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:11px;color:rgba(176,162,216,0.48)}
+.footer-ver{font-family:var(--fm);font-size:10px;color:rgba(176,162,216,0.4)}
+
+/* ═══════════════════════════════════════
+   SHARED
+═══════════════════════════════════════ */
+.rail{max-width:920px;margin:0 auto;padding:0 var(--gl-left)}
+.rail-w{max-width:1080px;margin:0 auto;padding:0 var(--gl-left)}
+.section-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--vs);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.section-label::before{content:'';width:32px;height:1px;background:var(--vs);flex-shrink:0}
+.btn{display:inline-block;font-family:var(--fb);font-weight:500;letter-spacing:0.5px;border-radius:100px;text-decoration:none;transition:all 0.25s;cursor:pointer;text-align:center}
+.btn-p{background:var(--vm);color:#f0ecf8;border:none}
+.btn-p:hover{background:#7d6ca0;color:#fff;transform:translateY(-1px)}
+.btn-g{background:transparent;color:var(--vs);border:0.5px solid var(--brm)}
+.btn-g:hover{border-color:var(--brh);color:var(--tx)}
+.btn-lg{padding:14px 32px;font-size:14px}
+.btn-sm{padding:9px 20px;font-size:12px}
+
+/* ═══════════════════════════════════════
+   PAGE HERO / DOCUMENT HEADER
+═══════════════════════════════════════ */
+.doc-header{background:var(--mid1);border-bottom:0.5px solid var(--br);padding:88px 0 64px;margin-top:64px}
+.doc-header-inner{max-width:920px;margin:0 auto;padding:0 var(--gl-left)}
+.doc-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.doc-type-badge{display:inline-flex;align-items:center;background:rgba(152,136,192,0.1);border:0.5px solid var(--br);border-radius:4px;padding:5px 12px;font-family:var(--fm);font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--vs)}
+.doc-header h1{font-family:var(--fd);font-weight:400;font-size:clamp(34px,4.5vw,56px);color:var(--tx);line-height:1.1;margin-bottom:14px}
+.doc-header h1 em{font-style:italic;background:linear-gradient(135deg,#9888c0,#7ab89a,#c9a8b8,#c8b890);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.doc-subtitle{font-family:var(--fb);font-size:17px;font-weight:300;color:var(--tm);margin-bottom:40px;line-height:1.55;max-width:600px}
+.doc-meta-bar{display:flex;flex-wrap:wrap;gap:32px;padding-top:24px;border-top:0.5px solid var(--br)}
+.doc-meta-item{display:flex;flex-direction:column;gap:4px}
+.doc-meta-label{font-family:var(--fm);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--ts)}
+.doc-meta-value{font-family:var(--fm);font-size:12px;color:var(--vs)}
+.doc-meta-value a{color:var(--vs)}
+.doc-meta-value a:hover{color:var(--tx)}
+
+/* PDF access strip */
+.pdf-strip{background:var(--mid2);border-bottom:0.5px solid var(--br);padding:16px 0}
+.pdf-strip-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pdf-info{display:flex;flex-direction:column;gap:3px}
+.pdf-filename{font-family:var(--fm);font-size:12.5px;color:var(--tx)}
+.pdf-filemeta{font-family:var(--fm);font-size:10px;color:var(--ts)}
+
+/* ═══════════════════════════════════════
+   MAIN LAYOUT — sidebar + content
+═══════════════════════════════════════ */
+.doc-main{padding:64px 0 96px}
+.doc-layout{display:grid;grid-template-columns:210px 1fr;gap:64px;align-items:start}
+
+/* Sidebar */
+.doc-sidebar{position:sticky;top:88px;max-height:calc(100vh - 120px);overflow-y:auto;display:flex;flex-direction:column;gap:0}
+.sidebar-heading{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(176,162,216,0.45);margin-bottom:14px}
+.sidebar-nav{display:flex;flex-direction:column;gap:1px;margin-bottom:20px}
+.sidebar-link{font-family:var(--fm);font-size:11px;color:var(--ts);padding:7px 10px;border-radius:4px;transition:all 0.2s;text-decoration:none;line-height:1.35;display:block}
+.sidebar-link:hover,.sidebar-link.active{color:var(--tx);background:rgba(152,136,192,0.09)}
+.sidebar-link.active{color:var(--vs)}
+.sidebar-divider{height:0.5px;background:var(--br);margin:16px 0}
+.sidebar-dl{display:flex;flex-direction:column;gap:10px}
+
+/* Document body */
+.doc-body{min-width:0}
+.doc-notice{background:var(--mid2);border:0.5px solid var(--brm);border-left:2px solid var(--vs);border-radius:0 8px 8px 0;padding:18px 22px;margin-bottom:48px}
+.doc-notice p{font-family:var(--fb);font-size:13.5px;color:var(--tm);margin:0;line-height:1.7}
+.doc-notice strong{color:var(--tx)}
+
+/* Sections */
+.doc-section{margin-bottom:56px;padding-bottom:56px;border-bottom:0.5px solid var(--br)}
+.doc-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.doc-section h2{font-family:var(--fd);font-weight:400;font-size:clamp(24px,2.8vw,32px);color:var(--tx);margin-bottom:20px;line-height:1.2}
+.doc-section p{font-family:var(--fb);font-size:15px;color:var(--td);line-height:1.8;margin-bottom:14px}
+.doc-section p:last-child{margin-bottom:0}
+.doc-section strong{font-weight:500;color:var(--tx)}
+
+/* Scope boundary lists */
+.scope-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+.scope-col-head{font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px}
+.scope-col-head.in{color:var(--gl)}
+.scope-col-head.out{color:var(--rm)}
+.scope-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.scope-list li{font-family:var(--fb);font-size:13.5px;color:var(--td);padding-left:16px;position:relative;line-height:1.6}
+.scope-list li::before{position:absolute;left:0;font-size:11px;top:2px}
+.scope-list.in li::before{content:'✓';color:var(--gl)}
+.scope-list.out li::before{content:'×';color:var(--rm)}
+
+/* Control category table */
+.cat-table{width:100%;border-collapse:collapse;margin:20px 0}
+.cat-table th{font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--vs);padding:8px 14px;border-bottom:0.5px solid var(--brm);text-align:left}
+.cat-table td{font-family:var(--fb);font-size:13.5px;color:var(--td);padding:10px 14px;border-bottom:0.5px solid var(--br);vertical-align:top;line-height:1.55}
+.cat-table tr:last-child td{border-bottom:none}
+.cat-table td:first-child{font-family:var(--fm);font-size:11px;color:var(--vs);white-space:nowrap}
+.cat-table td strong{color:var(--tx);font-weight:500}
+.cat-table td em{color:var(--ts);font-style:normal;font-size:12.5px}
+
+/* Control classification block */
+.ctrl-classify{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.ctrl-block{background:var(--mid2);border:0.5px solid var(--br);border-radius:10px;padding:20px 22px}
+.ctrl-block-label{font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px}
+.ctrl-block-label.cpc{color:var(--rm)}
+.ctrl-block-label.spc{color:var(--om)}
+.ctrl-block-count{font-family:var(--fd);font-size:36px;color:var(--tx);line-height:1;margin-bottom:6px}
+.ctrl-block-desc{font-family:var(--fb);font-size:13px;color:var(--td);line-height:1.6}
+.ctrl-block-ids{font-family:var(--fm);font-size:10px;color:var(--ts);margin-top:8px;line-height:1.7}
+
+/* Outcomes table */
+.outcomes-table{width:100%;border-collapse:collapse;margin:20px 0}
+.outcomes-table th{font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--vs);padding:8px 14px;border-bottom:0.5px solid var(--brm);text-align:left}
+.outcomes-table td{font-family:var(--fb);font-size:13.5px;color:var(--td);padding:10px 14px;border-bottom:0.5px solid var(--br);vertical-align:top;line-height:1.55}
+.outcomes-table tr:last-child td{border-bottom:none}
+.result-pass{font-family:var(--fm);font-size:11px;font-weight:600;color:var(--gl)}
+.result-cond{font-family:var(--fm);font-size:11px;font-weight:600;color:var(--om)}
+.result-fail{font-family:var(--fm);font-size:11px;font-weight:600;color:var(--rm)}
+
+/* Instrument list */
+.inst-list{display:flex;flex-direction:column;gap:10px;margin:20px 0}
+.inst-item{background:var(--mid2);border:0.5px solid var(--br);border-radius:10px;padding:16px 20px;display:flex;gap:16px;align-items:flex-start;transition:border-color 0.2s}
+.inst-item:hover{border-color:var(--brm)}
+.inst-num{font-family:var(--fm);font-size:10px;color:var(--vs);flex-shrink:0;min-width:28px;padding-top:1px}
+.inst-name{font-family:var(--fd);font-size:16px;color:var(--tx);margin-bottom:3px}
+.inst-version{font-family:var(--fm);font-size:10px;color:var(--ts);margin-left:8px;font-style:normal}
+.inst-desc{font-family:var(--fb);font-size:13px;color:var(--td);line-height:1.6}
+.inst-dl{margin-top:8px}
+.inst-dl a{font-family:var(--fm);font-size:10px;color:var(--vs);text-decoration:none;letter-spacing:0.5px}
+.inst-dl a:hover{color:var(--tx)}
+
+/* Bottom CTA */
+.bottom-cta{background:var(--mid1);border:0.5px solid var(--br);border-radius:16px;padding:40px;margin-top:56px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.bottom-cta-text h3{font-family:var(--fd);font-weight:400;font-size:26px;color:var(--tx);margin-bottom:8px}
+.bottom-cta-text p{font-family:var(--fb);font-size:14px;color:var(--tm);line-height:1.65;max-width:440px}
+.bottom-cta-actions{display:flex;flex-direction:column;gap:10px;flex-shrink:0}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:900px){
+  .doc-layout{grid-template-columns:1fr}
+  .doc-sidebar{position:static;background:var(--mid2);border:0.5px solid var(--br);border-radius:10px;padding:22px 24px;max-height:none;margin-bottom:48px}
+  .sidebar-nav{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+  .sidebar-dl{flex-direction:row;flex-wrap:wrap}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .ctrl-classify{grid-template-columns:1fr 1fr}
+  .scope-cols{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  :root{--gl-left:24px}
+  .topbar{padding:0 24px}
+  .topbar-nav,.topbar-cta{display:none}
+  .nav-toggle{display:flex}
+  .mob-menu{display:flex}
+  .doc-header{padding:64px 0 48px}
+  .sidebar-nav{grid-template-columns:1fr}
+  .sidebar-dl{flex-direction:column}
+  .footer-grid{grid-template-columns:1fr;gap:24px}
+  .pdf-strip-inner{flex-direction:column;gap:12px}
+  .ctrl-classify{grid-template-columns:1fr}
+  .scope-cols{grid-template-columns:1fr}
+  .bottom-cta{flex-direction:column;padding:28px}
+  .bottom-cta-actions{width:100%}
+  .bottom-cta-actions .btn{width:100%}
+}
+@media(max-width:400px){
+  :root{--gl-left:16px}
+  .topbar{padding:0 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar" id="topbar">
+  <a href="/" class="topbar-logo">
+    <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/icon/tpa-mandala-icon-v1-trans-500x500.png" alt="The Presence Authority" class="topbar-mark">
+    <span class="topbar-name">The Presence<br>Authority</span>
+  </a>
+  <div class="topbar-nav">
+    <a href="/framework" class="topbar-link">Framework</a>
+    <a href="/white-paper" class="topbar-link topbar-link-active">White Paper</a>
+    <a href="/assessment" class="topbar-link">Assessment</a>
+    <a href="/services" class="topbar-link">Services</a>
+    <a href="/regulatory-alignment" class="topbar-link">Regulatory</a>
+    <a href="/about" class="topbar-link">About</a>
+    <a href="/contact" class="topbar-link">Contact</a>
+  </div>
+  <a href="https://calendly.com/bradley-thepresenceauthority/30min" class="topbar-cta" target="_blank" rel="noopener">Request a Consultation</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a href="/framework" class="topbar-link">Framework</a>
+  <a href="/white-paper" class="topbar-link topbar-link-active">White Paper</a>
+  <a href="/assessment" class="topbar-link">Assessment</a>
+  <a href="/services" class="topbar-link">Services</a>
+  <a href="/regulatory-alignment" class="topbar-link">Regulatory</a>
+  <a href="/about" class="topbar-link">About</a>
+  <a href="/contact" class="topbar-link">Contact</a>
+  <a href="https://calendly.com/bradley-thepresenceauthority/30min" class="topbar-cta" target="_blank" rel="noopener">Request a Consultation</a>
+</div>
+
+<!-- DOCUMENT HEADER -->
+<header class="doc-header">
+  <div class="doc-header-inner">
+    <div class="doc-eyebrow">
+      <span class="doc-type-badge">Explanatory &mdash; Not Normative</span>
+    </div>
+    <h1>Digital Presence Integrity Framework (DPIF) <em>White Paper</em></h1>
+    <p class="doc-subtitle">Rationale, scope, threat model, and governance architecture for the Digital Presence Integrity Framework.</p>
+    <div class="doc-meta-bar">
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Version</span>
+        <span class="doc-meta-value">v1.3</span>
+      </div>
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Published</span>
+        <span class="doc-meta-value">12 March 2026</span>
+      </div>
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Conforms to</span>
+        <span class="doc-meta-value">Control Model v1.1</span>
+      </div>
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Licence</span>
+        <span class="doc-meta-value"><a href="https://creativecommons.org/licenses/by/4.0/deed.en" target="_blank" rel="noopener">CC BY 4.0</a></span>
+      </div>
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Repository</span>
+        <span class="doc-meta-value"><a href="https://github.com/PresenceAuthority/DPIF" target="_blank" rel="noopener">github.com/PresenceAuthority/DPIF</a></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PDF STRIP -->
+<div class="pdf-strip">
+  <div class="rail-w">
+    <div class="pdf-strip-inner">
+      <div class="pdf-info">
+        <span class="pdf-filename">DPIF_White_Paper_v1_3_110326.pdf</span>
+        <span class="pdf-filemeta">PDF &middot; CC BY 4.0 &middot; github.com/PresenceAuthority/DPIF</span>
+      </div>
+      <a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_White_Paper_v1_3_110326.pdf" class="btn btn-p btn-sm" target="_blank" rel="noopener">Download PDF &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="doc-main">
+  <div class="rail-w">
+    <div class="doc-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="doc-sidebar" aria-label="Page navigation">
+        <div class="sidebar-heading">On this page</div>
+        <nav class="sidebar-nav">
+          <a href="#document-record" class="sidebar-link" data-target="document-record">Document record</a>
+          <a href="#problem-statement" class="sidebar-link" data-target="problem-statement">Problem statement</a>
+          <a href="#scope" class="sidebar-link" data-target="scope">Scope</a>
+          <a href="#governance-architecture" class="sidebar-link" data-target="governance-architecture">Governance architecture</a>
+          <a href="#control-structure" class="sidebar-link" data-target="control-structure">Control structure</a>
+          <a href="#instrument-suite" class="sidebar-link" data-target="instrument-suite">Instrument suite</a>
+        </nav>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-dl">
+          <a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_White_Paper_v1_3_110326.pdf" class="btn btn-p btn-sm" target="_blank" rel="noopener">Download PDF &rarr;</a>
+          <a href="/framework" class="btn btn-g btn-sm">Framework &rarr;</a>
+        </div>
+      </aside>
+
+      <!-- BODY -->
+      <article class="doc-body">
+
+        <!-- NOTICE -->
+        <div class="doc-notice">
+          <p><strong>Explanatory document.</strong> This white paper provides conceptual orientation to DPIF &mdash; its rationale, scope, and governance architecture. Normative requirements are defined in the Control Model v1.1 and six supporting instruments. Where this document and a normative instrument address the same requirement, the normative instrument takes precedence.</p>
+        </div>
+
+        <!-- DOCUMENT RECORD -->
+        <section class="doc-section" id="document-record">
+          <span class="section-label">Document Record</span>
+          <h2>About this document</h2>
+          <p>The DPIF White Paper is the explanatory entry point to the Digital Presence Integrity Framework. It sets out the governance gap DPIF addresses, the threat model underlying its control architecture, and the structure of the normative instrument suite. It is written for governance, legal, and compliance functions within organisations deploying AI-mediated representations of real persons, and for regulators, standards bodies, and platform operators evaluating DPIF for reference or adoption.</p>
+          <p>The white paper does not define normative requirements. It does not modify, extend, or supersede any normative instrument. All compliance determinations are governed by the Control Model v1.1 and the six supporting instruments listed in the instrument suite section below.</p>
+          <p>The document is published under CC BY 4.0. It may be reproduced, cited, and adapted with attribution. The full PDF and all normative instruments are available at <a href="https://github.com/PresenceAuthority/DPIF" target="_blank" rel="noopener" style="color:var(--vs);text-decoration:underline;text-underline-offset:3px">github.com/PresenceAuthority/DPIF</a>.</p>
+        </section>
+
+        <!-- PROBLEM STATEMENT -->
+        <section class="doc-section" id="problem-statement">
+          <span class="section-label">Problem Statement</span>
+          <h2>The governance gap</h2>
+          <p>AI systems capable of replicating human likeness, voice, and communicative presence are in active deployment across customer communication, public affairs, executive representation, and content generation. Organisations deploying these systems do not have a consistent governance structure to ensure that the represented individual&rsquo;s identity, consent, and accountability rights are protected.</p>
+          <p>Existing AI governance frameworks do not close this gap. The EU AI Act regulates AI systems by risk category but does not establish deployment-level governance requirements specifically for AI-mediated representations of real persons. The NIST AI RMF addresses AI risk at a general level but does not cover the specific failure modes of identity, consent, and authority in representation contexts. ISO/IEC 42001 operates at the organisational management system level, not the deployment level.</p>
+          <p>The gap produces four classes of failure risk: <strong>identity distortion</strong> (DRRP representations drift from the principal&rsquo;s actual identity through unreviewed system changes); <strong>authority escalation</strong> (DRRPs generate commitments or positions the principal never authorised, in the absence of formally documented authority limits); <strong>consent failure</strong> (deployments expand incrementally beyond the scope, duration, or audience the principal consented to); and <strong>accountability loss</strong> (outputs cannot be traced to an accountable individual when investigation or remediation is required).</p>
+          <p>DPIF addresses each failure mode through a structured control architecture applied at the deployment level &mdash; where risk is generated, at the point of interaction between a representation and its audience.</p>
+        </section>
+
+        <!-- SCOPE -->
+        <section class="doc-section" id="scope">
+          <span class="section-label">Scope</span>
+          <h2>What DPIF governs</h2>
+          <p>DPIF governs the deployment-level operation of AI-mediated digital representations of real, identifiable natural persons &mdash; referred to throughout the framework as Digital Representations of Real Persons (DRRPs). The scope boundary is deliberately narrow.</p>
+
+          <div class="scope-cols">
+            <div>
+              <div class="scope-col-head in">DPIF applies to</div>
+              <ul class="scope-list in">
+                <li>Digital avatar systems replicating the visual likeness of a real person</li>
+                <li>Voice synthesis systems replicating the vocal characteristics of a real person</li>
+                <li>Language model deployments simulating the communicative presence of a real, identifiable person</li>
+                <li>Composite systems combining any of the above</li>
+              </ul>
+            </div>
+            <div>
+              <div class="scope-col-head out">DPIF does not apply to</div>
+              <ul class="scope-list out">
+                <li>Captured content &mdash; photographs, video, or audio not involving AI mediation</li>
+                <li>AI systems representing fictional characters or non-identifiable individuals</li>
+                <li>Organisational voice AI without direct association to a real, identifiable individual</li>
+                <li>Academic or research deployments without audience-facing operation</li>
+              </ul>
+            </div>
+          </div>
+
+          <p>DPIF does not evaluate AI model bias, fairness, or general safety; assess output quality or productivity; replace legal counsel or compliance teams; or enforce &mdash; it is a governance standard, not a regulatory instrument.</p>
+          <p>The <strong>deployment</strong> is the primary unit of DPIF governance. A single underlying DRRP tool may support multiple independent deployments, each with its own Scope of Use, Delegated Authority, and context risk classification, and each separately assessed. This formulation reflects the practical reality of multi-context DRRP operation and ensures governance is applied where risk is generated.</p>
+        </section>
+
+        <!-- GOVERNANCE ARCHITECTURE -->
+        <section class="doc-section" id="governance-architecture">
+          <span class="section-label">Governance Architecture</span>
+          <h2>Seven control categories</h2>
+          <p>DPIF&rsquo;s governance architecture is structured around seven control categories, each addressing a distinct dimension of <strong>Presence Integrity</strong> &mdash; the condition in which a DRRP remains faithful to the principal&rsquo;s identity, bounded by explicit consent, anchored to accountable authorship, and governed by enforceable containment controls. The categories are interdependent: weakness in any one creates exploitable exposure in others.</p>
+
+          <div style="overflow-x:auto;margin:20px 0">
+            <table class="cat-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Governs</th>
+                  <th>Failure mode</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>IC</td>
+                  <td><strong>Identity Controls</strong></td>
+                  <td><em>Synthetic drift or impersonation</em></td>
+                </tr>
+                <tr>
+                  <td>AC</td>
+                  <td><strong>Authority Controls</strong></td>
+                  <td><em>Unbounded speech or policy escalation</em></td>
+                </tr>
+                <tr>
+                  <td>CC</td>
+                  <td><strong>Consent Controls</strong></td>
+                  <td><em>Scope creep or consent drift</em></td>
+                </tr>
+                <tr>
+                  <td>DC</td>
+                  <td><strong>Disclosure Controls</strong></td>
+                  <td><em>Deceptive immediacy or false attribution</em></td>
+                </tr>
+                <tr>
+                  <td>CR</td>
+                  <td><strong>Context Risk Controls</strong></td>
+                  <td><em>Unclassified or misclassified deployment context</em></td>
+                </tr>
+                <tr>
+                  <td>SI</td>
+                  <td><strong>Semantic Integrity Controls</strong></td>
+                  <td><em>Semantic distortion through transformation</em></td>
+                </tr>
+                <tr>
+                  <td>CT</td>
+                  <td><strong>Containment Controls</strong></td>
+                  <td><em>Irreversible or untraceable misuse</em></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Each deployment must also satisfy <strong>BOUND-0.1</strong> (Scope Boundary Enforcement), a cross-cutting control requiring that governance is applied consistently across the full declared scope &mdash; not selectively within it.</p>
+          <p>Every deployment is assigned a context risk tier (Low, Moderate, High, or Regulated) which determines the minimum control intensity required across disclosure mechanisms, revocation timeframes, governance review cadence, logging retention, and identity revalidation triggers. The tier is determined by the highest-risk indicator present: ambiguity escalates, it never de-escalates. Financial services, healthcare, legal, government, and education contexts involving minors are unconditionally Regulated.</p>
+        </section>
+
+        <!-- CONTROL STRUCTURE -->
+        <section class="doc-section" id="control-structure">
+          <span class="section-label">Control Structure</span>
+          <h2>CPCs, SPCs, and assessment logic</h2>
+          <p>DPIF defines 18 controls across the seven categories and BOUND-0.1, classified into two tiers.</p>
+
+          <div class="ctrl-classify">
+            <div class="ctrl-block">
+              <div class="ctrl-block-label cpc">Critical Presence Controls</div>
+              <div class="ctrl-block-count">14</div>
+              <div class="ctrl-block-desc">Non-negotiable governance requirements. Failure of any single CPC produces an overall FAIL outcome regardless of performance elsewhere.</div>
+              <div class="ctrl-block-ids">IC-1.1 &middot; IC-1.2 &middot; AC-2.1 &middot; AC-2.2 &middot; AC-2.3 &middot; CC-3.1 &middot; CC-3.2 &middot; DC-4.1 &middot; CR-5.1 &middot; CR-5.2 &middot; SI-6.1 &middot; CT-7.1 &middot; CT-7.2 &middot; BOUND-0.1</div>
+            </div>
+            <div class="ctrl-block">
+              <div class="ctrl-block-label spc">Supporting Presence Controls</div>
+              <div class="ctrl-block-count">4</div>
+              <div class="ctrl-block-desc">Governance maturity controls, scored on a four-level scale (Initial &rarr; Optimised) using the Scoring Rubric. Assessed only after all 14 CPCs are Met.</div>
+              <div class="ctrl-block-ids">CC-3.3 &middot; DC-4.2 &middot; SI-6.2 &middot; CT-7.3</div>
+            </div>
+          </div>
+
+          <p>The non-compensatory architecture is the defining structural feature of DPIF. A deployment cannot offset the absence of one CPC with strength in another. This reflects the framework&rsquo;s foundational position: identity, consent, and accountability in representation are not substitutable. A deployment with excellent audit trails but no functional revocation mechanism is a FAIL. A deployment with strong governance review cadence but no formal Scope of Use declaration is a FAIL.</p>
+
+          <div style="overflow-x:auto;margin:20px 0">
+            <table class="outcomes-table">
+              <thead>
+                <tr><th>Result</th><th>Condition</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="result-pass">PASS</span></td>
+                  <td>All 14 CPCs Met. SPC maturity scoring completed via Scoring Rubric.</td>
+                </tr>
+                <tr>
+                  <td><span class="result-cond">CONDITIONAL PASS</span></td>
+                  <td>All 14 CPCs Met. One or more SPCs Unmet or below tier floor. Remediation plan required.</td>
+                </tr>
+                <tr>
+                  <td><span class="result-fail">FAIL</span></td>
+                  <td>Any CPC Unmet. No SPC scoring is conducted. Rubric is not applied.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Where all CPCs are Met and SPC scoring is completed, the composite maturity score from the Scoring Rubric determines the certification tier: Foundational (1.0&ndash;1.9), Standard (2.0&ndash;2.9), or Extended (3.0&ndash;4.0), each with a corresponding SPC floor condition. Certification is deployment-specific and valid for 12 months by default.</p>
+        </section>
+
+        <!-- INSTRUMENT SUITE -->
+        <section class="doc-section" id="instrument-suite">
+          <span class="section-label">Instrument Suite</span>
+          <h2>Normative documents</h2>
+          <p>DPIF consists of seven normative instruments. All are published under CC BY 4.0 at <a href="https://github.com/PresenceAuthority/DPIF" target="_blank" rel="noopener" style="color:var(--vs);text-decoration:underline;text-underline-offset:3px">github.com/PresenceAuthority/DPIF</a>. This white paper is explanatory and does not form part of the normative suite.</p>
+
+          <div class="inst-list">
+            <div class="inst-item">
+              <div class="inst-num">01</div>
+              <div>
+                <div class="inst-name">Control Model <span class="inst-version">v1.1</span></div>
+                <div class="inst-desc">The authoritative normative instrument. Defines all 18 controls, their classification, failure conditions, assessment logic, and all canonical definitions. Primary reference for governance, compliance, and legal interpretation of DPIF requirements.</div>
+                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/01_DPIF_Control_Model_V1_1_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
+              </div>
+            </div>
+            <div class="inst-item">
+              <div class="inst-num">02</div>
+              <div>
+                <div class="inst-name">Control Checklist <span class="inst-version">v2.0</span></div>
+                <div class="inst-desc">The operational assessment instrument. Translates the Control Model into a structured checklist with evidence requirements, test procedures, and assessment record requirements for direct use in DPIF compliance assessments.</div>
+                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Control_Checklist_v2_0_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
+              </div>
+            </div>
+            <div class="inst-item">
+              <div class="inst-num">03</div>
+              <div>
+                <div class="inst-name">Context Risk Classification Annex <span class="inst-version">v1.0</span></div>
+                <div class="inst-desc">Classification criteria, indicators, and decision logic for assigning deployment context risk tiers. Referenced by CR-5.1 and CR-5.2. Includes the regulatory override catalogue.</div>
+                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Context_Risk_Classification_Annex_v1_0_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
+              </div>
+            </div>
+            <div class="inst-item">
+              <div class="inst-num">04</div>
+              <div>
+                <div class="inst-name">Deployment Lifecycle Specification <span class="inst-version">v1.0</span></div>
+                <div class="inst-desc">Defines the state machine for DRRP deployments across five states (Provisioning, Active, Suspended, Revoked, Archived), including transition rules, audience output permissions, and certification implications per state. Revocation is irreversible.</div>
+                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Deployment_Lifecycle_Specification_v1_0_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
+              </div>
+            </div>
+            <div class="inst-item">
+              <div class="inst-num">05</div>
+              <div>
+                <div class="inst-name">Inter-Deployment Conflict Resolution Framework <span class="inst-version">v1.0</span></div>
+                <div class="inst-desc">Defines four conflict types (Scope Overlap, Content Contradiction, Authority Collision, Consent State Inconsistency) and the precedence rules and resolution procedures for resolving conflicts between multiple deployments of the same principal.</div>
+                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_InterDeployment_Conflict_Resolution_Framework_v1_0_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
+              </div>
+            </div>
+            <div class="inst-item">
+              <div class="inst-num">06</div>
+              <div>
+                <div class="inst-name">Posthumous and Incapacitated Principal Governance <span class="inst-version">v1.0</span></div>
+                <div class="inst-desc">Governs DRRP deployments where the principal is temporarily incapacitated, permanently incapacitated, or deceased. Defines Advance Consent Instruments, Successor Authority models, and mandatory suspension timelines (14 days for death; 30 days for permanent incapacity).</div>
+                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Posthumous_Incapacitated_Principal_Governance_v1_0_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
+              </div>
+            </div>
+            <div class="inst-item">
+              <div class="inst-num">07</div>
+              <div>
+                <div class="inst-name">Scoring Rubric <span class="inst-version">v1.0</span></div>
+                <div class="inst-desc">Defines the four-level maturity scoring methodology (Initial, Defined, Managed, Optimised) for the four Supporting Presence Controls and the composite scoring algorithm used to determine certification tier.</div>
+                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Scoring_Rubric_v1_0_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BOTTOM CTA -->
+        <div class="bottom-cta">
+          <div class="bottom-cta-text">
+            <h3>DPIF White Paper v1.3</h3>
+            <p>Full PDF available on GitHub under CC BY 4.0. All normative instruments in the same repository.</p>
+          </div>
+          <div class="bottom-cta-actions">
+            <a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_White_Paper_v1_3_110326.pdf" class="btn btn-p btn-lg" target="_blank" rel="noopener">Download PDF &rarr;</a>
+            <a href="/framework" class="btn btn-g btn-lg">Browse Framework &rarr;</a>
+          </div>
+        </div>
+
+      </article>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="rail-w">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">The Presence Authority</div>
+        <p class="footer-desc">The independent governance standards body for AI-mediated digital representations of real persons.</p>
+      </div>
+      <div>
+        <div class="footer-heading">Framework</div>
+        <a href="/framework" class="footer-link">Framework</a>
+        <a href="/white-paper" class="footer-link">White Paper</a>
+        <a href="/assessment" class="footer-link">Assessment</a>
+        <a href="/framework#instruments" class="footer-link">Instruments</a>
+      </div>
+      <div>
+        <div class="footer-heading">Organisation</div>
+        <a href="/services" class="footer-link">Services</a>
+        <a href="/about" class="footer-link">About</a>
+        <a href="/contact" class="footer-link">Contact</a>
+        <a href="/regulatory-alignment" class="footer-link">Regulatory Alignment</a>
+      </div>
+      <div>
+        <div class="footer-heading">Meta</div>
+        <a href="/updates" class="footer-link">Updates</a>
+        <a href="https://creativecommons.org/licenses/by/4.0/deed.en" class="footer-link">CC BY 4.0 Licence</a>
+        <a href="https://github.com/PresenceAuthority/DPIF" class="footer-link">GitHub</a>
+        <span class="footer-link" style="cursor:default">DPIF v1.3 &middot; March 2026</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 The Presence Authority</span>
+      <span class="footer-ver">TPA-WEB-v7.0</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Topbar scroll */
+const topbar = document.getElementById('topbar');
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      topbar.classList.toggle('scrolled', window.scrollY > 20);
+      ticking = false;
+    });
+    ticking = true;
+  }
+}, { passive: true });
+
+/* Mobile nav */
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('mobMenu').classList.toggle('open');
+});
+
+/* Sidebar active tracking */
+(function() {
+  const sections = document.querySelectorAll('.doc-section[id]');
+  const links = document.querySelectorAll('.sidebar-link[data-target]');
+  if (!sections.length || !links.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.toggle('active', l.dataset.target === e.target.id));
+      }
+    });
+  }, { rootMargin: '-64px 0px -60% 0px', threshold: 0 });
+  sections.forEach(s => io.observe(s));
+})();
+</script>
+
+</body>
+</html>
