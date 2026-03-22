@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Presence Authority — Governance Standards for Digital Representations of Real Persons</title>
+<meta name="description" content="The Presence Authority publishes DPIF — the deployment-level governance standard ensuring identity, consent, and accountability in AI-mediated digital representations of real persons.">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS — TPA Brand Guidelines v1.2
+═══════════════════════════════════════════ */
+:root {
+  --v:#4a3870;--vm:#6b5b8e;--vs:#9888c0;--vp:#f0ecf8;
+  --gk:#3d7a5c;--gm:#5a9e7a;--gl:#7ab89a;--gp:#e8f4ef;
+  --rm:#c9a8b8;--rl:#e8c8d8;--rp:#f8f2f5;
+  --om:#c8b890;--ol:#d4c8a0;--op:#faf7ee;
+  --mid:#0e0b1a;--mid1:#17122e;--mid2:#1f1840;
+  --tx:#ede8f8;--td:rgba(220,215,240,0.88);--tm:rgba(190,176,228,0.82);--ts:rgba(176,162,216,0.68);
+  --br:rgba(152,136,192,0.12);--brm:rgba(152,136,192,0.22);--brh:rgba(152,136,192,0.38);
+  --fd:'EB Garamond',Georgia,serif;
+  --fb:'DM Sans',system-ui,sans-serif;
+  --fm:'DM Mono',monospace;
+  --gl-left:80px;--bk:48px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--fb);background:var(--mid);color:var(--tx);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--vs);text-decoration:none;transition:color 0.2s}
+a:hover{color:var(--tx)}
+::selection{background:rgba(106,91,142,0.35);color:#fff}
+
+/* ═══════════════════════════════════════════
+   TOPBAR
+═══════════════════════════════════════════ */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:64px;display:flex;align-items:center;
+  padding:0 var(--gl-left);
+  background:rgba(14,11,26,0.88);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:0.5px solid var(--br);
+  transition:background 0.3s;
+}
+.topbar.scrolled{background:rgba(14,11,26,0.97)}
+.topbar-logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
+.topbar-mark{width:28px;height:28px;object-fit:contain}
+.topbar-name{font-family:var(--fd);font-size:11px;letter-spacing:2.5px;color:#c8c0e0;text-transform:uppercase;line-height:1.2}
+.topbar-nav{display:flex;align-items:center;margin-left:auto}
+.topbar-link{
+  padding:8px 16px;font-size:12.5px;font-weight:400;
+  letter-spacing:0.4px;color:var(--tm);text-decoration:none;
+  transition:all 0.2s;position:relative;
+}
+.topbar-link:hover{color:var(--tx)}
+.topbar-cta{
+  margin-left:20px;padding:8px 22px;
+  font-family:var(--fb);font-size:12px;font-weight:500;letter-spacing:0.5px;
+  background:var(--vm);color:#f0ecf8;border:none;border-radius:100px;
+  cursor:pointer;transition:all 0.25s;text-decoration:none;white-space:nowrap;
+}
+.topbar-cta:hover{background:#7d6ca0;color:#fff;transform:translateY(-1px)}
+.nav-toggle{display:none;background:none;border:none;color:var(--tm);cursor:pointer;padding:8px;margin-left:auto}
+.nav-toggle svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.5}
+.mob-menu{
+  display:none;position:fixed;top:64px;right:0;bottom:0;width:280px;
+  background:rgba(14,11,26,0.98);backdrop-filter:blur(24px);
+  border-left:0.5px solid var(--br);padding:32px 28px;
+  flex-direction:column;z-index:499;
+  transform:translateX(100%);transition:transform 0.3s ease;
+}
+.mob-menu.open{transform:translateX(0)}
+.mob-menu .topbar-link{display:block;padding:14px 0;font-size:15px;border-bottom:0.5px solid var(--br)}
+.mob-menu .topbar-cta{margin:24px 0 0;text-align:center;display:block;padding:14px}
+
+/* ═══════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════ */
+.rail{padding-left:var(--gl-left);padding-right:var(--gl-left);max-width:calc(var(--gl-left) + 760px + var(--gl-left));margin:0 auto}
+.rail-w{padding-left:var(--gl-left);padding-right:var(--gl-left);max-width:1200px;margin:0 auto}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.vr-xs{margin-bottom:16px}.vr-sm{margin-bottom:24px}.vr-md{margin-bottom:40px}.vr-lg{margin-bottom:64px}
+.mt-sm{margin-top:24px}.mt-md{margin-top:40px}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════ */
+.t-display{font-family:var(--fd);font-size:clamp(52px,7vw,88px);font-weight:400;line-height:1.0;letter-spacing:-1.5px;color:var(--tx)}
+.t-display em{font-style:italic;background:linear-gradient(135deg,#9888c0,#7ab89a,#c9a8b8,#c8b890);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.t-h2{font-family:var(--fd);font-size:38px;font-weight:400;line-height:1.15;color:var(--tx)}
+.t-h3{font-family:var(--fb);font-size:20px;font-weight:500;line-height:1.3;color:var(--tx)}
+.t-lead{font-size:18px;font-weight:300;line-height:1.8;color:var(--td)}
+.t-body{font-size:15px;line-height:1.8;color:var(--td)}
+.t-meta{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--tm)}
+.t-mono{font-family:var(--fm);font-size:12px;color:var(--vs)}
+.t-bright{color:var(--tx)!important;font-weight:500}
+.t-violet{color:var(--vs)}.t-green{color:var(--gl)}.t-gold{color:var(--om)}.t-rose{color:var(--rm)}
+.irid{color:transparent;background:linear-gradient(135deg,#9888c0,#7ab89a,#c8b890);-webkit-background-clip:text;background-clip:text}
+
+/* ═══════════════════════════════════════════
+   IRIDESCENT
+═══════════════════════════════════════════ */
+.irid-rule{height:1px;background:linear-gradient(90deg,transparent,#6b5b8e 20%,#9888c0 40%,#7ab89a 60%,#c8b890 80%,transparent);border:none;margin:0}
+
+/* ═══════════════════════════════════════════
+   SECTIONS
+═══════════════════════════════════════════ */
+.section{padding:96px 0;border-top:0.5px solid var(--br)}
+.section--dark{background:var(--mid1)}
+.section--darker{background:var(--mid2)}
+.section-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--vs);display:block;margin-bottom:20px}
+.section-title{font-family:var(--fd);font-size:38px;font-weight:400;line-height:1.15;color:var(--tx);margin-bottom:16px}
+.section-title em{font-style:italic;background:linear-gradient(135deg,#9888c0,#7ab89a,#c9a8b8,#c8b890);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-desc{font-size:18px;font-weight:300;line-height:1.75;color:var(--td);max-width:600px;margin-bottom:48px}
+
+/* ═══════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════ */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--fb);font-size:14px;font-weight:500;border-radius:100px;padding:13px 26px;text-decoration:none;cursor:pointer;border:1.5px solid transparent;transition:all 0.18s;letter-spacing:0.3px;white-space:nowrap}
+.btn-p{background:var(--vm);color:#f0ecf8;border-color:var(--vm)}
+.btn-p:hover{background:#7d6ca0;transform:translateY(-2px);box-shadow:0 6px 24px rgba(106,91,142,0.3)}
+.btn-g{background:transparent;color:#c8c0e0;border-color:rgba(152,136,192,0.3)}
+.btn-g:hover{border-color:var(--vs);color:#ede8f8;transform:translateY(-1px)}
+.btn-sm{font-size:12px;padding:8px 16px}
+.btn-lg{font-size:16px;padding:16px 32px}
+.btn-arrow::after{content:' →'}
+
+/* ═══════════════════════════════════════════
+   TAGS
+═══════════════════════════════════════════ */
+.tag{display:inline-flex;align-items:center;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:100px;border:0.5px solid transparent}
+.tag-v{background:rgba(152,136,192,0.12);color:#c8c0e0;border-color:rgba(152,136,192,0.25)}
+.tag-g{background:rgba(90,158,122,0.1);color:var(--gl);border-color:rgba(90,158,122,0.22)}
+.tag-o{background:rgba(200,184,144,0.09);color:var(--om);border-color:rgba(200,184,144,0.22)}
+.tag-r{background:rgba(201,168,184,0.1);color:var(--rm);border-color:rgba(201,168,184,0.22)}
+
+/* ═══════════════════════════════════════════
+   BOXES
+═══════════════════════════════════════════ */
+.box{border-radius:10px;padding:20px 24px}
+.box-title{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.box-body{font-size:14px;line-height:1.65}
+.box-cite{font-family:var(--fm);font-size:11px;color:var(--ts);margin-top:12px;font-style:italic}
+.box-info{background:rgba(106,91,142,0.12);border-left:2px solid var(--vm)}
+.box-info .box-title{color:var(--vs)}
+.box-info .box-body{color:rgba(220,215,240,0.85)}
+
+/* ═══════════════════════════════════════════
+   CARDS
+═══════════════════════════════════════════ */
+.card{background:var(--mid2);border:0.5px solid var(--br);border-radius:18px;padding:28px 32px;transition:border-color 0.2s,transform 0.2s}
+.card:hover{border-color:var(--brm);transform:translateY(-2px)}
+
+.progress{height:3px;background:rgba(152,136,192,0.1);border-radius:100px;margin:10px 0;overflow:hidden}
+.progress-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--vm),var(--gl))}
+
+/* ═══════════════════════════════════════════
+   PARALLAX
+═══════════════════════════════════════════ */
+.parallax-break{position:relative;overflow:hidden;height:500px}
+.parallax-break::before{content:'';position:absolute;top:0;left:0;right:0;height:35%;background:linear-gradient(to bottom,var(--mid),transparent);z-index:2;pointer-events:none}
+.parallax-break::after{content:'';position:absolute;bottom:0;left:0;right:0;height:35%;background:linear-gradient(to top,var(--mid),transparent);z-index:2;pointer-events:none}
+.parallax-break--dark::before{background:linear-gradient(to bottom,var(--mid1),transparent)}
+.parallax-break--dark::after{background:linear-gradient(to top,var(--mid1),transparent)}
+.parallax-img{position:absolute;left:0;right:0;width:100%;height:160%;object-fit:cover;object-position:center;display:block;will-change:transform;top:-30%}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;background:var(--mid)}
+.hero-text{display:flex;flex-direction:column;justify-content:center;padding:80px var(--gl-left);position:relative;z-index:2}
+.hero-visual{position:relative;overflow:hidden}
+.hero-visual-img{width:100%;height:100%;object-fit:cover;object-position:left center;display:block}
+.hero-visual::before{content:'';position:absolute;left:0;top:0;bottom:0;width:45%;background:linear-gradient(to right,var(--mid) 0%,rgba(14,11,26,0.7) 50%,transparent 100%);z-index:1;pointer-events:none}
+.hero-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--vs);margin-bottom:32px;display:flex;align-items:center;gap:12px}
+.hero-label::before{content:'';width:32px;height:1px;background:var(--vs)}
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+
+/* ═══════════════════════════════════════════
+   HOME: PRINCIPLE CARDS
+═══════════════════════════════════════════ */
+.principle-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.principle-card{background:var(--mid2);border:0.5px solid var(--br);border-radius:14px;padding:24px 20px;transition:border-color 0.2s,transform 0.25s;display:flex;flex-direction:column}
+.principle-card:hover{border-color:var(--brm);transform:translateY(-3px)}
+.principle-num{font-family:var(--fd);font-size:32px;font-weight:400;color:rgba(152,136,192,0.12);line-height:1;margin-bottom:14px}
+.principle-title{font-family:var(--fd);font-size:16px;font-weight:400;color:var(--tx);line-height:1.3;margin-bottom:12px}
+.principle-body{font-size:12.5px;line-height:1.6;color:var(--td);flex:1}
+
+/* ═══════════════════════════════════════════
+   HOME: ASSESSMENT FEATURE
+═══════════════════════════════════════════ */
+.assess-feature{position:relative;overflow:hidden}
+.assess-bg{position:absolute;inset:0;opacity:0.04;pointer-events:none}
+.assess-bg img{width:100%;height:100%;object-fit:cover;object-position:center}
+.assess-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center;position:relative;z-index:2}
+.assess-visual{background:var(--mid2);border:0.5px solid var(--br);border-radius:18px;padding:32px;overflow:hidden}
+.mock-row{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(106,91,142,0.06);border:0.5px solid rgba(152,136,192,0.08);border-radius:10px;margin-bottom:8px}
+.mock-row:last-child{margin-bottom:0}
+.mock-code{font-family:var(--fm);font-size:11px;color:var(--vs);flex-shrink:0;width:56px}
+.mock-name{font-size:13px;color:var(--td);flex:1}
+
+.stat-strip{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:16px 0}
+.stat-strip-item{font-size:12px;font-weight:500;letter-spacing:0.5px;color:var(--tm);display:flex;align-items:center;gap:8px}
+.stat-strip-item::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--vs);opacity:0.5}
+.stat-strip-item:first-child::before{display:none}
+
+/* ═══════════════════════════════════════════
+   HOME: SERVICE CARDS
+═══════════════════════════════════════════ */
+.svc-card{background:var(--mid2);border:0.5px solid var(--br);border-radius:18px;padding:32px;transition:border-color 0.2s,transform 0.2s}
+.svc-card:hover{border-color:var(--brm);transform:translateY(-2px)}
+.svc-num{font-family:var(--fd);font-size:36px;font-weight:400;color:rgba(152,136,192,0.15);margin-bottom:16px;line-height:1}
+.svc-title{font-family:var(--fd);font-size:24px;font-weight:400;color:var(--tx);margin-bottom:12px}
+.svc-desc{font-size:14px;line-height:1.65;color:var(--td);margin-bottom:20px}
+.svc-price{font-family:var(--fd);font-size:22px;font-weight:400;color:var(--tx)}
+.svc-unit{font-size:14px;color:var(--tm);font-family:var(--fb)}
+
+/* ═══════════════════════════════════════════
+   HOME: INSTRUMENT MINI CARDS
+═══════════════════════════════════════════ */
+.inst-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.inst-mini{display:flex;align-items:flex-start;gap:16px;padding:18px 20px;background:var(--mid2);border:0.5px solid var(--br);border-radius:12px;transition:border-color 0.2s,transform 0.2s;text-decoration:none}
+.inst-mini:hover{border-color:var(--brm);transform:translateY(-2px)}
+.inst-num{font-family:var(--fd);font-size:22px;font-weight:400;color:rgba(152,136,192,0.2);line-height:1;flex-shrink:0;min-width:28px}
+.inst-title{font-size:14px;font-weight:500;color:var(--tx);margin-bottom:2px}
+.inst-ver{font-family:var(--fm);font-size:10px;color:var(--ts)}
+.inst-desc{font-size:12px;color:var(--tm);line-height:1.5;margin-top:4px}
+
+/* ═══════════════════════════════════════════
+   HOME: CREDENTIAL CARDS
+═══════════════════════════════════════════ */
+.cred-card{padding:32px;background:var(--mid2);border:0.5px solid var(--br);border-radius:14px}
+.cred-title{font-family:var(--fd);font-size:18px;font-weight:400;color:var(--tx);margin:16px 0 10px}
+.cred-body{font-size:13px;line-height:1.65;color:var(--td)}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+.footer{border-top:0.5px solid var(--br);padding:64px 0 40px;background:var(--mid)}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand{font-family:var(--fd);font-size:12px;letter-spacing:2px;color:#c8c0e0;text-transform:uppercase;margin-bottom:12px}
+.footer-desc{font-size:13px;color:var(--ts);line-height:1.7;max-width:280px}
+.footer-heading{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(176,162,216,0.55);margin-bottom:16px}
+.footer-link{display:block;padding:4px 0;font-size:13px;color:rgba(190,176,228,0.65);text-decoration:none;transition:color 0.2s}
+.footer-link:hover{color:var(--tx)}
+.footer-bottom{padding-top:24px;border-top:0.5px solid var(--br);display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:11px;color:rgba(176,162,216,0.48)}
+.footer-ver{font-family:var(--fm);font-size:10px;color:rgba(176,162,216,0.4)}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width:1200px){
+  .principle-grid{grid-template-columns:repeat(3,1fr)}
+  .assess-inner{grid-template-columns:1fr}
+}
+@media (max-width:1024px){
+  :root{--gl-left:40px}
+  .g3{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-visual{display:none}
+  .hero-text{padding:140px var(--gl-left) 80px}
+}
+@media (max-width:768px){
+  :root{--gl-left:24px}
+  .topbar-nav{display:none}
+  .topbar .topbar-cta{display:none}
+  .nav-toggle{display:block}
+  .mob-menu{display:flex}
+  .g2,.g3,.principle-grid{grid-template-columns:1fr 1fr}
+  .hero-text{padding:120px var(--gl-left) 64px}
+  .hero-actions{flex-direction:column;align-items:flex-start}
+  .section{padding:64px 0}
+  .section-title{font-size:28px}
+  .parallax-break{height:280px}
+  .footer-grid{grid-template-columns:1fr;gap:32px}
+  .footer-bottom{flex-direction:column;gap:8px;align-items:flex-start}
+}
+@media (max-width:480px){
+  :root{--gl-left:16px}
+  .principle-grid,.g2,.g3{grid-template-columns:1fr}
+  .t-display{font-size:36px}
+  .btn-lg{font-size:14px;padding:14px 24px}
+}
+@media (prefers-reduced-motion:reduce){.parallax-img{transform:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     TOPBAR
+═══════════════════════════════════════════ -->
+<nav class="topbar" id="topbar">
+  <a href="/" class="topbar-logo">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cdefs%3E%3ClinearGradient id='ig' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%239888c0'/%3E%3Cstop offset='50%25' stop-color='%237ab89a'/%3E%3Cstop offset='100%25' stop-color='%23c8b890'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='14' cy='14' r='13' fill='none' stroke='url(%23ig)' stroke-width='1'/%3E%3Ccircle cx='14' cy='14' r='8' fill='none' stroke='url(%23ig)' stroke-width='0.75' opacity='0.6'/%3E%3Ccircle cx='14' cy='14' r='3' fill='url(%23ig)' opacity='0.4'/%3E%3C/svg%3E" alt="" class="topbar-mark">
+    <span class="topbar-name">The Presence<br>Authority</span>
+  </a>
+  <div class="topbar-nav">
+    <a href="/services" class="topbar-link">Services</a>
+    <a href="/framework" class="topbar-link">Framework</a>
+    <a href="/assessment" class="topbar-link">Assessment</a>
+    <a href="/white-paper" class="topbar-link">White Paper</a>
+    <a href="/regulatory-alignment" class="topbar-link">Regulatory</a>
+    <a href="/about" class="topbar-link">About</a>
+    <a href="/contact" class="topbar-link">Contact</a>
+  </div>
+  <a href="/assessment" class="topbar-cta">Take the Self-Assessment</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a href="/services" class="topbar-link">Services</a>
+  <a href="/framework" class="topbar-link">Framework</a>
+  <a href="/assessment" class="topbar-link">Assessment</a>
+  <a href="/white-paper" class="topbar-link">White Paper</a>
+  <a href="/regulatory-alignment" class="topbar-link">Regulatory</a>
+  <a href="/about" class="topbar-link">About</a>
+  <a href="/contact" class="topbar-link">Contact</a>
+  <a href="/assessment" class="topbar-cta">Take the Self-Assessment</a>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO — split grid, mandala right
+═══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-text">
+    <span class="hero-label">Governance Standards for Digital Presence</span>
+    <h1 class="t-display vr-md" style="max-width:600px">When a digital system represents a real person, <em>identity must remain intact.</em></h1>
+    <p class="t-lead vr-md" style="max-width:520px">AI can now replicate a person's face, voice, and communicative authority at scale. The Digital Presence Integrity Framework sets the governance controls that prevent that capability from eroding identity, consent, and accountability.</p>
+    <div class="hero-actions">
+      <a href="/assessment" class="btn btn-p btn-lg">Take the Self-Assessment</a>
+      <a href="/services" class="btn btn-g btn-lg btn-arrow">Explore Our Services</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <!-- Primary hero: three-quarter-v1-black (3232×2624, landscape, max depth and drama) -->
+    <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/hero/tpa-mandala-three-quarter-v1-black-3232w.png" alt="DPIF mandala — governance architecture rendered as geometric precision" class="hero-visual-img">
+  </div>
+</section>
+
+
+<hr class="irid-rule">
+
+
+<!-- ═══════════════════════════════════════════
+     PRESENCE DRIFT
+═══════════════════════════════════════════ -->
+<section class="section" id="problem">
+  <div class="rail">
+    <span class="section-label">The Problem</span>
+    <h2 class="section-title">Presence Drift</h2>
+    <div style="max-width:760px">
+      <p class="t-body vr-sm">The technology to create digital representations of real people — photorealistic avatars, synthetic voice clones, AI-mediated video embodiments — is operational. Organisations are deploying these systems across customer service, executive communications, education, and regulated industries.</p>
+      <p class="t-body vr-sm">The governance infrastructure has not kept pace. Most deployments operate without formal controls over identity fidelity, communicative authority, consent boundaries, or audience disclosure. The result is a systemic risk that DPIF defines as <span class="t-bright">Presence Drift</span>: the erosion of identity fidelity, delegated authority boundaries, consent integrity, or accountability caused by persistent or scaled digital representation.</p>
+      <p class="t-body vr-sm">Presence Drift may occur gradually and invisibly. A translated message subtly shifts meaning. An avatar's likeness degrades across model updates. Consent granted for one context extends into another without re-authorisation. Authority delegated for informational use escalates to material decision-making.</p>
+      <p class="t-body vr-md">The <span class="t-bright">EU AI Act</span> is now in force. Regulatory scrutiny is intensifying. The window to retrofit governance is narrowing.</p>
+      <div class="box box-info">
+        <div class="box-title">Presence Drift — Definition</div>
+        <div class="box-body"><strong>Presence Drift</strong> — Any measurable or material degradation of Presence Integrity. May be caused by identity drift, authority escalation, consent scope creep, disclosure failure, or containment breakdown. It may occur gradually, without explicit intent, and may be invisible to both the principal and the audience.</div>
+        <div class="box-cite">— DPIF Control Model v1.1, Section 5</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     PARALLAX — Iris Detail
+═══════════════════════════════════════════ -->
+<div class="parallax-break" data-parallax-speed="0.3">
+  <!-- Detail iris: spiral aperture mechanism, most hypnotic detail crop (1024×1008) -->
+  <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/detail/tpa-mandala-detail-iris-v1-1024w.png" alt="" class="parallax-img" loading="lazy">
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     FIVE PRINCIPLES
+═══════════════════════════════════════════ -->
+<section class="section" id="framework">
+  <div class="rail-w">
+    <span class="section-label">The Framework</span>
+    <h2 class="section-title">Five principles. Seven instruments. One standard.</h2>
+    <p class="section-desc">DPIF is the deployment-level governance standard for AI-mediated digital representations of real persons. It specifies the controls required to preserve Presence Integrity — and defines what happens when those controls fail.</p>
+    <div class="principle-grid vr-md">
+      <div class="principle-card"><div class="principle-num">01</div><div class="principle-title">Representation carries authority</div><div class="principle-body">When a system speaks using a person's face and voice, audiences attribute authority to that person. This is a communicative fact. DPIF requires that this authority be explicitly governed.</div></div>
+      <div class="principle-card"><div class="principle-num">02</div><div class="principle-title">Authority must remain human-originated</div><div class="principle-body">A digital representation cannot autonomously expand its communicative authority beyond what a real person has delegated. DPIF enforces boundaries that prevent unauthorised escalation.</div></div>
+      <div class="principle-card"><div class="principle-num">03</div><div class="principle-title">Consent must remain bounded and revocable</div><div class="principle-body">Consent to deploy must specify purpose, medium, audience, and duration. It must be revocable within defined timeframes. Consent for one context does not extend to others.</div></div>
+      <div class="principle-card"><div class="principle-num">04</div><div class="principle-title">Identity must remain recognisable</div><div class="principle-body">The person represented must remain recognisable throughout the deployment lifecycle. Identity fidelity must be validated at deployment and monitored for drift.</div></div>
+      <div class="principle-card"><div class="principle-num">05</div><div class="principle-title">Revocation must be operationally feasible</div><div class="principle-body">The ability to halt a deployment is not a policy aspiration — it is a technical requirement. DPIF mandates functional suspension mechanisms with verified response times.</div></div>
+    </div>
+    <a href="/framework" class="btn btn-g btn-arrow">Read the full Framework</a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SELF-ASSESSMENT FEATURE
+═══════════════════════════════════════════ -->
+<section class="section section--dark assess-feature" id="assess">
+  <div class="assess-bg">
+    <!-- Assessment bg: top-angled-v2-black, copper/rose-gold, center iris dominant (3851×3851) -->
+    <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/hero/tpa-mandala-top-angled-v2-black-3851w.png" alt="" loading="lazy">
+  </div>
+  <div class="rail-w">
+    <div class="assess-inner">
+      <div>
+        <span class="section-label">Assess Your Deployment</span>
+        <h2 class="section-title" style="margin-bottom:20px">Is your digital presence governed?</h2>
+        <p class="t-lead vr-sm" style="max-width:520px">The DPIF Self-Assessment evaluates your deployment against all 18 controls across 8 governance sections. It applies the same non-compensatory logic used in formal assessments: if any Critical Presence Control fails, the deployment fails.</p>
+        <div class="stat-strip vr-md">
+          <span class="stat-strip-item">18 Controls</span>
+          <span class="stat-strip-item">8 Sections</span>
+          <span class="stat-strip-item">~5 Minutes</span>
+          <span class="stat-strip-item">No Data Collected</span>
+        </div>
+        <p class="t-body vr-md" style="max-width:520px">The assessment covers identity fidelity, delegated authority, consent boundaries, audience disclosure, context risk classification, semantic integrity, containment, and scope boundary enforcement. You receive an immediate result — no registration required.</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <a href="/assessment" class="btn btn-p btn-lg">Start the Self-Assessment</a>
+          <a href="/contact" class="btn btn-g btn-arrow">Or book a discovery call</a>
+        </div>
+      </div>
+      <div class="assess-visual">
+        <div class="t-meta vr-sm" style="color:var(--vs)">DPIF Control Checklist v2.0</div>
+        <div class="mock-row"><span class="mock-code">IC-1.1</span><span class="mock-name">Identity Fidelity Validation</span><span class="tag tag-g" style="font-size:9px;padding:2px 8px">Met</span></div>
+        <div class="mock-row"><span class="mock-code">IC-1.2</span><span class="mock-name">Identity Drift Monitoring</span><span class="tag tag-g" style="font-size:9px;padding:2px 8px">Met</span></div>
+        <div class="mock-row"><span class="mock-code">AC-2.1</span><span class="mock-name">Delegated Authority Definition</span><span class="tag tag-r" style="font-size:9px;padding:2px 8px">Unmet</span></div>
+        <div class="mock-row"><span class="mock-code">AC-2.2</span><span class="mock-name">Autonomous Escalation Block</span><span class="tag tag-g" style="font-size:9px;padding:2px 8px">Met</span></div>
+        <div class="mock-row"><span class="mock-code">CC-3.1</span><span class="mock-name">Scope of Use Declaration</span><span class="tag tag-o" style="font-size:9px;padding:2px 8px">Unsure</span></div>
+        <div class="mock-row" style="opacity:0.4"><span class="mock-code">CC-3.2</span><span class="mock-name">Revocation Feasibility</span><span style="font-size:10px;color:var(--ts)">…</span></div>
+        <div class="mock-row" style="opacity:0.25"><span class="mock-code">DC-4.1</span><span class="mock-name">Contextual Disclosure</span><span style="font-size:10px;color:var(--ts)">…</span></div>
+        <div style="margin-top:16px;padding-top:14px;border-top:0.5px solid var(--br);display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:11px;color:var(--ts)">5 of 18 controls assessed</span>
+          <div class="progress" style="width:120px;margin:0"><div class="progress-fill" style="width:28%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<hr class="irid-rule">
+
+
+<!-- ═══════════════════════════════════════════
+     SERVICES
+═══════════════════════════════════════════ -->
+<section class="section" id="services">
+  <div class="rail-w">
+    <span class="section-label">Services</span>
+    <h2 class="section-title">From assessment to certification</h2>
+    <p class="section-desc">We wrote the standard. Now we help you meet it.</p>
+    <div class="g3 vr-md">
+      <div class="svc-card">
+        <div class="svc-num">01</div>
+        <div style="margin-bottom:12px"><span class="tag tag-v">Starting Point</span></div>
+        <div class="svc-title">DPIF Readiness Assessment</div>
+        <div class="svc-desc">A structured review against all 18 DPIF controls — producing a prioritised gap analysis, risk classification, and written remediation roadmap.</div>
+        <div class="svc-price">$3,500 <span class="svc-unit">AUD</span></div>
+        <div style="font-size:12px;color:var(--ts);margin-top:2px">Single deployment · 2–3 weeks</div>
+        <div class="mt-sm"><a href="/services" class="btn btn-g btn-sm btn-arrow">Learn more</a></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">02</div>
+        <div style="margin-bottom:12px"><span class="tag tag-v">Structured Remediation</span></div>
+        <div class="svc-title">Certification Advisory</div>
+        <div class="svc-desc">Hands-on guidance building the controls, documentation, and governance infrastructure needed to achieve DPIF certification.</div>
+        <div class="svc-price">$8,500 <span class="svc-unit">AUD</span></div>
+        <div style="font-size:12px;color:var(--ts);margin-top:2px">8-week engagement</div>
+        <div class="mt-sm"><a href="/services" class="btn btn-g btn-sm btn-arrow">Learn more</a></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">03</div>
+        <div style="margin-bottom:12px"><span class="tag tag-v">Ongoing</span></div>
+        <div class="svc-title">Governance Retainer</div>
+        <div class="svc-desc">Continuous governance support — monitoring, re-assessment, regulatory updates, and direct access as your deployment evolves.</div>
+        <div class="svc-price">$2,200 <span class="svc-unit">AUD/month</span></div>
+        <div style="font-size:12px;color:var(--ts);margin-top:2px">6-month minimum</div>
+        <div class="mt-sm"><a href="/services" class="btn btn-g btn-sm btn-arrow">Learn more</a></div>
+      </div>
+    </div>
+    <a href="/services" class="btn btn-g btn-arrow">View all services</a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     PARALLAX — Chevron Detail
+═══════════════════════════════════════════ -->
+<div class="parallax-break" data-parallax-speed="0.25" style="height:360px">
+  <!-- Detail chevron: front-on stacked geometry, OCTO-PHI inscription (1016×1016) -->
+  <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/detail/tpa-mandala-detail-chevron-v1-1016w.png" alt="" class="parallax-img" loading="lazy">
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     INSTRUMENTS
+═══════════════════════════════════════════ -->
+<section class="section" id="instruments">
+  <div class="rail">
+    <span class="section-label">Published Instruments</span>
+    <h2 class="section-title">Seven governance documents. Open access.</h2>
+    <p class="section-desc">The DPIF instrument suite is published under CC BY 4.0. No paywall. No registration. The standard is public — the services that implement it are not.</p>
+    <div class="inst-grid vr-md">
+      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">01</span><div><div class="inst-title">Control Model</div><div class="inst-ver">v1.1</div><div class="inst-desc">The authoritative control architecture.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">02</span><div><div class="inst-title">Control Checklist</div><div class="inst-ver">v2.0</div><div class="inst-desc">14 CPCs + 4 SPCs. Evidence-mapped.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">03</span><div><div class="inst-title">Context Risk Annex</div><div class="inst-ver">v1.0</div><div class="inst-desc">Deployment risk classification criteria.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">04</span><div><div class="inst-title">Deployment Lifecycle</div><div class="inst-ver">v1.0</div><div class="inst-desc">The DRRP deployment state machine.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">05</span><div><div class="inst-title">Conflict Resolution</div><div class="inst-ver">v1.0</div><div class="inst-desc">Multi-deployment conflict governance.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">06</span><div><div class="inst-title">Posthumous Governance</div><div class="inst-ver">v1.0</div><div class="inst-desc">Incapacitated principal controls.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">07</span><div><div class="inst-title">Scoring Rubric</div><div class="inst-ver">v1.0</div><div class="inst-desc">SPC maturity scoring methodology.</div></div></a>
+    </div>
+    <a href="/framework" class="btn btn-g btn-arrow">View the full framework</a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     CREDENTIALS
+═══════════════════════════════════════════ -->
+<section class="section section--dark" id="credentials">
+  <div class="rail-w">
+    <span class="section-label">Governance Credentials</span>
+    <div class="g3">
+      <div class="cred-card">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="url(#ci1)" stroke-width="1.5"/><path d="M12 16l3 3 5-6" stroke="url(#ci1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="ci1" x1="4" y1="4" x2="28" y2="28"><stop stop-color="#9888c0"/><stop offset="1" stop-color="#7ab89a"/></linearGradient></defs></svg>
+        <div class="cred-title">CC BY 4.0 Licence</div>
+        <div class="cred-body">The entire instrument suite is published under Creative Commons Attribution 4.0. Use it, cite it, build on it.</div>
+      </div>
+      <div class="cred-card">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="6" y="8" width="20" height="16" rx="2" stroke="url(#ci2)" stroke-width="1.5"/><path d="M6 14h20M12 14v10" stroke="url(#ci2)" stroke-width="1.5"/><defs><linearGradient id="ci2" x1="6" y1="8" x2="26" y2="24"><stop stop-color="#7ab89a"/><stop offset="1" stop-color="#c8b890"/></linearGradient></defs></svg>
+        <div class="cred-title">Published on GitHub</div>
+        <div class="cred-body">All normative documents, version history, and governance records. <a href="https://github.com/PresenceAuthority/DPIF" style="color:var(--vs)">github.com/PresenceAuthority/DPIF</a></div>
+      </div>
+      <div class="cred-card">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 6v20M6 16h20" stroke="url(#ci3)" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="16" r="10" stroke="url(#ci3)" stroke-width="1.5"/><defs><linearGradient id="ci3" x1="6" y1="6" x2="26" y2="26"><stop stop-color="#c9a8b8"/><stop offset="1" stop-color="#9888c0"/></linearGradient></defs></svg>
+        <div class="cred-title">Regulatory Alignment</div>
+        <div class="cred-body">Mapped to EU AI Act, NIST AI RMF, and ISO/IEC 42001. DPIF fills the deployment-level gap these frameworks leave open.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<hr class="irid-rule">
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="rail-w">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">The Presence Authority</div>
+        <p class="footer-desc">The independent governance standards body for AI-mediated digital representations of real persons.</p>
+      </div>
+      <div>
+        <div class="footer-heading">Framework</div>
+        <a href="/framework" class="footer-link">Framework</a>
+        <a href="/assessment" class="footer-link">Assessment</a>
+        <a href="/white-paper" class="footer-link">White Paper</a>
+        <a href="/framework#instruments" class="footer-link">Instruments</a>
+      </div>
+      <div>
+        <div class="footer-heading">Organisation</div>
+        <a href="/services" class="footer-link">Services</a>
+        <a href="/about" class="footer-link">About</a>
+        <a href="/contact" class="footer-link">Contact</a>
+        <a href="/regulatory-alignment" class="footer-link">Regulatory Alignment</a>
+      </div>
+      <div>
+        <div class="footer-heading">Meta</div>
+        <a href="/updates" class="footer-link">Updates</a>
+        <a href="https://creativecommons.org/licenses/by/4.0/deed.en" class="footer-link">CC BY 4.0 Licence</a>
+        <a href="https://github.com/PresenceAuthority/DPIF" class="footer-link">GitHub</a>
+        <span class="footer-link" style="cursor:default">DPIF v1.3 · March 2026</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 The Presence Authority</span>
+      <span class="footer-ver">TPA-WEB-v2.0</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════ -->
+<script>
+/* Topbar scroll */
+const topbar = document.getElementById('topbar');
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      topbar.classList.toggle('scrolled', window.scrollY > 20);
+      ticking = false;
+    });
+    ticking = true;
+  }
+}, { passive: true });
+
+/* Mobile nav */
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('mobMenu').classList.toggle('open');
+});
+
+/* Parallax */
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!prefersReduced) {
+  const items = [];
+  document.querySelectorAll('[data-parallax-speed]').forEach(c => {
+    const img = c.querySelector('.parallax-img');
+    if (img) items.push({ container: c, img, speed: parseFloat(c.dataset.parallaxSpeed || '0.3') });
+  });
+  let pTicking = false;
+  function updateParallax() {
+    const vh = window.innerHeight;
+    items.forEach(({ container, img, speed }) => {
+      const r = container.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > vh + 200) return;
+      const offset = (r.top + r.height / 2) - vh / 2;
+      const maxT = r.height * 0.30;
+      const t = Math.max(-maxT, Math.min(maxT, -(offset * speed)));
+      img.style.transform = `translateY(${t}px)`;
+    });
+    pTicking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!pTicking) { requestAnimationFrame(updateParallax); pTicking = true; }
+  }, { passive: true });
+  updateParallax();
+
+  /* Entrance animations */
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.section, .principle-card, .svc-card, .inst-mini, .cred-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    obs.observe(el);
+  });
+}
+</script>
+
+</body>
+</html>
