@@ -86,9 +86,9 @@ a{color:inherit;text-decoration:none}
 ═══════════════════════════════════════ */
 .doc-header{background:var(--mid1);border-bottom:0.5px solid var(--br);padding:88px 0 64px;margin-top:64px}
 .doc-header-inner{max-width:920px;margin:0 auto;padding:0 var(--gl-left)}
-.doc-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.doc-type-badge{display:inline-flex;align-items:center;background:rgba(152,136,192,0.1);border:0.5px solid var(--br);border-radius:4px;padding:5px 12px;font-family:var(--fm);font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--vs)}
-.doc-header h1{font-family:var(--fd);font-weight:400;font-size:clamp(34px,4.5vw,56px);color:var(--tx);line-height:1.1;margin-bottom:14px}
+.doc-eyebrow{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--vs);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.doc-eyebrow::before{content:'';width:32px;height:1px;background:var(--vs);flex-shrink:0}
+.doc-header h1{font-family:var(--fd);font-weight:400;font-size:clamp(52px,7vw,88px);color:var(--tx);line-height:1;margin-bottom:20px}
 .doc-header h1 em{font-style:italic;background:linear-gradient(135deg,#9888c0,#7ab89a,#c9a8b8,#c8b890);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .doc-subtitle{font-family:var(--fb);font-size:17px;font-weight:300;color:var(--tm);margin-bottom:40px;line-height:1.55;max-width:600px}
 .doc-meta-bar{display:flex;flex-wrap:wrap;gap:32px;padding-top:24px;border-top:0.5px solid var(--br)}
@@ -147,44 +147,31 @@ a{color:inherit;text-decoration:none}
 .scope-list.out li::before{content:'×';color:var(--rm)}
 
 /* Control category table */
-.cat-table{width:100%;border-collapse:collapse;margin:20px 0}
-.cat-table th{font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--vs);padding:8px 14px;border-bottom:0.5px solid var(--brm);text-align:left}
-.cat-table td{font-family:var(--fb);font-size:13.5px;color:var(--td);padding:10px 14px;border-bottom:0.5px solid var(--br);vertical-align:top;line-height:1.55}
-.cat-table tr:last-child td{border-bottom:none}
-.cat-table td:first-child{font-family:var(--fm);font-size:11px;color:var(--vs);white-space:nowrap}
-.cat-table td strong{color:var(--tx);font-weight:500}
-.cat-table td em{color:var(--ts);font-style:normal;font-size:12.5px}
+.wp-toc{list-style:none;padding:0;margin:20px 0;display:flex;flex-direction:column;gap:0;border:0.5px solid var(--br);border-radius:10px;overflow:hidden}
+.wp-toc li{display:flex;align-items:baseline;gap:14px;padding:10px 18px;border-bottom:0.5px solid var(--br);font-family:var(--fb);font-size:13.5px;color:var(--td);line-height:1.5}
+.wp-toc li:last-child{border-bottom:none}
+.wp-toc-num{font-family:var(--fm);font-size:10px;color:var(--vs);flex-shrink:0;min-width:20px}
 
 /* Control classification block */
-.ctrl-classify{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
-.ctrl-block{background:var(--mid2);border:0.5px solid var(--br);border-radius:10px;padding:20px 22px}
-.ctrl-block-label{font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px}
-.ctrl-block-label.cpc{color:var(--rm)}
-.ctrl-block-label.spc{color:var(--om)}
-.ctrl-block-count{font-family:var(--fd);font-size:36px;color:var(--tx);line-height:1;margin-bottom:6px}
-.ctrl-block-desc{font-family:var(--fb);font-size:13px;color:var(--td);line-height:1.6}
-.ctrl-block-ids{font-family:var(--fm);font-size:10px;color:var(--ts);margin-top:8px;line-height:1.7}
+/* Compact instrument download list */
+.inst-dl-list{display:flex;flex-direction:column;margin:20px 0;border:0.5px solid var(--br);border-radius:10px;overflow:hidden}
+.inst-dl-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px 18px;border-bottom:0.5px solid var(--br);transition:background 0.15s}
+.inst-dl-row:last-child{border-bottom:none}
+.inst-dl-row:hover{background:rgba(152,136,192,0.05)}
+.inst-dl-meta{display:flex;align-items:baseline;gap:10px;min-width:0}
+.inst-dl-num{font-family:var(--fm);font-size:9px;color:var(--vs);flex-shrink:0}
+.inst-dl-name{font-family:var(--fb);font-size:13.5px;color:var(--tx)}
+.inst-dl-ver{font-family:var(--fm);font-size:10px;color:var(--ts);flex-shrink:0}
+.inst-dl-link{font-family:var(--fm);font-size:10px;color:var(--vs);text-decoration:none;white-space:nowrap;flex-shrink:0}
+.inst-dl-link:hover{color:var(--tx)}
 
-/* Outcomes table */
-.outcomes-table{width:100%;border-collapse:collapse;margin:20px 0}
-.outcomes-table th{font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--vs);padding:8px 14px;border-bottom:0.5px solid var(--brm);text-align:left}
-.outcomes-table td{font-family:var(--fb);font-size:13.5px;color:var(--td);padding:10px 14px;border-bottom:0.5px solid var(--br);vertical-align:top;line-height:1.55}
-.outcomes-table tr:last-child td{border-bottom:none}
-.result-pass{font-family:var(--fm);font-size:11px;font-weight:600;color:var(--gl)}
-.result-cond{font-family:var(--fm);font-size:11px;font-weight:600;color:var(--om)}
-.result-fail{font-family:var(--fm);font-size:11px;font-weight:600;color:var(--rm)}
-
-/* Instrument list */
-.inst-list{display:flex;flex-direction:column;gap:10px;margin:20px 0}
-.inst-item{background:var(--mid2);border:0.5px solid var(--br);border-radius:10px;padding:16px 20px;display:flex;gap:16px;align-items:flex-start;transition:border-color 0.2s}
-.inst-item:hover{border-color:var(--brm)}
-.inst-num{font-family:var(--fm);font-size:10px;color:var(--vs);flex-shrink:0;min-width:28px;padding-top:1px}
-.inst-name{font-family:var(--fd);font-size:16px;color:var(--tx);margin-bottom:3px}
-.inst-version{font-family:var(--fm);font-size:10px;color:var(--ts);margin-left:8px;font-style:normal}
-.inst-desc{font-family:var(--fb);font-size:13px;color:var(--td);line-height:1.6}
-.inst-dl{margin-top:8px}
-.inst-dl a{font-family:var(--fm);font-size:10px;color:var(--vs);text-decoration:none;letter-spacing:0.5px}
-.inst-dl a:hover{color:var(--tx)}
+/* Next steps */
+.next-steps{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0}
+.next-step-card{background:var(--mid2);border:0.5px solid var(--br);border-radius:12px;padding:22px 24px;text-decoration:none;transition:border-color 0.2s;display:block}
+.next-step-card:hover{border-color:var(--brm)}
+.nsc-label{font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--vs);margin-bottom:8px}
+.nsc-title{font-family:var(--fd);font-size:18px;color:var(--tx);margin-bottom:6px;line-height:1.2}
+.nsc-desc{font-family:var(--fb);font-size:13px;color:var(--tm);line-height:1.6}
 
 /* Bottom CTA */
 .bottom-cta{background:var(--mid1);border:0.5px solid var(--br);border-radius:16px;padding:40px;margin-top:56px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
@@ -201,7 +188,7 @@ a{color:inherit;text-decoration:none}
   .sidebar-nav{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
   .sidebar-dl{flex-direction:row;flex-wrap:wrap}
   .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
-  .ctrl-classify{grid-template-columns:1fr 1fr}
+  .next-steps{grid-template-columns:1fr 1fr}
   .scope-cols{grid-template-columns:1fr 1fr}
 }
 @media(max-width:640px){
@@ -215,7 +202,7 @@ a{color:inherit;text-decoration:none}
   .sidebar-dl{flex-direction:column}
   .footer-grid{grid-template-columns:1fr;gap:24px}
   .pdf-strip-inner{flex-direction:column;gap:12px}
-  .ctrl-classify{grid-template-columns:1fr}
+  .next-steps{grid-template-columns:1fr}
   .scope-cols{grid-template-columns:1fr}
   .bottom-cta{flex-direction:column;padding:28px}
   .bottom-cta-actions{width:100%}
@@ -263,10 +250,8 @@ a{color:inherit;text-decoration:none}
 <!-- DOCUMENT HEADER -->
 <header class="doc-header">
   <div class="doc-header-inner">
-    <div class="doc-eyebrow">
-      <span class="doc-type-badge">Explanatory &mdash; Not Normative</span>
-    </div>
-    <h1>Digital Presence Integrity Framework (DPIF) <em>White Paper</em></h1>
+    <div class="doc-eyebrow">Digital Presence Integrity Framework</div>
+    <h1>Digital Presence Integrity Framework (DPIF)<br><em>White Paper</em></h1>
     <p class="doc-subtitle">Rationale, scope, threat model, and governance architecture for the Digital Presence Integrity Framework.</p>
     <div class="doc-meta-bar">
       <div class="doc-meta-item">
@@ -318,9 +303,8 @@ a{color:inherit;text-decoration:none}
           <a href="#document-record" class="sidebar-link" data-target="document-record">Document record</a>
           <a href="#problem-statement" class="sidebar-link" data-target="problem-statement">Problem statement</a>
           <a href="#scope" class="sidebar-link" data-target="scope">Scope</a>
-          <a href="#governance-architecture" class="sidebar-link" data-target="governance-architecture">Governance architecture</a>
-          <a href="#control-structure" class="sidebar-link" data-target="control-structure">Control structure</a>
-          <a href="#instrument-suite" class="sidebar-link" data-target="instrument-suite">Instrument suite</a>
+          <a href="#what-it-covers" class="sidebar-link" data-target="what-it-covers">What it covers</a>
+          <a href="#normative-instruments" class="sidebar-link" data-target="normative-instruments">Instruments</a>
         </nav>
         <div class="sidebar-divider"></div>
         <div class="sidebar-dl">
@@ -387,190 +371,102 @@ a{color:inherit;text-decoration:none}
           <p>The <strong>deployment</strong> is the primary unit of DPIF governance. A single underlying DRRP tool may support multiple independent deployments, each with its own Scope of Use, Delegated Authority, and context risk classification, and each separately assessed. This formulation reflects the practical reality of multi-context DRRP operation and ensures governance is applied where risk is generated.</p>
         </section>
 
-        <!-- GOVERNANCE ARCHITECTURE -->
-        <section class="doc-section" id="governance-architecture">
-          <span class="section-label">Governance Architecture</span>
-          <h2>Seven control categories</h2>
-          <p>DPIF&rsquo;s governance architecture is structured around seven control categories, each addressing a distinct dimension of <strong>Presence Integrity</strong> &mdash; the condition in which a DRRP remains faithful to the principal&rsquo;s identity, bounded by explicit consent, anchored to accountable authorship, and governed by enforceable containment controls. The categories are interdependent: weakness in any one creates exploitable exposure in others.</p>
-
-          <div style="overflow-x:auto;margin:20px 0">
-            <table class="cat-table">
-              <thead>
-                <tr>
-                  <th>Category</th>
-                  <th>Governs</th>
-                  <th>Failure mode</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>IC</td>
-                  <td><strong>Identity Controls</strong></td>
-                  <td><em>Synthetic drift or impersonation</em></td>
-                </tr>
-                <tr>
-                  <td>AC</td>
-                  <td><strong>Authority Controls</strong></td>
-                  <td><em>Unbounded speech or policy escalation</em></td>
-                </tr>
-                <tr>
-                  <td>CC</td>
-                  <td><strong>Consent Controls</strong></td>
-                  <td><em>Scope creep or consent drift</em></td>
-                </tr>
-                <tr>
-                  <td>DC</td>
-                  <td><strong>Disclosure Controls</strong></td>
-                  <td><em>Deceptive immediacy or false attribution</em></td>
-                </tr>
-                <tr>
-                  <td>CR</td>
-                  <td><strong>Context Risk Controls</strong></td>
-                  <td><em>Unclassified or misclassified deployment context</em></td>
-                </tr>
-                <tr>
-                  <td>SI</td>
-                  <td><strong>Semantic Integrity Controls</strong></td>
-                  <td><em>Semantic distortion through transformation</em></td>
-                </tr>
-                <tr>
-                  <td>CT</td>
-                  <td><strong>Containment Controls</strong></td>
-                  <td><em>Irreversible or untraceable misuse</em></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>Each deployment must also satisfy <strong>BOUND-0.1</strong> (Scope Boundary Enforcement), a cross-cutting control requiring that governance is applied consistently across the full declared scope &mdash; not selectively within it.</p>
-          <p>Every deployment is assigned a context risk tier (Low, Moderate, High, or Regulated) which determines the minimum control intensity required across disclosure mechanisms, revocation timeframes, governance review cadence, logging retention, and identity revalidation triggers. The tier is determined by the highest-risk indicator present: ambiguity escalates, it never de-escalates. Financial services, healthcare, legal, government, and education contexts involving minors are unconditionally Regulated.</p>
+        <!-- WHAT IT COVERS -->
+        <section class="doc-section" id="what-it-covers">
+          <span class="section-label">What It Covers</span>
+          <h2>White paper contents</h2>
+          <p>The white paper covers the full rationale, threat model, and governance architecture of DPIF across ten sections. The framework&#39;s control architecture, assessment logic, and instrument suite are documented in detail in the <a href="/framework" style="color:var(--vs);text-decoration:underline;text-underline-offset:3px">Framework page</a> and normative instruments.</p>
+          <ul class="wp-toc">
+            <li><span class="wp-toc-num">01</span>Executive Summary</li>
+            <li><span class="wp-toc-num">02</span>Problem Statement &mdash; The Governance Gap</li>
+            <li><span class="wp-toc-num">03</span>Scope and Definitions &mdash; DRRPs and Deployments</li>
+            <li><span class="wp-toc-num">04</span>Threat Model &mdash; Identity Distortion, Consent Failure, Accountability Loss</li>
+            <li><span class="wp-toc-num">05</span>Governance Architecture &mdash; Seven Control Categories</li>
+            <li><span class="wp-toc-num">06</span>Control Structure &mdash; CPCs, SPCs, and Non-Compensatory Logic</li>
+            <li><span class="wp-toc-num">07</span>Risk Classification Framework</li>
+            <li><span class="wp-toc-num">08</span>Regulatory Alignment &mdash; EU AI Act, NIST, ISO 42001, C2PA</li>
+            <li><span class="wp-toc-num">09</span>Instrument Suite Overview</li>
+            <li><span class="wp-toc-num">10</span>Relationship to Normative Instruments</li>
+          </ul>
         </section>
 
-        <!-- CONTROL STRUCTURE -->
-        <section class="doc-section" id="control-structure">
-          <span class="section-label">Control Structure</span>
-          <h2>CPCs, SPCs, and assessment logic</h2>
-          <p>DPIF defines 18 controls across the seven categories and BOUND-0.1, classified into two tiers.</p>
-
-          <div class="ctrl-classify">
-            <div class="ctrl-block">
-              <div class="ctrl-block-label cpc">Critical Presence Controls</div>
-              <div class="ctrl-block-count">14</div>
-              <div class="ctrl-block-desc">Non-negotiable governance requirements. Failure of any single CPC produces an overall FAIL outcome regardless of performance elsewhere.</div>
-              <div class="ctrl-block-ids">IC-1.1 &middot; IC-1.2 &middot; AC-2.1 &middot; AC-2.2 &middot; AC-2.3 &middot; CC-3.1 &middot; CC-3.2 &middot; DC-4.1 &middot; CR-5.1 &middot; CR-5.2 &middot; SI-6.1 &middot; CT-7.1 &middot; CT-7.2 &middot; BOUND-0.1</div>
+        <!-- NORMATIVE INSTRUMENTS -->
+        <section class="doc-section" id="normative-instruments">
+          <span class="section-label">Normative Instruments</span>
+          <h2>Download the suite</h2>
+          <p>Seven normative instruments. All published under CC BY 4.0 at <a href="https://github.com/PresenceAuthority/DPIF" target="_blank" rel="noopener" style="color:var(--vs);text-decoration:underline;text-underline-offset:3px">github.com/PresenceAuthority/DPIF</a>. For instrument descriptions and context, see the <a href="/framework" style="color:var(--vs);text-decoration:underline;text-underline-offset:3px">Framework page</a>.</p>
+          <div class="inst-dl-list">
+            <div class="inst-dl-row">
+              <div class="inst-dl-meta">
+                <span class="inst-dl-num">01</span>
+                <span class="inst-dl-name">Control Model</span>
+                <span class="inst-dl-ver">v1.1</span>
+              </div>
+              <a href="https://github.com/PresenceAuthority/DPIF/raw/main/01_DPIF_Control_Model_V1_1_110326.pdf" class="inst-dl-link" target="_blank" rel="noopener">Download &rarr;</a>
             </div>
-            <div class="ctrl-block">
-              <div class="ctrl-block-label spc">Supporting Presence Controls</div>
-              <div class="ctrl-block-count">4</div>
-              <div class="ctrl-block-desc">Governance maturity controls, scored on a four-level scale (Initial &rarr; Optimised) using the Scoring Rubric. Assessed only after all 14 CPCs are Met.</div>
-              <div class="ctrl-block-ids">CC-3.3 &middot; DC-4.2 &middot; SI-6.2 &middot; CT-7.3</div>
+            <div class="inst-dl-row">
+              <div class="inst-dl-meta">
+                <span class="inst-dl-num">02</span>
+                <span class="inst-dl-name">Control Checklist</span>
+                <span class="inst-dl-ver">v2.0</span>
+              </div>
+              <a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Control_Checklist_v2_0_110326.pdf" class="inst-dl-link" target="_blank" rel="noopener">Download &rarr;</a>
+            </div>
+            <div class="inst-dl-row">
+              <div class="inst-dl-meta">
+                <span class="inst-dl-num">03</span>
+                <span class="inst-dl-name">Context Risk Classification Annex</span>
+                <span class="inst-dl-ver">v1.0</span>
+              </div>
+              <a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Context_Risk_Classification_Annex_v1_0_110326.pdf" class="inst-dl-link" target="_blank" rel="noopener">Download &rarr;</a>
+            </div>
+            <div class="inst-dl-row">
+              <div class="inst-dl-meta">
+                <span class="inst-dl-num">04</span>
+                <span class="inst-dl-name">Deployment Lifecycle Specification</span>
+                <span class="inst-dl-ver">v1.0</span>
+              </div>
+              <a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Deployment_Lifecycle_Specification_v1_0_110326.pdf" class="inst-dl-link" target="_blank" rel="noopener">Download &rarr;</a>
+            </div>
+            <div class="inst-dl-row">
+              <div class="inst-dl-meta">
+                <span class="inst-dl-num">05</span>
+                <span class="inst-dl-name">Inter-Deployment Conflict Resolution Framework</span>
+                <span class="inst-dl-ver">v1.0</span>
+              </div>
+              <a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_InterDeployment_Conflict_Resolution_Framework_v1_0_110326.pdf" class="inst-dl-link" target="_blank" rel="noopener">Download &rarr;</a>
+            </div>
+            <div class="inst-dl-row">
+              <div class="inst-dl-meta">
+                <span class="inst-dl-num">06</span>
+                <span class="inst-dl-name">Posthumous and Incapacitated Principal Governance</span>
+                <span class="inst-dl-ver">v1.0</span>
+              </div>
+              <a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Posthumous_Incapacitated_Principal_Governance_v1_0_110326.pdf" class="inst-dl-link" target="_blank" rel="noopener">Download &rarr;</a>
+            </div>
+            <div class="inst-dl-row">
+              <div class="inst-dl-meta">
+                <span class="inst-dl-num">07</span>
+                <span class="inst-dl-name">Scoring Rubric</span>
+                <span class="inst-dl-ver">v1.0</span>
+              </div>
+              <a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Scoring_Rubric_v1_0_110326.pdf" class="inst-dl-link" target="_blank" rel="noopener">Download &rarr;</a>
             </div>
           </div>
 
-          <p>The non-compensatory architecture is the defining structural feature of DPIF. A deployment cannot offset the absence of one CPC with strength in another. This reflects the framework&rsquo;s foundational position: identity, consent, and accountability in representation are not substitutable. A deployment with excellent audit trails but no functional revocation mechanism is a FAIL. A deployment with strong governance review cadence but no formal Scope of Use declaration is a FAIL.</p>
-
-          <div style="overflow-x:auto;margin:20px 0">
-            <table class="outcomes-table">
-              <thead>
-                <tr><th>Result</th><th>Condition</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><span class="result-pass">PASS</span></td>
-                  <td>All 14 CPCs Met. SPC maturity scoring completed via Scoring Rubric.</td>
-                </tr>
-                <tr>
-                  <td><span class="result-cond">CONDITIONAL PASS</span></td>
-                  <td>All 14 CPCs Met. One or more SPCs Unmet or below tier floor. Remediation plan required.</td>
-                </tr>
-                <tr>
-                  <td><span class="result-fail">FAIL</span></td>
-                  <td>Any CPC Unmet. No SPC scoring is conducted. Rubric is not applied.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>Where all CPCs are Met and SPC scoring is completed, the composite maturity score from the Scoring Rubric determines the certification tier: Foundational (1.0&ndash;1.9), Standard (2.0&ndash;2.9), or Extended (3.0&ndash;4.0), each with a corresponding SPC floor condition. Certification is deployment-specific and valid for 12 months by default.</p>
-        </section>
-
-        <!-- INSTRUMENT SUITE -->
-        <section class="doc-section" id="instrument-suite">
-          <span class="section-label">Instrument Suite</span>
-          <h2>Normative documents</h2>
-          <p>DPIF consists of seven normative instruments. All are published under CC BY 4.0 at <a href="https://github.com/PresenceAuthority/DPIF" target="_blank" rel="noopener" style="color:var(--vs);text-decoration:underline;text-underline-offset:3px">github.com/PresenceAuthority/DPIF</a>. This white paper is explanatory and does not form part of the normative suite.</p>
-
-          <div class="inst-list">
-            <div class="inst-item">
-              <div class="inst-num">01</div>
-              <div>
-                <div class="inst-name">Control Model <span class="inst-version">v1.1</span></div>
-                <div class="inst-desc">The authoritative normative instrument. Defines all 18 controls, their classification, failure conditions, assessment logic, and all canonical definitions. Primary reference for governance, compliance, and legal interpretation of DPIF requirements.</div>
-                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/01_DPIF_Control_Model_V1_1_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
-              </div>
-            </div>
-            <div class="inst-item">
-              <div class="inst-num">02</div>
-              <div>
-                <div class="inst-name">Control Checklist <span class="inst-version">v2.0</span></div>
-                <div class="inst-desc">The operational assessment instrument. Translates the Control Model into a structured checklist with evidence requirements, test procedures, and assessment record requirements for direct use in DPIF compliance assessments.</div>
-                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Control_Checklist_v2_0_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
-              </div>
-            </div>
-            <div class="inst-item">
-              <div class="inst-num">03</div>
-              <div>
-                <div class="inst-name">Context Risk Classification Annex <span class="inst-version">v1.0</span></div>
-                <div class="inst-desc">Classification criteria, indicators, and decision logic for assigning deployment context risk tiers. Referenced by CR-5.1 and CR-5.2. Includes the regulatory override catalogue.</div>
-                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Context_Risk_Classification_Annex_v1_0_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
-              </div>
-            </div>
-            <div class="inst-item">
-              <div class="inst-num">04</div>
-              <div>
-                <div class="inst-name">Deployment Lifecycle Specification <span class="inst-version">v1.0</span></div>
-                <div class="inst-desc">Defines the state machine for DRRP deployments across five states (Provisioning, Active, Suspended, Revoked, Archived), including transition rules, audience output permissions, and certification implications per state. Revocation is irreversible.</div>
-                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Deployment_Lifecycle_Specification_v1_0_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
-              </div>
-            </div>
-            <div class="inst-item">
-              <div class="inst-num">05</div>
-              <div>
-                <div class="inst-name">Inter-Deployment Conflict Resolution Framework <span class="inst-version">v1.0</span></div>
-                <div class="inst-desc">Defines four conflict types (Scope Overlap, Content Contradiction, Authority Collision, Consent State Inconsistency) and the precedence rules and resolution procedures for resolving conflicts between multiple deployments of the same principal.</div>
-                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_InterDeployment_Conflict_Resolution_Framework_v1_0_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
-              </div>
-            </div>
-            <div class="inst-item">
-              <div class="inst-num">06</div>
-              <div>
-                <div class="inst-name">Posthumous and Incapacitated Principal Governance <span class="inst-version">v1.0</span></div>
-                <div class="inst-desc">Governs DRRP deployments where the principal is temporarily incapacitated, permanently incapacitated, or deceased. Defines Advance Consent Instruments, Successor Authority models, and mandatory suspension timelines (14 days for death; 30 days for permanent incapacity).</div>
-                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Posthumous_Incapacitated_Principal_Governance_v1_0_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
-              </div>
-            </div>
-            <div class="inst-item">
-              <div class="inst-num">07</div>
-              <div>
-                <div class="inst-name">Scoring Rubric <span class="inst-version">v1.0</span></div>
-                <div class="inst-desc">Defines the four-level maturity scoring methodology (Initial, Defined, Managed, Optimised) for the four Supporting Presence Controls and the composite scoring algorithm used to determine certification tier.</div>
-                <div class="inst-dl"><a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_Scoring_Rubric_v1_0_110326.pdf" target="_blank" rel="noopener">Download &rarr;</a></div>
-              </div>
-            </div>
+          <div class="next-steps">
+            <a href="/framework" class="next-step-card">
+              <div class="nsc-label">Next</div>
+              <div class="nsc-title">Framework</div>
+              <div class="nsc-desc">Full control architecture, assessment logic, and instrument suite with context.</div>
+            </a>
+            <a href="/assessment" class="next-step-card">
+              <div class="nsc-label">Next</div>
+              <div class="nsc-title">Assessment</div>
+              <div class="nsc-desc">Assess a deployment against all 18 DPIF controls with guided evidence requirements.</div>
+            </a>
           </div>
         </section>
-
-        <!-- BOTTOM CTA -->
-        <div class="bottom-cta">
-          <div class="bottom-cta-text">
-            <h3>DPIF White Paper v1.3</h3>
-            <p>Full PDF available on GitHub under CC BY 4.0. All normative instruments in the same repository.</p>
-          </div>
-          <div class="bottom-cta-actions">
-            <a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_White_Paper_v1_3_110326.pdf" class="btn btn-p btn-lg" target="_blank" rel="noopener">Download PDF &rarr;</a>
-            <a href="/framework" class="btn btn-g btn-lg">Browse Framework &rarr;</a>
-          </div>
-        </div>
 
       </article>
     </div>
