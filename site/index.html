@@ -3,9 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Presence Authority — Governance Standards for Digital Representations of Real Persons</title>
-<meta name="description" content="The Presence Authority publishes DPIF — the deployment-level governance standard ensuring identity, consent, and accountability in AI-mediated digital representations of real persons.">
+<title>The Presence Authority — Governance Standards for AI-Mediated Digital Representations</title>
+<meta name="description" content="The Digital Presence Integrity Framework (DPIF) is the governance standard for AI-mediated digital representations of real persons. Published by The Presence Authority under CC BY 4.0.">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://thepresenceauthority.pages.dev/#org",
+      "name": "The Presence Authority",
+      "description": "The independent governance standards body for AI-mediated digital representations of real persons. Publisher and steward of the Digital Presence Integrity Framework (DPIF).",
+      "url": "https://thepresenceauthority.pages.dev",
+      "sameAs": ["https://github.com/PresenceAuthority/DPIF"],
+      "foundingDate": "2025",
+      "knowsAbout": ["AI governance", "digital identity", "synthetic media", "EU AI Act compliance", "AI avatars", "digital presence governance"]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Digital Presence Integrity Framework",
+      "alternateName": "DPIF",
+      "description": "A deployment-level governance standard for AI-mediated digital representations of real persons, specifying the controls required to preserve identity fidelity, consent integrity, delegated authority boundaries, and accountability when a real person's face, voice, or communicative presence is deployed at scale.",
+      "url": "https://thepresenceauthority.pages.dev/framework",
+      "inDefinedTermSet": {
+        "@type": "DefinedTermSet",
+        "name": "DPIF Control Model v1.1",
+        "url": "https://github.com/PresenceAuthority/DPIF"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Presence Drift",
+      "description": "Any measurable or material degradation of Presence Integrity — the erosion of identity fidelity, delegated authority boundaries, consent integrity, or accountability caused by persistent or scaled digital representation. May occur gradually and invisibly.",
+      "inDefinedTermSet": {
+        "@type": "DefinedTermSet",
+        "name": "DPIF Control Model v1.1"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Digital Representation of a Real Person",
+      "alternateName": "DRRP",
+      "description": "An AI-mediated or digitally generated system replicating or simulating the likeness, voice, or communicative presence of an identifiable natural person.",
+      "inDefinedTermSet": {
+        "@type": "DefinedTermSet",
+        "name": "DPIF Control Model v1.1"
+      }
+    }
+  ]
+}
+</script>
 <style>
 /* ═══════════════════════════════════════════
    TOKENS — TPA Brand Guidelines v1.2
@@ -23,7 +71,6 @@
   --fm:'DM Mono',monospace;
   --gl-left:80px;--bk:48px;
 }
-
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
 body{font-family:var(--fb);background:var(--mid);color:var(--tx);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -153,7 +200,6 @@ a:hover{color:var(--tx)}
 ═══════════════════════════════════════════ */
 .card{background:var(--mid2);border:0.5px solid var(--br);border-radius:18px;padding:28px 32px;transition:border-color 0.2s,transform 0.2s}
 .card:hover{border-color:var(--brm);transform:translateY(-2px)}
-
 .progress{height:3px;background:rgba(152,136,192,0.1);border-radius:100px;margin:10px 0;overflow:hidden}
 .progress-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--vm),var(--gl))}
 
@@ -180,7 +226,16 @@ a:hover{color:var(--tx)}
 .hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 
 /* ═══════════════════════════════════════════
-   HOME: PRINCIPLE CARDS
+   DPIF DEFINITION BAND
+═══════════════════════════════════════════ */
+.definition-band{padding:48px 0;background:var(--mid);border-top:0.5px solid var(--br)}
+.definition-inner{display:grid;grid-template-columns:200px 1fr;gap:48px;align-items:start}
+.definition-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--vs);padding-top:4px}
+.definition-text{font-size:17px;font-weight:300;line-height:1.8;color:var(--td)}
+.definition-text strong{color:var(--tx);font-weight:500}
+
+/* ═══════════════════════════════════════════
+   PRINCIPLE CARDS
 ═══════════════════════════════════════════ */
 .principle-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
 .principle-card{background:var(--mid2);border:0.5px solid var(--br);border-radius:14px;padding:24px 20px;transition:border-color 0.2s,transform 0.25s;display:flex;flex-direction:column}
@@ -190,7 +245,7 @@ a:hover{color:var(--tx)}
 .principle-body{font-size:12.5px;line-height:1.6;color:var(--td);flex:1}
 
 /* ═══════════════════════════════════════════
-   HOME: ASSESSMENT FEATURE
+   ASSESSMENT FEATURE
 ═══════════════════════════════════════════ */
 .assess-feature{position:relative;overflow:hidden}
 .assess-bg{position:absolute;inset:0;opacity:0.04;pointer-events:none}
@@ -201,25 +256,24 @@ a:hover{color:var(--tx)}
 .mock-row:last-child{margin-bottom:0}
 .mock-code{font-family:var(--fm);font-size:11px;color:var(--vs);flex-shrink:0;width:56px}
 .mock-name{font-size:13px;color:var(--td);flex:1}
-
 .stat-strip{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:16px 0}
 .stat-strip-item{font-size:12px;font-weight:500;letter-spacing:0.5px;color:var(--tm);display:flex;align-items:center;gap:8px}
 .stat-strip-item::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--vs);opacity:0.5}
 .stat-strip-item:first-child::before{display:none}
 
 /* ═══════════════════════════════════════════
-   HOME: SERVICE CARDS
+   PILOT PROGRAMME
 ═══════════════════════════════════════════ */
-.svc-card{background:var(--mid2);border:0.5px solid var(--br);border-radius:18px;padding:32px;transition:border-color 0.2s,transform 0.2s}
-.svc-card:hover{border-color:var(--brm);transform:translateY(-2px)}
-.svc-num{font-family:var(--fd);font-size:36px;font-weight:400;color:rgba(152,136,192,0.15);margin-bottom:16px;line-height:1}
-.svc-title{font-family:var(--fd);font-size:24px;font-weight:400;color:var(--tx);margin-bottom:12px}
-.svc-desc{font-size:14px;line-height:1.65;color:var(--td);margin-bottom:20px}
-.svc-price{font-family:var(--fd);font-size:22px;font-weight:400;color:var(--tx)}
-.svc-unit{font-size:14px;color:var(--tm);font-family:var(--fb)}
+.pilot-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:start}
+.pilot-offer{background:rgba(106,91,142,0.08);border:0.5px solid rgba(152,136,192,0.18);border-radius:14px;padding:28px 32px}
+.pilot-offer-heading{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--vs);margin-bottom:14px}
+.pilot-offer-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;font-size:14px;line-height:1.65;color:var(--td)}
+.pilot-offer-item::before{content:'→';color:var(--gl);flex-shrink:0;margin-top:2px}
+.pilot-divider{height:0.5px;background:rgba(152,136,192,0.12);margin:20px 0}
+.pilot-note{font-size:12px;line-height:1.6;color:var(--ts);font-style:italic;margin-top:16px}
 
 /* ═══════════════════════════════════════════
-   HOME: INSTRUMENT MINI CARDS
+   INSTRUMENT MINI CARDS
 ═══════════════════════════════════════════ */
 .inst-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
 .inst-mini{display:flex;align-items:flex-start;gap:16px;padding:18px 20px;background:var(--mid2);border:0.5px solid var(--br);border-radius:12px;transition:border-color 0.2s,transform 0.2s;text-decoration:none}
@@ -230,7 +284,18 @@ a:hover{color:var(--tx)}
 .inst-desc{font-size:12px;color:var(--tm);line-height:1.5;margin-top:4px}
 
 /* ═══════════════════════════════════════════
-   HOME: CREDENTIAL CARDS
+   FOUNDERS
+═══════════════════════════════════════════ */
+.founder-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.founder-card{background:var(--mid2);border:0.5px solid var(--br);border-radius:18px;padding:36px 32px;transition:border-color 0.2s}
+.founder-card:hover{border-color:var(--brm)}
+.founder-monogram{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,rgba(106,91,142,0.25),rgba(90,158,122,0.15));border:1px solid rgba(152,136,192,0.2);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:18px;font-weight:400;color:var(--vs);margin-bottom:20px;flex-shrink:0}
+.founder-name{font-family:var(--fd);font-size:24px;font-weight:400;color:var(--tx);margin-bottom:4px}
+.founder-role{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--vs);margin-bottom:20px}
+.founder-bio{font-size:14px;line-height:1.75;color:var(--td)}
+
+/* ═══════════════════════════════════════════
+   CREDENTIAL CARDS
 ═══════════════════════════════════════════ */
 .cred-card{padding:32px;background:var(--mid2);border:0.5px solid var(--br);border-radius:14px}
 .cred-title{font-family:var(--fd);font-size:18px;font-weight:400;color:var(--tx);margin:16px 0 10px}
@@ -256,6 +321,7 @@ a:hover{color:var(--tx)}
 @media (max-width:1200px){
   .principle-grid{grid-template-columns:repeat(3,1fr)}
   .assess-inner{grid-template-columns:1fr}
+  .pilot-inner{grid-template-columns:1fr}
 }
 @media (max-width:1024px){
   :root{--gl-left:40px}
@@ -264,6 +330,8 @@ a:hover{color:var(--tx)}
   .hero{grid-template-columns:1fr;min-height:auto}
   .hero-visual{display:none}
   .hero-text{padding:140px var(--gl-left) 80px}
+  .definition-inner{grid-template-columns:1fr}
+  .founder-grid{grid-template-columns:1fr}
 }
 @media (max-width:768px){
   :root{--gl-left:24px}
@@ -279,12 +347,14 @@ a:hover{color:var(--tx)}
   .parallax-break{height:280px}
   .footer-grid{grid-template-columns:1fr;gap:32px}
   .footer-bottom{flex-direction:column;gap:8px;align-items:flex-start}
+  .definition-inner{grid-template-columns:1fr;gap:16px}
 }
 @media (max-width:480px){
   :root{--gl-left:16px}
   .principle-grid,.g2,.g3{grid-template-columns:1fr}
   .t-display{font-size:36px}
   .btn-lg{font-size:14px;padding:14px 24px}
+  .founder-grid{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){.parallax-img{transform:none!important}}
 </style>
@@ -292,7 +362,7 @@ a:hover{color:var(--tx)}
 <body>
 
 <!-- ═══════════════════════════════════════════
-     TOPBAR
+     TOPBAR — Framework-first nav order
 ═══════════════════════════════════════════ -->
 <nav class="topbar" id="topbar">
   <a href="/" class="topbar-logo">
@@ -300,56 +370,110 @@ a:hover{color:var(--tx)}
     <span class="topbar-name">The Presence<br>Authority</span>
   </a>
   <div class="topbar-nav">
-    <a href="/services" class="topbar-link">Services</a>
     <a href="/framework" class="topbar-link">Framework</a>
-    <a href="/assessment" class="topbar-link">Assessment</a>
     <a href="/white-paper" class="topbar-link">White Paper</a>
+    <a href="/assessment" class="topbar-link">Assessment</a>
+    <a href="/services" class="topbar-link">Services</a>
     <a href="/regulatory-alignment" class="topbar-link">Regulatory</a>
     <a href="/about" class="topbar-link">About</a>
     <a href="/contact" class="topbar-link">Contact</a>
   </div>
-  <a href="/assessment" class="topbar-cta">Take the Self-Assessment</a>
+  <a href="/contact" class="topbar-cta">Request a Consultation</a>
   <button class="nav-toggle" id="navToggle" aria-label="Menu">
     <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
 </nav>
 <div class="mob-menu" id="mobMenu">
-  <a href="/services" class="topbar-link">Services</a>
   <a href="/framework" class="topbar-link">Framework</a>
-  <a href="/assessment" class="topbar-link">Assessment</a>
   <a href="/white-paper" class="topbar-link">White Paper</a>
+  <a href="/assessment" class="topbar-link">Assessment</a>
+  <a href="/services" class="topbar-link">Services</a>
   <a href="/regulatory-alignment" class="topbar-link">Regulatory</a>
   <a href="/about" class="topbar-link">About</a>
   <a href="/contact" class="topbar-link">Contact</a>
-  <a href="/assessment" class="topbar-cta">Take the Self-Assessment</a>
+  <a href="/contact" class="topbar-cta">Request a Consultation</a>
 </div>
 
-
 <!-- ═══════════════════════════════════════════
-     HERO — split grid, mandala right
+     HERO — institution framing, consultation CTA
 ═══════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-text">
     <span class="hero-label">Governance Standards for Digital Presence</span>
     <h1 class="t-display vr-md" style="max-width:600px">When a digital system represents a real person, <em>identity must remain intact.</em></h1>
-    <p class="t-lead vr-md" style="max-width:520px">AI can now replicate a person's face, voice, and communicative authority at scale. The Digital Presence Integrity Framework sets the governance controls that prevent that capability from eroding identity, consent, and accountability.</p>
+    <p class="t-lead vr-md" style="max-width:520px">The Presence Authority is the independent governance standards body for AI-mediated digital representations of real persons. We publish and maintain the Digital Presence Integrity Framework — the deployment-level standard that defines what controlled, accountable digital representation looks like.</p>
     <div class="hero-actions">
-      <a href="/assessment" class="btn btn-p btn-lg">Take the Self-Assessment</a>
-      <a href="/services" class="btn btn-g btn-lg btn-arrow">Explore Our Services</a>
+      <a href="/contact" class="btn btn-p btn-lg">Request a Consultation</a>
+      <a href="/white-paper" class="btn btn-g btn-lg btn-arrow">Read the White Paper</a>
     </div>
   </div>
   <div class="hero-visual">
-    <!-- Primary hero: three-quarter-v1-black (3232×2624, landscape, max depth and drama) -->
-    <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/hero/tpa-mandala-three-quarter-v1-black-3232w.png" alt="DPIF mandala — governance architecture rendered as geometric precision" class="hero-visual-img">
+    <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/hero/tpa-mandala-three-quarter-v1-black-3232w.png" alt="DPIF mandala — governance architecture rendered as geometric precision" class="hero-visual-img" fetchpriority="high">
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════
+     DPIF DEFINITION — AI-extractable anchor paragraph
+═══════════════════════════════════════════ -->
+<div class="definition-band">
+  <div class="rail">
+    <div class="definition-inner">
+      <span class="definition-label">What is DPIF</span>
+      <p class="definition-text">The <strong>Digital Presence Integrity Framework (DPIF)</strong> is a deployment-level governance standard for AI-mediated digital representations of real persons. It specifies the controls required to preserve identity fidelity, consent integrity, delegated authority boundaries, and accountability when a real person's face, voice, or communicative presence is deployed at scale. DPIF is published by The Presence Authority under <a href="https://creativecommons.org/licenses/by/4.0/" style="color:var(--vs)">CC BY 4.0</a> and maintained on <a href="https://github.com/PresenceAuthority/DPIF" style="color:var(--vs)">GitHub</a>.</p>
+    </div>
+  </div>
+</div>
 
 <hr class="irid-rule">
 
+<!-- ═══════════════════════════════════════════
+     FIVE PRINCIPLES — moved above Presence Drift
+═══════════════════════════════════════════ -->
+<section class="section" id="framework">
+  <div class="rail-w">
+    <span class="section-label">The Framework</span>
+    <h2 class="section-title">Five principles. Seven instruments. One standard.</h2>
+    <p class="section-desc">DPIF is the deployment-level governance standard for AI-mediated digital representations of real persons. It specifies the controls required to preserve Presence Integrity — and defines what happens when those controls fail.</p>
+    <div class="principle-grid vr-md">
+      <div class="principle-card">
+        <div class="principle-num">01</div>
+        <div class="principle-title">Representation carries authority</div>
+        <div class="principle-body">When a system speaks using a person's face and voice, audiences attribute authority to that person. This is a communicative fact. DPIF requires that this authority be explicitly governed.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">02</div>
+        <div class="principle-title">Authority must remain human-originated</div>
+        <div class="principle-body">A digital representation cannot autonomously expand its communicative authority beyond what a real person has delegated. DPIF enforces boundaries that prevent unauthorised escalation.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">03</div>
+        <div class="principle-title">Consent must remain bounded and revocable</div>
+        <div class="principle-body">Consent to deploy must specify purpose, medium, audience, and duration. It must be revocable within defined timeframes. Consent for one context does not extend to others.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">04</div>
+        <div class="principle-title">Identity must remain recognisable</div>
+        <div class="principle-body">The person represented must remain recognisable throughout the deployment lifecycle. Identity fidelity must be validated at deployment and monitored for drift.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">05</div>
+        <div class="principle-title">Revocation must be operationally feasible</div>
+        <div class="principle-body">The ability to halt a deployment is not a policy aspiration — it is a technical requirement. DPIF mandates functional suspension mechanisms with verified response times.</div>
+      </div>
+    </div>
+    <a href="/framework" class="btn btn-g btn-arrow">Read the full Framework</a>
+  </div>
+</section>
 
 <!-- ═══════════════════════════════════════════
-     PRESENCE DRIFT
+     PARALLAX — Iris Detail
+═══════════════════════════════════════════ -->
+<div class="parallax-break" data-parallax-speed="0.3">
+  <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/detail/tpa-mandala-detail-iris-v1-1024w.png" alt="" class="parallax-img" loading="lazy">
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PRESENCE DRIFT — moved below framework
 ═══════════════════════════════════════════ -->
 <section class="section" id="problem">
   <div class="rail">
@@ -369,60 +493,71 @@ a:hover{color:var(--tx)}
   </div>
 </section>
 
-
 <!-- ═══════════════════════════════════════════
-     PARALLAX — Iris Detail
+     PARALLAX — Chevron Detail
 ═══════════════════════════════════════════ -->
-<div class="parallax-break" data-parallax-speed="0.3">
-  <!-- Detail iris: spiral aperture mechanism, most hypnotic detail crop (1024×1008) -->
-  <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/detail/tpa-mandala-detail-iris-v1-1024w.png" alt="" class="parallax-img" loading="lazy">
+<div class="parallax-break" data-parallax-speed="0.25" style="height:360px">
+  <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/detail/tpa-mandala-detail-chevron-v1-1016w.png" alt="" class="parallax-img" loading="lazy">
 </div>
 
-
 <!-- ═══════════════════════════════════════════
-     FIVE PRINCIPLES
+     PILOT PROGRAMME — the explicit ask
 ═══════════════════════════════════════════ -->
-<section class="section" id="framework">
+<section class="section section--dark" id="pilot">
   <div class="rail-w">
-    <span class="section-label">The Framework</span>
-    <h2 class="section-title">Five principles. Seven instruments. One standard.</h2>
-    <p class="section-desc">DPIF is the deployment-level governance standard for AI-mediated digital representations of real persons. It specifies the controls required to preserve Presence Integrity — and defines what happens when those controls fail.</p>
-    <div class="principle-grid vr-md">
-      <div class="principle-card"><div class="principle-num">01</div><div class="principle-title">Representation carries authority</div><div class="principle-body">When a system speaks using a person's face and voice, audiences attribute authority to that person. This is a communicative fact. DPIF requires that this authority be explicitly governed.</div></div>
-      <div class="principle-card"><div class="principle-num">02</div><div class="principle-title">Authority must remain human-originated</div><div class="principle-body">A digital representation cannot autonomously expand its communicative authority beyond what a real person has delegated. DPIF enforces boundaries that prevent unauthorised escalation.</div></div>
-      <div class="principle-card"><div class="principle-num">03</div><div class="principle-title">Consent must remain bounded and revocable</div><div class="principle-body">Consent to deploy must specify purpose, medium, audience, and duration. It must be revocable within defined timeframes. Consent for one context does not extend to others.</div></div>
-      <div class="principle-card"><div class="principle-num">04</div><div class="principle-title">Identity must remain recognisable</div><div class="principle-body">The person represented must remain recognisable throughout the deployment lifecycle. Identity fidelity must be validated at deployment and monitored for drift.</div></div>
-      <div class="principle-card"><div class="principle-num">05</div><div class="principle-title">Revocation must be operationally feasible</div><div class="principle-body">The ability to halt a deployment is not a policy aspiration — it is a technical requirement. DPIF mandates functional suspension mechanisms with verified response times.</div></div>
+    <div class="pilot-inner">
+      <div>
+        <span class="section-label">Pilot Programme</span>
+        <h2 class="section-title" style="margin-bottom:20px">We are currently recruiting pilot organisations.</h2>
+        <p class="t-lead vr-sm" style="max-width:520px">The first organisations to undergo formal DPIF assessment establish the empirical foundation of the standard. This is a limited programme. We are onboarding a small first cohort.</p>
+        <p class="t-body vr-md" style="max-width:520px">Organisations with active AI avatar, synthetic voice, or scaled digital presence deployments are the natural fit. Regulated sectors — financial services, healthcare, education, professional services — are particularly relevant given the EU AI Act timeline.</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <a href="/contact" class="btn btn-p btn-lg">Apply to join the pilot</a>
+          <a href="/framework" class="btn btn-g btn-arrow">Review the standard first</a>
+        </div>
+      </div>
+      <div>
+        <div class="pilot-offer">
+          <div class="pilot-offer-heading">What pilot organisations receive</div>
+          <div class="pilot-offer-item">Full assessment against all 18 DPIF controls</div>
+          <div class="pilot-offer-item">Written gap analysis with prioritised remediation recommendations</div>
+          <div class="pilot-offer-item">Formal certification readiness report</div>
+          <div class="pilot-offer-item">No charge</div>
+          <div class="pilot-divider"></div>
+          <div class="pilot-offer-heading">What we ask in return</div>
+          <div class="pilot-offer-item">Permission to document the process as a case study</div>
+          <div class="pilot-offer-item">Editorial review and sign-off before any publication</div>
+          <div class="pilot-offer-item">Public acknowledgement of participation, timing and format agreed in advance</div>
+          <div class="pilot-note">Participation does not imply endorsement of DPIF. Case study publication is contingent on sign-off by the participating organisation.</div>
+        </div>
+      </div>
     </div>
-    <a href="/framework" class="btn btn-g btn-arrow">Read the full Framework</a>
   </div>
 </section>
 
-
 <!-- ═══════════════════════════════════════════
-     SELF-ASSESSMENT FEATURE
+     SELF-ASSESSMENT — reframed as demonstration
 ═══════════════════════════════════════════ -->
-<section class="section section--dark assess-feature" id="assess">
+<section class="section assess-feature" id="assess">
   <div class="assess-bg">
-    <!-- Assessment bg: top-angled-v2-black, copper/rose-gold, center iris dominant (3851×3851) -->
     <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/hero/tpa-mandala-top-angled-v2-black-3851w.png" alt="" loading="lazy">
   </div>
   <div class="rail-w">
     <div class="assess-inner">
       <div>
-        <span class="section-label">Assess Your Deployment</span>
-        <h2 class="section-title" style="margin-bottom:20px">Is your digital presence governed?</h2>
-        <p class="t-lead vr-sm" style="max-width:520px">The DPIF Self-Assessment evaluates your deployment against all 18 controls across 8 governance sections. It applies the same non-compensatory logic used in formal assessments: if any Critical Presence Control fails, the deployment fails.</p>
-        <div class="stat-strip vr-md">
+        <span class="section-label">See How DPIF Works</span>
+        <h2 class="section-title" style="margin-bottom:20px">See where a deployment stands before committing to anything.</h2>
+        <p class="t-lead vr-sm" style="max-width:520px">The self-assessment runs through all 18 DPIF controls and applies the same non-compensatory logic used in formal assessments. If any Critical Presence Control fails, the deployment fails — no maturity score compensates for it.</p>
+        <div class="stat-strip vr-sm">
           <span class="stat-strip-item">18 Controls</span>
           <span class="stat-strip-item">8 Sections</span>
           <span class="stat-strip-item">~5 Minutes</span>
           <span class="stat-strip-item">No Data Collected</span>
         </div>
-        <p class="t-body vr-md" style="max-width:520px">The assessment covers identity fidelity, delegated authority, consent boundaries, audience disclosure, context risk classification, semantic integrity, containment, and scope boundary enforcement. You receive an immediate result — no registration required.</p>
+        <p class="t-body vr-md" style="max-width:520px">If the result identifies gaps you recognise, a formal assessment is the logical next step. Use it to orient internally before a conversation with us.</p>
         <div style="display:flex;gap:16px;flex-wrap:wrap">
           <a href="/assessment" class="btn btn-p btn-lg">Start the Self-Assessment</a>
-          <a href="/contact" class="btn btn-g btn-arrow">Or book a discovery call</a>
+          <a href="/contact" class="btn btn-g btn-arrow">Speak with our team</a>
         </div>
       </div>
       <div class="assess-visual">
@@ -443,63 +578,10 @@ a:hover{color:var(--tx)}
   </div>
 </section>
 
-
 <hr class="irid-rule">
 
-
 <!-- ═══════════════════════════════════════════
-     SERVICES
-═══════════════════════════════════════════ -->
-<section class="section" id="services">
-  <div class="rail-w">
-    <span class="section-label">Services</span>
-    <h2 class="section-title">From assessment to certification</h2>
-    <p class="section-desc">We wrote the standard. Now we help you meet it.</p>
-    <div class="g3 vr-md">
-      <div class="svc-card">
-        <div class="svc-num">01</div>
-        <div style="margin-bottom:12px"><span class="tag tag-v">Starting Point</span></div>
-        <div class="svc-title">DPIF Readiness Assessment</div>
-        <div class="svc-desc">A structured review against all 18 DPIF controls — producing a prioritised gap analysis, risk classification, and written remediation roadmap.</div>
-        <div class="svc-price">$3,500 <span class="svc-unit">AUD</span></div>
-        <div style="font-size:12px;color:var(--ts);margin-top:2px">Single deployment · 2–3 weeks</div>
-        <div class="mt-sm"><a href="/services" class="btn btn-g btn-sm btn-arrow">Learn more</a></div>
-      </div>
-      <div class="svc-card">
-        <div class="svc-num">02</div>
-        <div style="margin-bottom:12px"><span class="tag tag-v">Structured Remediation</span></div>
-        <div class="svc-title">Certification Advisory</div>
-        <div class="svc-desc">Hands-on guidance building the controls, documentation, and governance infrastructure needed to achieve DPIF certification.</div>
-        <div class="svc-price">$8,500 <span class="svc-unit">AUD</span></div>
-        <div style="font-size:12px;color:var(--ts);margin-top:2px">8-week engagement</div>
-        <div class="mt-sm"><a href="/services" class="btn btn-g btn-sm btn-arrow">Learn more</a></div>
-      </div>
-      <div class="svc-card">
-        <div class="svc-num">03</div>
-        <div style="margin-bottom:12px"><span class="tag tag-v">Ongoing</span></div>
-        <div class="svc-title">Governance Retainer</div>
-        <div class="svc-desc">Continuous governance support — monitoring, re-assessment, regulatory updates, and direct access as your deployment evolves.</div>
-        <div class="svc-price">$2,200 <span class="svc-unit">AUD/month</span></div>
-        <div style="font-size:12px;color:var(--ts);margin-top:2px">6-month minimum</div>
-        <div class="mt-sm"><a href="/services" class="btn btn-g btn-sm btn-arrow">Learn more</a></div>
-      </div>
-    </div>
-    <a href="/services" class="btn btn-g btn-arrow">View all services</a>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════
-     PARALLAX — Chevron Detail
-═══════════════════════════════════════════ -->
-<div class="parallax-break" data-parallax-speed="0.25" style="height:360px">
-  <!-- Detail chevron: front-on stacked geometry, OCTO-PHI inscription (1016×1016) -->
-  <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/detail/tpa-mandala-detail-chevron-v1-1016w.png" alt="" class="parallax-img" loading="lazy">
-</div>
-
-
-<!-- ═══════════════════════════════════════════
-     INSTRUMENTS
+     PUBLISHED INSTRUMENTS
 ═══════════════════════════════════════════ -->
 <section class="section" id="instruments">
   <div class="rail">
@@ -519,11 +601,34 @@ a:hover{color:var(--tx)}
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════
+     FOUNDERS
+═══════════════════════════════════════════ -->
+<section class="section section--dark" id="founders">
+  <div class="rail">
+    <span class="section-label">The Team</span>
+    <h2 class="section-title" style="margin-bottom:48px">Built by people who identified the gap directly.</h2>
+    <div class="founder-grid">
+      <div class="founder-card">
+        <div class="founder-monogram">BG</div>
+        <div class="founder-name">Brad Gaylard</div>
+        <div class="founder-role">Co-Founder — Framework &amp; Technical Direction</div>
+        <p class="founder-bio">Brad brings a decade of structured instrument design to DPIF's control architecture. His background in curriculum publishing — leading award-winning educational products through a print-to-digital transition at Firefly Education — shaped the framework's methodology: evidence-based, non-compensatory, and built for assessment at scale.</p>
+      </div>
+      <div class="founder-card">
+        <div class="founder-monogram">BJ</div>
+        <div class="founder-name">Bobbie-Jane Skewes</div>
+        <div class="founder-role">Co-Founder — Commercial &amp; Strategy</div>
+        <p class="founder-bio">Bobbie's background is in luxury hospitality and destination development. Her commercial strategy role at a digital avatar platform gave direct operational visibility into how organisations deploy AI-mediated representations — and where governance was absent. DPIF addresses the gap she identified from that position.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════════════════════════════════
      CREDENTIALS
 ═══════════════════════════════════════════ -->
-<section class="section section--dark" id="credentials">
+<section class="section" id="credentials">
   <div class="rail-w">
     <span class="section-label">Governance Credentials</span>
     <div class="g3">
@@ -546,9 +651,7 @@ a:hover{color:var(--tx)}
   </div>
 </section>
 
-
 <hr class="irid-rule">
-
 
 <!-- ═══════════════════════════════════════════
      FOOTER
@@ -563,8 +666,8 @@ a:hover{color:var(--tx)}
       <div>
         <div class="footer-heading">Framework</div>
         <a href="/framework" class="footer-link">Framework</a>
-        <a href="/assessment" class="footer-link">Assessment</a>
         <a href="/white-paper" class="footer-link">White Paper</a>
+        <a href="/assessment" class="footer-link">Assessment</a>
         <a href="/framework#instruments" class="footer-link">Instruments</a>
       </div>
       <div>
@@ -584,11 +687,10 @@ a:hover{color:var(--tx)}
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 The Presence Authority</span>
-      <span class="footer-ver">TPA-WEB-v2.0</span>
+      <span class="footer-ver">TPA-WEB-v3.0</span>
     </div>
   </div>
 </footer>
-
 
 <!-- ═══════════════════════════════════════════
      SCRIPTS
@@ -612,7 +714,7 @@ document.getElementById('navToggle').addEventListener('click', () => {
   document.getElementById('mobMenu').classList.toggle('open');
 });
 
-/* Parallax */
+/* Parallax + entrance animations */
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (!prefersReduced) {
   const items = [];
@@ -648,8 +750,7 @@ if (!prefersReduced) {
       }
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-
-  document.querySelectorAll('.section, .principle-card, .svc-card, .inst-mini, .cred-card').forEach(el => {
+  document.querySelectorAll('.section, .principle-card, .inst-mini, .cred-card, .founder-card, .pilot-offer').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -657,6 +758,5 @@ if (!prefersReduced) {
   });
 }
 </script>
-
 </body>
 </html>
