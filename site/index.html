@@ -158,7 +158,8 @@ a:hover{color:var(--tx)}
 .section{padding:96px 0;border-top:0.5px solid var(--br)}
 .section--dark{background:var(--mid1)}
 .section--darker{background:var(--mid2)}
-.section-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--vs);display:block;margin-bottom:20px}
+.section-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--vs);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.section-label::before{content:'';width:32px;height:1px;background:var(--vs);flex-shrink:0}
 .section-title{font-family:var(--fd);font-size:38px;font-weight:400;line-height:1.15;color:var(--tx);margin-bottom:16px}
 .section-title em{font-style:italic;background:linear-gradient(135deg,#9888c0,#7ab89a,#c9a8b8,#c8b890);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .section-desc{font-size:18px;font-weight:300;line-height:1.75;color:var(--td);max-width:600px;margin-bottom:48px}
@@ -218,25 +219,27 @@ a:hover{color:var(--tx)}
 ═══════════════════════════════════════════ */
 .hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;background:var(--mid)}
 .hero-text{display:flex;flex-direction:column;justify-content:center;padding:80px var(--gl-left);position:relative;z-index:2}
-.hero-visual{position:relative;overflow:hidden}
-.hero-visual-img{width:100%;height:100%;object-fit:cover;object-position:left center;display:block}
-.hero-visual::before{content:'';position:absolute;left:0;top:0;bottom:0;width:45%;background:linear-gradient(to right,var(--mid) 0%,rgba(14,11,26,0.7) 50%,transparent 100%);z-index:1;pointer-events:none}
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center;padding:80px 48px 80px 24px}
+.hero-icon{width:100%;max-width:540px;height:auto;display:block;filter:drop-shadow(0 0 80px rgba(106,91,142,0.22))}
+
 .hero-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--vs);margin-bottom:32px;display:flex;align-items:center;gap:12px}
 .hero-label::before{content:'';width:32px;height:1px;background:var(--vs)}
 .hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 
 /* ═══════════════════════════════════════════
-   DPIF DEFINITION BAND
+   BREAKOUT BAND
 ═══════════════════════════════════════════ */
-.definition-band{padding:48px 0;background:var(--mid);border-top:0.5px solid var(--br)}
-.definition-inner{display:grid;grid-template-columns:200px 1fr;gap:48px;align-items:start}
-.definition-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--vs);padding-top:4px}
-.definition-text{font-size:17px;font-weight:300;line-height:1.8;color:var(--td)}
-.definition-text strong{color:var(--tx);font-weight:500}
+.breakout-band{padding:64px 0;background:var(--mid1);border-top:0.5px solid var(--br);border-bottom:0.5px solid var(--br)}
+.breakout-eyebrow{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--vs);display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.breakout-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--vs);flex-shrink:0}
+.breakout-text{font-family:var(--fd);font-size:clamp(18px,2vw,24px);font-weight:400;line-height:1.65;color:var(--tx);max-width:720px}
+.breakout-text strong{background:linear-gradient(135deg,#9888c0,#7ab89a,#c8b890);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:500}
+.breakout-text a{color:var(--vs)}
 
 /* ═══════════════════════════════════════════
    PRINCIPLE CARDS
 ═══════════════════════════════════════════ */
+.principle-icon{width:36px;height:36px;margin-bottom:16px;flex-shrink:0;display:block;overflow:visible}
 .principle-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
 .principle-card{background:var(--mid2);border:0.5px solid var(--br);border-radius:14px;padding:24px 20px;transition:border-color 0.2s,transform 0.25s;display:flex;flex-direction:column}
 .principle-card:hover{border-color:var(--brm);transform:translateY(-3px)}
@@ -331,7 +334,6 @@ a:hover{color:var(--tx)}
   .hero{grid-template-columns:1fr;min-height:auto}
   .hero-visual{display:none}
   .hero-text{padding:140px var(--gl-left) 80px}
-  .definition-inner{grid-template-columns:1fr}
   .founder-grid{grid-template-columns:1fr}
 }
 @media (max-width:768px){
@@ -348,7 +350,6 @@ a:hover{color:var(--tx)}
   .parallax-break{height:280px}
   .footer-grid{grid-template-columns:1fr;gap:32px}
   .footer-bottom{flex-direction:column;gap:8px;align-items:flex-start}
-  .definition-inner{grid-template-columns:1fr;gap:16px}
 }
 @media (max-width:480px){
   :root{--gl-left:16px}
@@ -367,7 +368,7 @@ a:hover{color:var(--tx)}
 ═══════════════════════════════════════════ -->
 <nav class="topbar" id="topbar">
   <a href="/" class="topbar-logo">
-    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cdefs%3E%3ClinearGradient id='ig' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%239888c0'/%3E%3Cstop offset='50%25' stop-color='%237ab89a'/%3E%3Cstop offset='100%25' stop-color='%23c8b890'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='14' cy='14' r='13' fill='none' stroke='url(%23ig)' stroke-width='1'/%3E%3Ccircle cx='14' cy='14' r='8' fill='none' stroke='url(%23ig)' stroke-width='0.75' opacity='0.6'/%3E%3Ccircle cx='14' cy='14' r='3' fill='url(%23ig)' opacity='0.4'/%3E%3C/svg%3E" alt="" class="topbar-mark">
+    <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/icon/tpa-mandala-icon-v1-trans-500x500.png" alt="The Presence Authority" class="topbar-mark">
     <span class="topbar-name">The Presence<br>Authority</span>
   </a>
   <div class="topbar-nav">
@@ -401,7 +402,7 @@ a:hover{color:var(--tx)}
 <section class="hero">
   <div class="hero-text">
     <span class="hero-label">Governance Standards for Digital Presence</span>
-    <h1 class="t-display vr-md" style="max-width:600px">When a digital system represents a real person, <em>identity must remain intact.</em></h1>
+    <h1 class="t-display vr-md" style="max-width:580px">The governance standard for <em>AI-mediated human representation.</em></h1>
     <p class="t-lead vr-md" style="max-width:520px">The Presence Authority is the independent governance standards body for AI-mediated digital representations of real persons. We publish and maintain the Digital Presence Integrity Framework — the deployment-level standard that defines what controlled, accountable digital representation looks like.</p>
     <div class="hero-actions">
       <a href="/contact" class="btn btn-p btn-lg">Request a Consultation</a>
@@ -409,19 +410,19 @@ a:hover{color:var(--tx)}
     </div>
   </div>
   <div class="hero-visual">
-    <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/hero/tpa-mandala-three-quarter-v1-black-3232w.png" alt="DPIF mandala — governance architecture rendered as geometric precision" class="hero-visual-img" fetchpriority="high">
+    <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/icon/tpa-mandala-icon-v1-trans-1024x1024.png" alt="DPIF governance architecture" class="hero-icon" fetchpriority="high">
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     DPIF DEFINITION — AI-extractable anchor paragraph
+     BREAKOUT — DPIF definition, AI-extractable anchor
 ═══════════════════════════════════════════ -->
-<div class="definition-band">
+<div class="breakout-band">
   <div class="rail">
-    <div class="definition-inner">
-      <span class="definition-label">What is DPIF</span>
-      <p class="definition-text">The <strong>Digital Presence Integrity Framework (DPIF)</strong> is a deployment-level governance standard for AI-mediated digital representations of real persons. It specifies the controls required to preserve identity fidelity, consent integrity, delegated authority boundaries, and accountability when a real person's face, voice, or communicative presence is deployed at scale. DPIF is published by The Presence Authority under <a href="https://creativecommons.org/licenses/by/4.0/" style="color:var(--vs)">CC BY 4.0</a> and maintained on <a href="https://github.com/PresenceAuthority/DPIF" style="color:var(--vs)">GitHub</a>.</p>
-    </div>
+    <div class="breakout-eyebrow">What is DPIF</div>
+    <p class="breakout-text">The <strong>Digital Presence Integrity Framework (DPIF)</strong> is a deployment-level governance standard for AI-mediated digital representations of real persons. It specifies the controls required to preserve identity fidelity, consent integrity, delegated authority boundaries, and accountability when a real person's face, voice, or communicative presence is deployed at scale. DPIF is published by The Presence Authority under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> and maintained on <a href="https://github.com/PresenceAuthority/DPIF">GitHub</a>.</p>
+  </div>
+</div>
   </div>
 </div>
 
@@ -437,26 +438,31 @@ a:hover{color:var(--tx)}
     <p class="section-desc">DPIF is the deployment-level governance standard for AI-mediated digital representations of real persons. It specifies the controls required to preserve Presence Integrity — and defines what happens when those controls fail.</p>
     <div class="principle-grid vr-md">
       <div class="principle-card">
+        <svg class="principle-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><defs> <linearGradient id="pa_ig1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9888c0"/><stop offset="50%" stop-color="#7ab89a"/><stop offset="100%" stop-color="#c8b890"/></linearGradient> <linearGradient id="pa_ig2" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#c9a8b8"/><stop offset="50%" stop-color="#9888c0"/><stop offset="100%" stop-color="#7ab89a"/></linearGradient> <linearGradient id="pa_ig3" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#c8b890"/><stop offset="50%" stop-color="#c9a8b8"/><stop offset="100%" stop-color="#9888c0"/></linearGradient> <linearGradient id="pa_ig4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7ab89a"/><stop offset="100%" stop-color="#9888c0"/></linearGradient> <linearGradient id="pa_ig5" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9888c0"/><stop offset="100%" stop-color="#c8b890"/></linearGradient> </defs><path d="M14 3l2.5 7h7.5l-6 4.5 2.5 7L14 17l-6.5 4.5 2.5-7L4 10h7.5z" stroke="url(#pa_ig3)" stroke-width="1.5" stroke-linejoin="round"/></svg>
         <div class="principle-num">01</div>
         <div class="principle-title">Representation carries authority</div>
         <div class="principle-body">When a system speaks using a person's face and voice, audiences attribute authority to that person. This is a communicative fact. DPIF requires that this authority be explicitly governed.</div>
       </div>
       <div class="principle-card">
+        <svg class="principle-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><defs> <linearGradient id="pi_ig1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9888c0"/><stop offset="50%" stop-color="#7ab89a"/><stop offset="100%" stop-color="#c8b890"/></linearGradient> <linearGradient id="pi_ig2" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#c9a8b8"/><stop offset="50%" stop-color="#9888c0"/><stop offset="100%" stop-color="#7ab89a"/></linearGradient> <linearGradient id="pi_ig3" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#c8b890"/><stop offset="50%" stop-color="#c9a8b8"/><stop offset="100%" stop-color="#9888c0"/></linearGradient> <linearGradient id="pi_ig4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7ab89a"/><stop offset="100%" stop-color="#9888c0"/></linearGradient> <linearGradient id="pi_ig5" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9888c0"/><stop offset="100%" stop-color="#c8b890"/></linearGradient> </defs><circle cx="14" cy="10" r="5" stroke="url(#pi_ig1)" stroke-width="1.5"/><path d="M4 24c0-5.5 4.5-9 10-9s10 3.5 10 9" stroke="url(#pi_ig1)" stroke-width="1.5" stroke-linecap="round"/></svg>
         <div class="principle-num">02</div>
         <div class="principle-title">Authority must remain human-originated</div>
         <div class="principle-body">A digital representation cannot autonomously expand its communicative authority beyond what a real person has delegated. DPIF enforces boundaries that prevent unauthorised escalation.</div>
       </div>
       <div class="principle-card">
+        <svg class="principle-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><defs> <linearGradient id="pc_ig1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9888c0"/><stop offset="50%" stop-color="#7ab89a"/><stop offset="100%" stop-color="#c8b890"/></linearGradient> <linearGradient id="pc_ig2" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#c9a8b8"/><stop offset="50%" stop-color="#9888c0"/><stop offset="100%" stop-color="#7ab89a"/></linearGradient> <linearGradient id="pc_ig3" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#c8b890"/><stop offset="50%" stop-color="#c9a8b8"/><stop offset="100%" stop-color="#9888c0"/></linearGradient> <linearGradient id="pc_ig4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7ab89a"/><stop offset="100%" stop-color="#9888c0"/></linearGradient> <linearGradient id="pc_ig5" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9888c0"/><stop offset="100%" stop-color="#c8b890"/></linearGradient> </defs><path d="M14 3v11M10 7l4-4 4 4" stroke="url(#pc_ig4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="5" y="14" width="18" height="11" rx="3" stroke="url(#pc_ig4)" stroke-width="1.5"/><circle cx="14" cy="19.5" r="1.5" fill="url(#pc_ig4)"/></svg>
         <div class="principle-num">03</div>
         <div class="principle-title">Consent must remain bounded and revocable</div>
         <div class="principle-body">Consent to deploy must specify purpose, medium, audience, and duration. It must be revocable within defined timeframes. Consent for one context does not extend to others.</div>
       </div>
       <div class="principle-card">
+        <svg class="principle-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><defs> <linearGradient id="pv_ig1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9888c0"/><stop offset="50%" stop-color="#7ab89a"/><stop offset="100%" stop-color="#c8b890"/></linearGradient> <linearGradient id="pv_ig2" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#c9a8b8"/><stop offset="50%" stop-color="#9888c0"/><stop offset="100%" stop-color="#7ab89a"/></linearGradient> <linearGradient id="pv_ig3" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#c8b890"/><stop offset="50%" stop-color="#c9a8b8"/><stop offset="100%" stop-color="#9888c0"/></linearGradient> <linearGradient id="pv_ig4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7ab89a"/><stop offset="100%" stop-color="#9888c0"/></linearGradient> <linearGradient id="pv_ig5" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9888c0"/><stop offset="100%" stop-color="#c8b890"/></linearGradient> </defs><circle cx="14" cy="14" r="10" stroke="url(#pv_ig4)" stroke-width="1.5"/><path d="M6 14l5 5 11-11" stroke="url(#pv_ig4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <div class="principle-num">04</div>
         <div class="principle-title">Identity must remain recognisable</div>
         <div class="principle-body">The person represented must remain recognisable throughout the deployment lifecycle. Identity fidelity must be validated at deployment and monitored for drift.</div>
       </div>
       <div class="principle-card">
+        <svg class="principle-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><defs> <linearGradient id="pr_ig1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9888c0"/><stop offset="50%" stop-color="#7ab89a"/><stop offset="100%" stop-color="#c8b890"/></linearGradient> <linearGradient id="pr_ig2" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#c9a8b8"/><stop offset="50%" stop-color="#9888c0"/><stop offset="100%" stop-color="#7ab89a"/></linearGradient> <linearGradient id="pr_ig3" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#c8b890"/><stop offset="50%" stop-color="#c9a8b8"/><stop offset="100%" stop-color="#9888c0"/></linearGradient> <linearGradient id="pr_ig4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7ab89a"/><stop offset="100%" stop-color="#9888c0"/></linearGradient> <linearGradient id="pr_ig5" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9888c0"/><stop offset="100%" stop-color="#c8b890"/></linearGradient> </defs><circle cx="14" cy="14" r="9" stroke="url(#pr_ig2)" stroke-width="1.5"/><path d="M9 14h10M9 14l4-4M9 14l4 4" stroke="url(#pr_ig2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <div class="principle-num">05</div>
         <div class="principle-title">Revocation must be operationally feasible</div>
         <div class="principle-body">The ability to halt a deployment is not a policy aspiration — it is a technical requirement. DPIF mandates functional suspension mechanisms with verified response times.</div>
@@ -466,12 +472,6 @@ a:hover{color:var(--tx)}
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     PARALLAX — Iris Detail
-═══════════════════════════════════════════ -->
-<div class="parallax-break" data-parallax-speed="0.3">
-  <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/detail/tpa-mandala-detail-iris-v1-1024w.png" alt="" class="parallax-img" loading="lazy">
-</div>
 
 <!-- ═══════════════════════════════════════════
      PRESENCE DRIFT — moved below framework
@@ -494,12 +494,6 @@ a:hover{color:var(--tx)}
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     PARALLAX — Chevron Detail
-═══════════════════════════════════════════ -->
-<div class="parallax-break" data-parallax-speed="0.25" style="height:360px">
-  <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/mandala/detail/tpa-mandala-detail-chevron-v1-1016w.png" alt="" class="parallax-img" loading="lazy">
-</div>
 
 <!-- ═══════════════════════════════════════════
      PILOT PROGRAMME — the explicit ask
@@ -614,13 +608,15 @@ a:hover{color:var(--tx)}
         <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/Profiles/bobbie_profile.jpg" alt="Bobbie-Jane Skewes" class="founder-photo">
         <div class="founder-name">Bobbie-Jane Skewes</div>
         <div class="founder-role">Co-Founder &amp; CEO</div>
-        <p class="founder-bio">Bobbie’s background is in luxury hospitality and destination development. Her commercial strategy role at a digital avatar platform gave direct operational visibility into how organisations deploy AI-mediated representations — and where governance was absent. DPIF addresses the gap she identified from that position.</p>
+        <p class="founder-bio">Bobbie spent twenty years building and protecting some of the world’s most iconic luxury brands — pre-opening strategies for Rosewood, six hotel launches simultaneously across Southeast Asia, rebrands across Egypt, Dubai, Jordan, Cambodia, Vietnam, and Indonesia. She understood, viscerally, that a brand is a promise about identity.</p>
+        <p class="founder-bio" style="margin-top:14px">Then she watched AI start replicating people’s identities with no governance in place. Working inside the AI avatar industry, she saw the same pattern repeat: consent was vague or absent, people had no clear understanding of what would happen to their likeness, accountability fell into a void. She went looking for the standard that should have existed. It didn’t exist. So she and Brad built it.</p>
       </div>
       <div class="founder-card">
         <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/Profiles/brad_profile.jpg" alt="Brad Gaylard" class="founder-photo">
         <div class="founder-name">Brad Gaylard</div>
         <div class="founder-role">Co-Founder &amp; Chief Governance Architect</div>
-        <p class="founder-bio">Brad brings a decade of structured instrument design to DPIF’s control architecture. His background in curriculum publishing — leading award-winning educational products through a print-to-digital transition at Firefly Education — shaped the framework’s methodology: evidence-based, non-compensatory, and built for assessment at scale.</p>
+        <p class="founder-bio">Brad’s career has been built on turning complex disciplines into rigorous, usable frameworks. At Firefly Education he led award-winning curriculum products through a print-to-digital transition, winning multiple Australian Educational Publishing Awards. At Library For All he built content systems serving global audiences.</p>
+        <p class="founder-bio" style="margin-top:14px">When Bobbie brought her observations to him, he saw the same governance gap from a different angle. He designed the DPIF architecture: evidence-based controls, non-compensatory logic, and a certification system built for deployment-level assessment — a curriculum instrument applied to governance, rigorous enough for regulators and clear enough for practitioners.</p>
       </div>
     </div>
   </div>
@@ -688,7 +684,7 @@ a:hover{color:var(--tx)}
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 The Presence Authority</span>
-      <span class="footer-ver">TPA-WEB-v3.0</span>
+      <span class="footer-ver">TPA-WEB-v5.0</span>
     </div>
   </div>
 </footer>
