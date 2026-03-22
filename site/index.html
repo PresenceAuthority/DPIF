@@ -126,7 +126,7 @@ a:hover{color:var(--tx)}
    LAYOUT
 ═══════════════════════════════════════════ */
 .rail{padding-left:var(--gl-left);padding-right:var(--gl-left);max-width:calc(var(--gl-left) + 760px + var(--gl-left));margin:0 auto}
-.rail-w{padding-left:var(--gl-left);padding-right:var(--gl-left);max-width:1200px;margin:0 auto}
+.rail-w{padding-left:var(--gl-left);padding-right:var(--gl-left);max-width:1080px;margin:0 auto}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .vr-xs{margin-bottom:16px}.vr-sm{margin-bottom:24px}.vr-md{margin-bottom:40px}.vr-lg{margin-bottom:64px}
@@ -240,7 +240,7 @@ a:hover{color:var(--tx)}
 .principle-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
 .principle-card{background:var(--mid2);border:0.5px solid var(--br);border-radius:14px;padding:24px 20px;transition:border-color 0.2s,transform 0.25s;display:flex;flex-direction:column}
 .principle-card:hover{border-color:var(--brm);transform:translateY(-3px)}
-.principle-num{font-family:var(--fd);font-size:32px;font-weight:400;color:rgba(152,136,192,0.12);line-height:1;margin-bottom:14px}
+.principle-num{font-family:var(--fd);font-size:32px;font-weight:400;color:rgba(152,136,192,0.45);line-height:1;margin-bottom:14px}
 .principle-title{font-family:var(--fd);font-size:16px;font-weight:400;color:var(--tx);line-height:1.3;margin-bottom:12px}
 .principle-body{font-size:12.5px;line-height:1.6;color:var(--td);flex:1}
 
@@ -290,6 +290,7 @@ a:hover{color:var(--tx)}
 .founder-card{background:var(--mid2);border:0.5px solid var(--br);border-radius:18px;padding:36px 32px;transition:border-color 0.2s}
 .founder-card:hover{border-color:var(--brm)}
 .founder-monogram{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,rgba(106,91,142,0.25),rgba(90,158,122,0.15));border:1px solid rgba(152,136,192,0.2);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:18px;font-weight:400;color:var(--vs);margin-bottom:20px;flex-shrink:0}
+.founder-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center top;margin-bottom:20px;border:1.5px solid transparent;background:linear-gradient(var(--mid2),var(--mid2)) padding-box,linear-gradient(135deg,#6b5b8e,#9888c0,#7ab89a,#c8b890) border-box;flex-shrink:0;display:block}
 .founder-name{font-family:var(--fd);font-size:24px;font-weight:400;color:var(--tx);margin-bottom:4px}
 .founder-role{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--vs);margin-bottom:20px}
 .founder-bio{font-size:14px;line-height:1.75;color:var(--td)}
@@ -610,16 +611,16 @@ a:hover{color:var(--tx)}
     <h2 class="section-title" style="margin-bottom:48px">Built by people who identified the gap directly.</h2>
     <div class="founder-grid">
       <div class="founder-card">
-        <div class="founder-monogram">BG</div>
-        <div class="founder-name">Brad Gaylard</div>
-        <div class="founder-role">Co-Founder — Framework &amp; Technical Direction</div>
-        <p class="founder-bio">Brad brings a decade of structured instrument design to DPIF's control architecture. His background in curriculum publishing — leading award-winning educational products through a print-to-digital transition at Firefly Education — shaped the framework's methodology: evidence-based, non-compensatory, and built for assessment at scale.</p>
+        <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/Profiles/bobbie_profile.jpg" alt="Bobbie-Jane Skewes" class="founder-photo">
+        <div class="founder-name">Bobbie-Jane Skewes</div>
+        <div class="founder-role">Co-Founder &amp; CEO</div>
+        <p class="founder-bio">Bobbie’s background is in luxury hospitality and destination development. Her commercial strategy role at a digital avatar platform gave direct operational visibility into how organisations deploy AI-mediated representations — and where governance was absent. DPIF addresses the gap she identified from that position.</p>
       </div>
       <div class="founder-card">
-        <div class="founder-monogram">BJ</div>
-        <div class="founder-name">Bobbie-Jane Skewes</div>
-        <div class="founder-role">Co-Founder — Commercial &amp; Strategy</div>
-        <p class="founder-bio">Bobbie's background is in luxury hospitality and destination development. Her commercial strategy role at a digital avatar platform gave direct operational visibility into how organisations deploy AI-mediated representations — and where governance was absent. DPIF addresses the gap she identified from that position.</p>
+        <img src="https://pub-b09d0e49daa44353a978b47c9766659e.r2.dev/Profiles/brad_profile.jpg" alt="Brad Gaylard" class="founder-photo">
+        <div class="founder-name">Brad Gaylard</div>
+        <div class="founder-role">Co-Founder &amp; Chief Governance Architect</div>
+        <p class="founder-bio">Brad brings a decade of structured instrument design to DPIF’s control architecture. His background in curriculum publishing — leading award-winning educational products through a print-to-digital transition at Firefly Education — shaped the framework’s methodology: evidence-based, non-compensatory, and built for assessment at scale.</p>
       </div>
     </div>
   </div>
