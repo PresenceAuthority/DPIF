@@ -1,0 +1,216 @@
+
+Gemini
+Ask about your files
+Summarize this folder
+Analyze each file in this folder
+What can Gemini do with folders in Google Drive
+Gemini in Workspace can make mistakes. Learn more
+<!-- THE PRESENCE AUTHORITY — Updates Page — embed as full-page HTML in Webflow -->
+<style>
+/* ── Tokens & reset ── */
+:root{--navy:#0D1117;--deep:#131A26;--steel:#2C3E52;--slate:#8FA3B1;--mist:#C4D0D9;--chalk:#EEF1F4;--white:#F8FAFB;--gold:#C4A882;--amber:#8B6840;--teal:#3D7A8A;--fd:'Cormorant Garamond',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;--fm:'DM Mono','Courier New',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--white);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* ── Nav ── */
+.tpa-nav{border-bottom:1px solid rgba(13,17,23,.08);background:var(--white);position:sticky;top:0;z-index:200}
+.tpa-nav-inner{max-width:960px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
+.tpa-brand{display:flex;align-items:center;gap:10px;flex-shrink:0;text-decoration:none}
+.tpa-mark{width:28px;height:28px;border-radius:5px;overflow:hidden;flex-shrink:0}
+.tpa-mark img{width:100%;height:100%;object-fit:cover;display:block}
+.tpa-wordmark{font-family:var(--fd);font-weight:300;font-size:16px;letter-spacing:.04em;color:var(--navy);white-space:nowrap;transition:color .15s}
+.tpa-brand:hover .tpa-wordmark{color:var(--amber)}
+.tpa-links{display:flex;align-items:center;flex:1;justify-content:center}
+.tpa-nl{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);padding:6px 9px;transition:color .15s;white-space:nowrap;text-decoration:none}
+.tpa-nl:hover,.tpa-nl.on{color:var(--navy)}
+.tpa-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:1px solid rgba(13,17,23,.1);border-radius:3px;cursor:pointer;padding:0 8px;flex-shrink:0}
+.tpa-burger span{display:block;height:1.5px;background:var(--navy);border-radius:1px;transition:all .25s}
+.tpa-burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.tpa-burger.open span:nth-child(2){opacity:0}
+.tpa-burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.tpa-drawer{display:none;position:fixed;top:56px;left:0;right:0;bottom:0;background:var(--white);z-index:190;overflow-y:auto;border-top:1px solid rgba(13,17,23,.08)}
+.tpa-drawer.open{display:block}
+.tpa-drawer-links{display:flex;flex-direction:column;padding:8px 0 32px}
+.tpa-drawer-link{font-family:var(--fm);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);padding:16px 32px;border-bottom:1px solid rgba(13,17,23,.05);text-decoration:none;transition:color .15s}
+.tpa-drawer-link:hover,.tpa-drawer-link.on{color:var(--navy)}
+@media(max-width:900px){.tpa-links{display:none}.tpa-burger{display:flex}}
+@media(max-width:480px){.tpa-nav-inner{padding:0 20px}}
+
+/* ── Page ── */
+.w{max-width:860px;margin:0 auto;padding:0 32px;width:100%}
+@media(max-width:600px){.w{padding:0 20px}}
+.nav-ct.hero{padding:72px 0 52px;border-bottom:1px solid rgba(13,17,23,.07)}
+.hero-over{font-family:var(--fm);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
+.hero-title{font-family:var(--fd);font-weight:300;font-size:clamp(30px,5vw,52px);line-height:1.1;color:var(--navy);margin-bottom:16px}
+.hero-sub{font-family:var(--fb);font-weight:300;font-size:16px;color:var(--steel);line-height:1.75;max-width:560px}
+.content{padding:52px 0}
+.section{margin-bottom:48px}
+.h2{font-family:var(--fd);font-weight:300;font-size:28px;color:var(--navy);margin-bottom:14px;line-height:1.15}
+..body:last-child{margin-bottom:0}
+.lbl{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+.rule{border:none;border-top:1px solid rgba(13,17,23,.08);margin:40px 0}
+/* Version entries */
+.version-list{display:flex;flex-direction:column;gap:0}
+.version{padding:28px 0;border-bottom:1px solid rgba(13,17,23,.07)}
+.version:last-child{border-bottom:none}
+.version-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px;flex-wrap:wrap}
+.version-title{font-family:var(--fd);font-weight:300;font-size:22px;color:var(--navy);line-height:1.2}
+.version-date{font-family:var(--fm);font-size:10px;letter-spacing:.08em;color:var(--slate);padding-top:5px;white-space:nowrap}
+.version-status{display:inline-block;font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;margin-bottom:12px}
+.status-norm{background:rgba(61,122,138,.1);color:var(--teal)}
+.status-expl{background:rgba(139,104,64,.1);color:var(--amber)}
+.status-sup{background:rgba(13,17,23,.05);color:var(--slate)}
+.version-@media(max-width:600px){}
+
+/* ── Footer ── */
+.footer{border-top:1px solid rgba(13,17,23,.08);padding:24px 0}
+.footer-i{max-width:860px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-copy{font-family:var(--fm);font-size:11px;letter-spacing:.04em;color:var(--slate)}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-link{font-family:var(--fm);font-size:11px;letter-spacing:.04em;color:var(--slate);transition:color .15s}
+.footer-link:hover{color:var(--navy)}
+@media(max-width:600px){.footer-i{flex-direction:column;align-items:flex-start}}
+</style>
+
+<nav class="tpa-nav">
+  <div class="tpa-nav-inner">
+    <a class="tpa-brand" href="/">
+      <div class="tpa-mark"><img src="data:image/webp;base64,UklGRtwBAABXRUJQVlA4INABAADwCQCdASooACgAPp1Amkolo6IhqrqqqLATiWUAsv9Mx5tfSItaHGqfyzG3Gqp3fRAShtydWCQx02JP9Kkfh6WsRphILCzr0tKvKAZDfKbPRZsj+9yl37YAAP722fRDuTxoa+EtQS2Nc36jdlt5YxqLCMbIgd2v/CH9iA6bVc8j+YU+ln8C8NyuuT1kKmQGz9HiKijk7/0SnqtCYaf8mStSOjM8QDPXhJ2+/xeFj6KEJfXl1a4JEsZgH6AAOlLzWUW8CQorNcQ5EkOYJGPjTZaWs8SgRA7aV+VpXO/2qPUO0BjGOwcu/PiFp+2nGgzvcYRF25GAMGoB1cYoDZg4LVNhYc8qY1tLL1rPaLkBgXJFBBdDUnz3d3RPmfBgrlwp4+ZBnXl0d3kbbCFfQ2daqWgXzETG86Of/sisps96aCoamO/lcPVahIEgKkjGDbqt0Cl2qmHJhcXyDhYmQ9MgXACXD9cIHMrUY81IZGD3qdE4iVCBfxlffuaWmeaA0AuoVUx/yyA8w6tOeHvzRC7dXtO+tJauSbn9oQyr5oWbgeWtqwx6vtkJZaLyRNRhzlYMKBC1kNB4YLTtMxFDidmmrKhFiIThGSEC7aFNTyLCOxAAAA==" alt="The Presence Authority"></div>
+      <span class="tpa-wordmark">The Presence Authority</span>
+    </a>
+    <div class="tpa-links">
+      <a class="tpa-nl" href="/services">Services</a>
+      <a class="tpa-nl" href="/white-paper">White Paper</a>
+      <a class="tpa-nl" href="/framework">Framework</a>
+      <a class="tpa-nl" href="/instruments">Instruments</a>
+      <a class="tpa-nl" href="/regulatory-alignment">Regulatory Alignment</a>
+      <a class="tpa-nl" href="/assessment">Assessment</a>
+      <a class="tpa-nl" href="/about">About</a>
+      <a class="tpa-nl" href="/contact">Contact</a>
+    </div>
+    <button class="tpa-burger" id="tpa-burger" onclick="tpaToggle()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="tpa-drawer" id="tpa-drawer">
+  <div class="tpa-drawer-links">
+    <a class="tpa-drawer-link" href="/services">Services</a>
+    <a class="tpa-drawer-link" href="/white-paper">White Paper</a>
+    <a class="tpa-drawer-link" href="/framework">Framework</a>
+    <a class="tpa-drawer-link" href="/instruments">Instruments</a>
+    <a class="tpa-drawer-link" href="/regulatory-alignment">Regulatory Alignment</a>
+    <a class="tpa-drawer-link" href="/assessment">Assessment</a>
+    <a class="tpa-drawer-link" href="/about">About</a>
+    <a class="tpa-drawer-link" href="/contact">Contact</a>
+  </div>
+</div>
+<script>
+function tpaToggle(){var b=document.getElementById('tpa-burger'),d=document.getElementById('tpa-drawer');b.classList.toggle('open');d.classList.toggle('open');document.body.style.overflow=d.classList.contains('open')?'hidden':'';}
+</script>
+
+<div class="hero">
+  <div class="w">
+    <div class="hero-over">Version History</div>
+    <h1 class="hero-title">Updates</h1>
+    <p class="hero-sub">Release history and version notes for the Digital Presence Integrity Framework and its instrument suite.</p>
+  </div>
+</div>
+
+<div class="content">
+  <div class="w">
+
+    <div class="section">
+      <div class="lbl">Current Release</div>
+      <h2 class="h2">Normative Instruments — March 2026</h2>
+      <p class="body">The current normative release comprises seven instruments published under CC BY 4.0. The Control Model v1.1 is the apex document. All other instruments are at v1.0. All instruments are available on GitHub.</p>
+    </div>
+
+    <hr class="rule">
+
+    <div class="section">
+      <div class="lbl">Release Log</div>
+      <h2 class="h2">Version History</h2>
+
+      <div class="version-list">
+
+        <div class="version">
+          <div class="version-header">
+            <div class="version-title">DPIF Control Model v1.1</div>
+            <div class="version-date">11 March 2026</div>
+          </div>
+          <div><span class="version-status status-norm">Normative — Current</span></div>
+          <div class="version-body">Current normative release. Consolidates the seven governance pillars, context-risk classification tiers, and deployment-readiness requirements into a single auditable instrument. Supersedes v1.0. Aligns with the full DPIF instrument suite published under CC BY 4.0.</div>
+        </div>
+
+        <div class="version">
+          <div class="version-header">
+            <div class="version-title">DPIF Instrument Suite — Initial Publication</div>
+            <div class="version-date">11 March 2026</div>
+          </div>
+          <div><span class="version-status status-norm">Normative — Current</span></div>
+          <div class="version-body">First publication of the six supporting instruments: Context Risk Classification Annex v1.0, DRRP Deployment Lifecycle Specification v1.0, Inter-Deployment Conflict Resolution Framework v1.0, Scoring Rubric v1.0, Posthumous and Incapacitated Principal Governance v1.0, and Control Checklist v1.0.</div>
+        </div>
+
+        <div class="version">
+          <div class="version-header">
+            <div class="version-title">DPIF White Paper v1.3</div>
+            <div class="version-date">12 March 2026</div>
+          </div>
+          <div><span class="version-status status-expl">Explanatory — Not Normative</span></div>
+          <div class="version-body">Current release of the DPIF white paper. Provides conceptual orientation to the framework including the seven governance pillars, risk taxonomy, and relationship between explanatory and normative instruments. Not a compliance document — normative requirements are defined in the Control Model.</div>
+        </div>
+
+        <div class="version">
+          <div class="version-header">
+            <div class="version-title">DPIF White Paper v1.2</div>
+            <div class="version-date">12 March 2026</div>
+          </div>
+          <div><span class="version-status status-sup">Superseded</span></div>
+          <div class="version-body">Refined instrument suite descriptions and corrected cross-references between the white paper and normative instruments. Clarified the distinction between explanatory and normative content.</div>
+        </div>
+
+        <div class="version">
+          <div class="version-header">
+            <div class="version-title">DPIF White Paper v1.1</div>
+            <div class="version-date">12 March 2026</div>
+          </div>
+          <div><span class="version-status status-sup">Superseded</span></div>
+          <div class="version-body">Added instrument suite overview and expanded discussion of deployment lifecycle stages. Integrated feedback from initial review of the governance pillar structure.</div>
+        </div>
+
+        <div class="version">
+          <div class="version-header">
+            <div class="version-title">DPIF White Paper v1.0</div>
+            <div class="version-date">11 March 2026</div>
+          </div>
+          <div><span class="version-status status-sup">Superseded</span></div>
+          <div class="version-body">Initial release. Established the seven governance pillars, context-risk classification framework, and conceptual foundation for the instrument suite.</div>
+        </div>
+
+        <div class="version">
+          <div class="version-header">
+            <div class="version-title">DPIF Control Model v1.0</div>
+            <div class="version-date">20 February 2026</div>
+          </div>
+          <div><span class="version-status status-sup">Superseded by v1.1</span></div>
+          <div class="version-body">Initial release of the DPIF Control Model. Defined the normative control architecture including mandatory requirements, compliance thresholds, and operational rules for digital presence governance. Superseded by v1.1 on 11 March 2026.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-i">
+    <span class="footer-copy">© 2026 The Presence Authority</span>
+    <div class="footer-links">
+      <a class="footer-link" href="/updates">Updates</a>
+      <a class="footer-link" href="https://creativecommons.org/licenses/by/4.0/deed.en" target="_blank">CC BY 4.0</a>
+      <a class="footer-link" href="https://github.com/PresenceAuthority/DPIF/tree/main" target="_blank">GitHub</a>
+    </div>
+  </div>
+</footer>
