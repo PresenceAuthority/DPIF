@@ -32,6 +32,7 @@
     --fb:'DM Sans',system-ui,sans-serif;
     --fm:'DM Mono',monospace;
     --gl-left:80px;
+    --sidebar-w:200px;--sidebar-gap:64px;
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -278,12 +279,14 @@
   /* ═══════════════════════════════════════════
      RESPONSIVE
   ═══════════════════════════════════════════ */
-  @media(max-width:1024px){:root{--gl-left:40px}}
+  @media(max-width:1024px){:root{--gl-left:40px;--sidebar-gap:48px}}
   @media(max-width:900px){
     .topbar-nav{display:none}
     .topbar-cta{display:none}
     .nav-toggle{display:block}
     .mob-menu{display:flex}
+    .page-layout{grid-template-columns:1fr}
+    .page-nav{display:none}
     .section-title{font-size:28px}
     .arch-split{grid-template-columns:1fr}
     .cta-grid{grid-template-columns:1fr}
@@ -311,39 +314,16 @@
   }
   
 /* ═══════════════════════════════════════
-   ON THIS PAGE SIDEBAR
+   PAGE LAYOUT + SIDEBAR
 ═══════════════════════════════════════ */
-.otp-sidebar{
-  position:fixed;
-  top:50%;
-  transform:translateY(-50%);
-  left:max(16px, calc((100vw - 1080px) / 2 - 200px));
-  width:168px;
-  display:flex;
-  flex-direction:column;
-  gap:0;
-  z-index:100;
-  pointer-events:none;
-  opacity:0;
-  transition:opacity 0.3s;
-}
-.otp-sidebar.visible{opacity:1;pointer-events:auto}
-.otp-heading{
-  font-size:9px;font-weight:700;letter-spacing:3px;
-  text-transform:uppercase;color:rgba(176,162,216,0.45);
-  margin-bottom:12px;padding-left:10px;
-}
-.otp-nav{display:flex;flex-direction:column;gap:1px}
-.otp-link{
-  font-family:var(--fm);font-size:11px;color:var(--ts);
-  padding:6px 10px;border-radius:4px;
-  transition:all 0.2s;text-decoration:none;
-  display:block;line-height:1.35;
-  border-left:1.5px solid transparent;
-}
-.otp-link:hover{color:var(--td);background:rgba(152,136,192,0.07)}
-.otp-link.active{color:var(--vs);border-left-color:var(--vs);background:rgba(152,136,192,0.08)}
-@media(max-width:1340px){.otp-sidebar{display:none}}
+.page-outer{max-width:1080px;margin:0 auto;padding:0 var(--gl-left)}
+.page-layout{display:grid;grid-template-columns:var(--sidebar-w) 1fr;gap:0 var(--sidebar-gap);align-items:start;padding:80px 0 120px}
+.page-nav{position:sticky;top:88px}
+.page-nav-label{font-family:var(--fm);font-size:9px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:rgba(176,162,216,0.45);margin-bottom:16px;padding-bottom:12px;border-bottom:0.5px solid var(--br)}
+.page-nav-link{display:block;font-size:12.5px;color:var(--ts);padding:6px 0;letter-spacing:0.2px;transition:color 0.2s;border-left:1.5px solid transparent;padding-left:12px;margin-left:-12px}
+.page-nav-link:hover{color:var(--tm)}
+.page-nav-link.active{color:var(--vs);border-left-color:var(--vs)}
+.full-bleed{width:100vw;position:relative;left:50%;transform:translateX(-50%)}
 </style>
 </head>
 <body>
@@ -380,20 +360,6 @@
   <a href="/contact" class="topbar-link">Contact</a>
   <a href="https://calendly.com/bradley-thepresenceauthority/30min" class="topbar-cta" target="_blank" rel="noopener">Request a Consultation</a>
 </div>
-
-<!-- ON THIS PAGE SIDEBAR -->
-<nav class="otp-sidebar" id="otpSidebar" aria-label="On this page">
-  <div class="otp-heading">On this page</div>
-  <div class="otp-nav">
-    <a href="#instruments"         class="otp-link" data-target="instruments">Instruments</a>
-    <a href="#control-architecture" class="otp-link" data-target="control-architecture">Control architecture</a>
-    <a href="#cpc-spc"             class="otp-link" data-target="cpc-spc">CPC &amp; SPC</a>
-    <a href="#assessment-scope"    class="otp-link" data-target="assessment-scope">Assessment scope</a>
-    <a href="#context-risk"        class="otp-link" data-target="context-risk">Context risk</a>
-    <a href="#document-versions"   class="otp-link" data-target="document-versions">Document versions</a>
-  </div>
-</nav>
-
 
 <!-- ═══════════════════════════════════════════
      HERO
@@ -440,6 +406,24 @@
     <div class="breakout-source">— DPIF Control Model v1.1</div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE LAYOUT WITH SIDEBAR
+═══════════════════════════════════════════ -->
+<div class="page-outer">
+  <div class="page-layout">
+
+    <nav class="page-nav" aria-label="On this page">
+      <div class="page-nav-label">On this page</div>
+      <a href="#instruments"         class="page-nav-link">Instruments</a>
+      <a href="#control-architecture" class="page-nav-link">Control architecture</a>
+      <a href="#cpc-spc"             class="page-nav-link">CPC &amp; SPC</a>
+      <a href="#assessment-scope"    class="page-nav-link">Assessment scope</a>
+      <a href="#context-risk"        class="page-nav-link">Context risk</a>
+      <a href="#document-versions"   class="page-nav-link">Document versions</a>
+    </nav>
+
+    <main>
 
 <!-- ═══════════════════════════════════════════
      INSTRUMENT SUITE
@@ -628,7 +612,7 @@
 <!-- ═══════════════════════════════════════════
      CONTROL CATEGORIES
 ═══════════════════════════════════════════ -->
-<div style="background:var(--mid1);border-top:0.5px solid var(--br);border-bottom:0.5px solid var(--br)">
+<div class="full-bleed" style="background:var(--mid1);border-top:0.5px solid var(--br);border-bottom:0.5px solid var(--br)">
   <div class="section" id="control-architecture">
     <div class="rail-w">
       <span class="section-label">Control Architecture</span>
@@ -812,7 +796,7 @@
 <!-- ═══════════════════════════════════════════
      ASSESSMENT TYPES
 ═══════════════════════════════════════════ -->
-<div style="background:var(--mid1);border-top:0.5px solid var(--br);border-bottom:0.5px solid var(--br)">
+<div class="full-bleed" style="background:var(--mid1);border-top:0.5px solid var(--br);border-bottom:0.5px solid var(--br)">
   <div class="section" id="assessment-scope">
     <div class="rail">
       <span class="section-label">Assessment Scope</span>
@@ -909,7 +893,7 @@
 <!-- ═══════════════════════════════════════════
      VERSION HISTORY
 ═══════════════════════════════════════════ -->
-<div style="background:var(--mid1);border-top:0.5px solid var(--br);border-bottom:0.5px solid var(--br)">
+<div class="full-bleed" style="background:var(--mid1);border-top:0.5px solid var(--br);border-bottom:0.5px solid var(--br)">
   <div class="section" id="document-versions">
     <div class="rail">
       <span class="section-label">Document Versions</span>
@@ -984,7 +968,7 @@
 <!-- ═══════════════════════════════════════════
      CTA BAND
 ═══════════════════════════════════════════ -->
-<div class="cta-band">
+<div class="cta-band full-bleed">
   <div class="rail-w">
     <span class="section-label" style="margin-bottom:40px">Next Steps</span>
     <div class="cta-grid">
@@ -1042,6 +1026,10 @@
   </div>
 </div>
 
+    </main>
+  </div><!-- /page-layout -->
+</div><!-- /page-outer -->
+
 <!-- ═══════════════════════════════════════════
      FOOTER
 ═══════════════════════════════════════════ -->
@@ -1076,7 +1064,7 @@
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 The Presence Authority</span>
-      <span class="footer-ver">TPA-WEB-v8.0</span>
+      <span class="footer-ver">TPA-WEB-v9.0</span>
     </div>
   </div>
 </footer>
@@ -1108,33 +1096,19 @@ document.getElementById('chToggle').addEventListener('click', function() {
   body.classList.toggle('open', !expanded);
 });
 
-/* On this page sidebar */
-(function(){
-  const sidebar = document.getElementById('otpSidebar');
-  const hero = document.querySelector('.hero');
-  const links = document.querySelectorAll('.otp-link[data-target]');
-  const sections = document.querySelectorAll('.section[id], .hero[id]');
-
-  // Show sidebar after scrolling past hero
-  if(hero && sidebar){
-    const heroObs = new IntersectionObserver((entries)=>{
-      sidebar.classList.toggle('visible', !entries[0].isIntersecting);
-    },{threshold:0});
-    heroObs.observe(hero);
-  }
-
-  // Track active section
-  const secObs = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        links.forEach(l=>l.classList.toggle('active', l.dataset.target===e.target.id));
-      }
-    });
-  },{rootMargin:'-64px 0px -60% 0px',threshold:0});
-  document.querySelectorAll('[id]').forEach(s=>{
-    if([...links].some(l=>l.dataset.target===s.id)) secObs.observe(s);
+/* Sidebar active state */
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('.page-nav-link');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.page-nav-link[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
   });
-})();
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
 
 </script>
 

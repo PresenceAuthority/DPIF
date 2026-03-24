@@ -112,21 +112,14 @@ a{color:inherit;text-decoration:none}
 ═══════════════════════════════════════ */
 .doc-main{padding:64px 0 96px}
 .page-outer{max-width:1080px;margin:0 auto;padding:0 var(--gl-left)}
-.page-layout{display:block;padding:80px 0 120px}
+.page-layout{display:grid;grid-template-columns:var(--sidebar-w) 1fr;gap:0 var(--sidebar-gap);align-items:start;padding:80px 0 120px}
 
-/* ON THIS PAGE SIDEBAR */
-.otp-sidebar{
-  position:fixed;top:50%;transform:translateY(-50%);
-  left:max(16px, calc((100vw - 1080px) / 2 - 200px));
-  width:168px;display:flex;flex-direction:column;gap:0;
-  z-index:100;pointer-events:none;opacity:0;transition:opacity 0.3s;
-}
-.otp-sidebar.visible{opacity:1;pointer-events:auto}
-.otp-heading{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(176,162,216,0.45);margin-bottom:12px;padding-left:10px}
-.otp-nav{display:flex;flex-direction:column;gap:1px}
-.otp-link{font-family:var(--fm);font-size:11px;color:var(--ts);padding:6px 10px;border-radius:4px;transition:all 0.2s;text-decoration:none;display:block;line-height:1.35;border-left:1.5px solid transparent}
-.otp-link:hover{color:var(--td);background:rgba(152,136,192,0.07)}
-.otp-link.active{color:var(--vs);border-left-color:var(--vs);background:rgba(152,136,192,0.08)}
+/* Sidebar */
+.page-nav{position:sticky;top:88px}
+.page-nav-label{font-family:var(--fm);font-size:9px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:rgba(176,162,216,0.45);margin-bottom:16px;padding-bottom:12px;border-bottom:0.5px solid var(--br)}
+.page-nav-link{display:block;font-size:12.5px;color:var(--ts);padding:6px 0;letter-spacing:0.2px;transition:color 0.2s;border-left:1.5px solid transparent;padding-left:12px;margin-left:-12px}
+.page-nav-link:hover{color:var(--tm)}
+.page-nav-link.active{color:var(--vs);border-left-color:var(--vs)}
 
 /* Document body */
 .doc-body{min-width:0}
@@ -190,9 +183,9 @@ a{color:inherit;text-decoration:none}
    RESPONSIVE
 ═══════════════════════════════════════ */
 @media(max-width:1024px){:root{--gl-left:40px;--sidebar-gap:48px}}
-@media(max-width:1340px){.otp-sidebar{display:none}}
 @media(max-width:900px){
-  .page-layout{padding:56px 0 80px}
+  .page-layout{grid-template-columns:1fr;padding:56px 0 80px}
+  .page-nav{display:none}
   .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
   .next-steps{grid-template-columns:1fr 1fr}
   .scope-cols{grid-template-columns:1fr 1fr}
@@ -295,22 +288,19 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<!-- ON THIS PAGE SIDEBAR -->
-<nav class="otp-sidebar" id="otpSidebar" aria-label="On this page">
-  <div class="otp-heading">On this page</div>
-  <div class="otp-nav">
-    <a href="#document-record"       class="otp-link" data-target="document-record">Document record</a>
-    <a href="#problem-statement"     class="otp-link" data-target="problem-statement">Problem statement</a>
-    <a href="#scope"                 class="otp-link" data-target="scope">Scope</a>
-    <a href="#what-it-covers"        class="otp-link" data-target="what-it-covers">What it covers</a>
-    <a href="#normative-instruments" class="otp-link" data-target="normative-instruments">Instruments</a>
-  </div>
-</nav>
-
 <!-- MAIN -->
 <main class="doc-main">
   <div class="page-outer">
     <div class="page-layout">
+
+      <nav class="page-nav" aria-label="On this page">
+        <div class="page-nav-label">On this page</div>
+        <a href="#document-record"       class="page-nav-link">Document record</a>
+        <a href="#problem-statement"     class="page-nav-link">Problem statement</a>
+        <a href="#scope"                 class="page-nav-link">Scope</a>
+        <a href="#what-it-covers"        class="page-nav-link">What it covers</a>
+        <a href="#normative-instruments" class="page-nav-link">Instruments</a>
+      </nav>
 
       <article class="doc-body">
 
@@ -503,7 +493,7 @@ a{color:inherit;text-decoration:none}
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">&copy; 2026 The Presence Authority</span>
-      <span class="footer-ver">TPA-WEB-v9.0</span>
+      <span class="footer-ver">TPA-WEB-v10.0</span>
     </div>
   </div>
 </footer>
@@ -527,28 +517,19 @@ document.getElementById('navToggle').addEventListener('click', () => {
   document.getElementById('mobMenu').classList.toggle('open');
 });
 
-/* On this page sidebar */
-(function(){
-  const sidebar = document.getElementById('otpSidebar');
-  const header = document.querySelector('.doc-header');
-  const links = document.querySelectorAll('.otp-link[data-target]');
-  if(header && sidebar){
-    const heroObs = new IntersectionObserver((entries)=>{
-      sidebar.classList.toggle('visible', !entries[0].isIntersecting);
-    },{threshold:0});
-    heroObs.observe(header);
-  }
-  const secObs = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        links.forEach(l=>l.classList.toggle('active', l.dataset.target===e.target.id));
-      }
-    });
-  },{rootMargin:'-64px 0px -60% 0px',threshold:0});
-  document.querySelectorAll('[id]').forEach(s=>{
-    if([...links].some(l=>l.dataset.target===s.id)) secObs.observe(s);
+/* Sidebar active state */
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('.page-nav-link');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.page-nav-link[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
   });
-})();
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
 </script>
 
 </body>
