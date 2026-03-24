@@ -184,6 +184,7 @@ img{display:block;max-width:100%}
   .mob-menu{display:flex}
   .page-layout{grid-template-columns:1fr;padding:56px 0 80px}
   .page-nav{display:none}
+  .enquiry-wrap{grid-template-columns:1fr !important;gap:40px !important}
   .why-grid{grid-template-columns:1fr;gap:40px}
   .founder-block{grid-template-columns:1fr;gap:28px}
   .founder-sidebar-col{position:static;flex-direction:row;align-items:center;gap:20px;flex-wrap:wrap}
@@ -238,7 +239,7 @@ img{display:block;max-width:100%}
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-label">About The Presence Authority</div>
-    <h1 class="t-display"><span style="color:var(--tx);display:inline;">Built by people who saw<br>what was missing and decided<br>to </span><span style="background:linear-gradient(135deg,#9888c0,#7ab89a,#c9a8b8,#c8b890);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline;">fix it themselves.</span></h1>
+    <h1 class="t-display" style="line-height:1.15;"><span style="color:var(--tx);">Built by people who saw<br>what was missing and decided<br>to </span><em style="font-style:inherit; background:linear-gradient(135deg,#9888c0,#7ab89a,#c9a8b8,#c8b890); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">fix it themselves.</em></h1>
     <p class="hero-sub">The Presence Authority was founded when its co-founders encountered AI digital twin technology being deployed without transparency, without consent, and without any governance — and realised nobody was building the standard to change that.</p>
   </div>
 </div>
@@ -421,6 +422,32 @@ img{display:block;max-width:100%}
   </div>
 </div>
 
+<!-- ENQUIRY -->
+<section class="section" id="enquiry" style="padding:80px 0">
+  <div class="enquiry-wrap" style="max-width:1080px;margin:0 auto;padding:0 var(--gl-left);display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start">
+    <div>
+      <span class="section-label">Get in touch</span>
+      <h2 class="section-title">We'd like to hear from you.</h2>
+      <p class="t-body">For readiness assessments and pilot programme enquiries, use the form to tell us about your deployment context. For advisory board or general questions, we'll route your message to the right person.</p>
+      <p class="t-body">Alternatively, <a href="https://calendly.com/bradley-thepresenceauthority/30min" style="color:var(--vs)" target="_blank" rel="noopener">book a 30-minute introductory call</a> directly.</p>
+    </div>
+    <div id="enquiryForm">
+      <input type="text" id="eq-name" placeholder="Name" style="width:100%;background:var(--mid2);border:0.5px solid var(--br);color:var(--tx);border-radius:8px;padding:12px 16px;font-family:var(--fb);font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+      <input type="text" id="eq-org" placeholder="Organisation" style="width:100%;background:var(--mid2);border:0.5px solid var(--br);color:var(--tx);border-radius:8px;padding:12px 16px;font-family:var(--fb);font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+      <input type="email" id="eq-email" placeholder="Email" style="width:100%;background:var(--mid2);border:0.5px solid var(--br);color:var(--tx);border-radius:8px;padding:12px 16px;font-family:var(--fb);font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+      <select id="eq-type" style="width:100%;background:var(--mid2);border:0.5px solid var(--br);color:var(--ts);border-radius:8px;padding:12px 16px;font-family:var(--fb);font-size:14px;margin-bottom:12px;outline:none;appearance:none;box-sizing:border-box">
+        <option value="">Enquiry type</option>
+        <option value="Readiness Assessment">Readiness Assessment</option>
+        <option value="Pilot Programme">Pilot Programme</option>
+        <option value="Advisory Board">Advisory Board</option>
+        <option value="General">General</option>
+      </select>
+      <textarea id="eq-msg" placeholder="Message" rows="5" style="width:100%;background:var(--mid2);border:0.5px solid var(--br);color:var(--tx);border-radius:8px;padding:12px 16px;font-family:var(--fb);font-size:14px;margin-bottom:16px;outline:none;resize:vertical;box-sizing:border-box"></textarea>
+      <button onclick="handleEnquiry()" class="btn btn-p" style="width:100%">Send Enquiry</button>
+    </div>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-grid">
@@ -452,7 +479,7 @@ img{display:block;max-width:100%}
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 The Presence Authority</span>
-      <span class="footer-ver">TPA-WEB-v11.0</span>
+      <span class="footer-ver">TPA-WEB-v12.0</span>
     </div>
   </div>
 </footer>
@@ -487,6 +514,20 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { rootMargin: '-20% 0px -70% 0px' });
 sections.forEach(s => observer.observe(s));
+
+/* Enquiry form handler */
+function handleEnquiry(){
+  const name  = document.getElementById('eq-name').value.trim();
+  const org   = document.getElementById('eq-org').value.trim();
+  const email = document.getElementById('eq-email').value.trim();
+  const type  = document.getElementById('eq-type').value;
+  const msg   = document.getElementById('eq-msg').value.trim();
+  if(!name||!email||!msg){alert('Please complete name, email, and message.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert('Please enter a valid email address.');return;}
+  const subject = encodeURIComponent((type?type+' — ':'')+'Enquiry from '+name+(org?' ('+org+')':''));
+  const body    = encodeURIComponent('Name: '+name+'\nOrganisation: '+org+'\nEmail: '+email+'\nEnquiry type: '+(type||'Not specified')+'\n\n'+msg);
+  window.location.href='mailto:bradley@thepresenceauthority.com?subject='+subject+'&body='+body;
+}
 </script>
 </body>
 </html>
