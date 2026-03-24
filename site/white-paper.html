@@ -25,6 +25,8 @@
   --br:rgba(152,136,192,0.12);--brm:rgba(152,136,192,0.22);--brh:rgba(152,136,192,0.38);
   --fd:'EB Garamond',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;--fm:'DM Mono',monospace;
   --gl-left:80px;
+  --sidebar-w:200px;
+  --sidebar-gap:64px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -109,17 +111,16 @@ a{color:inherit;text-decoration:none}
    MAIN LAYOUT — sidebar + content
 ═══════════════════════════════════════ */
 .doc-main{padding:64px 0 96px}
-.doc-layout{display:grid;grid-template-columns:210px 1fr;gap:64px;align-items:start}
+.page-outer{max-width:1080px;margin:0 auto;padding:0 var(--gl-left)}
+.page-layout{display:grid;grid-template-columns:var(--sidebar-w) 1fr;gap:0 var(--sidebar-gap);align-items:start;padding:80px 0 120px}
 
 /* Sidebar */
-.doc-sidebar{position:sticky;top:88px;max-height:calc(100vh - 120px);overflow-y:auto;display:flex;flex-direction:column;gap:0}
-.sidebar-heading{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(176,162,216,0.45);margin-bottom:14px}
-.sidebar-nav{display:flex;flex-direction:column;gap:1px;margin-bottom:20px}
-.sidebar-link{font-family:var(--fm);font-size:11px;color:var(--ts);padding:7px 10px;border-radius:4px;transition:all 0.2s;text-decoration:none;line-height:1.35;display:block}
-.sidebar-link:hover,.sidebar-link.active{color:var(--tx);background:rgba(152,136,192,0.09)}
-.sidebar-link.active{color:var(--vs)}
-.sidebar-divider{height:0.5px;background:var(--br);margin:16px 0}
-.sidebar-dl{display:flex;flex-direction:column;gap:10px}
+.page-nav{position:sticky;top:88px}
+.page-nav-label{font-family:var(--fm);font-size:9px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:rgba(176,162,216,0.45);margin-bottom:16px;padding-bottom:12px;border-bottom:0.5px solid var(--br)}
+.page-nav-link{display:block;font-size:12.5px;color:var(--ts);padding:6px 0;letter-spacing:0.2px;transition:color 0.2s;border-left:1.5px solid transparent;padding-left:12px;margin-left:-12px}
+.page-nav-link:hover{color:var(--tm)}
+.page-nav-link.active{color:var(--vs);border-left-color:var(--vs)}
+.page-nav-dl{display:flex;flex-direction:column;gap:10px;margin-top:20px;padding-top:16px;border-top:0.5px solid var(--br)}
 
 /* Document body */
 .doc-body{min-width:0}
@@ -182,11 +183,10 @@ a{color:inherit;text-decoration:none}
 /* ═══════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════ */
+@media(max-width:1024px){:root{--gl-left:40px;--sidebar-gap:48px}}
 @media(max-width:900px){
-  .doc-layout{grid-template-columns:1fr}
-  .doc-sidebar{position:static;background:var(--mid2);border:0.5px solid var(--br);border-radius:10px;padding:22px 24px;max-height:none;margin-bottom:48px}
-  .sidebar-nav{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
-  .sidebar-dl{flex-direction:row;flex-wrap:wrap}
+  .page-layout{grid-template-columns:1fr;padding:56px 0 80px}
+  .page-nav{display:none}
   .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
   .next-steps{grid-template-columns:1fr 1fr}
   .scope-cols{grid-template-columns:1fr 1fr}
@@ -198,8 +198,6 @@ a{color:inherit;text-decoration:none}
   .nav-toggle{display:flex}
   .mob-menu{display:flex}
   .doc-header{padding:64px 0 48px}
-  .sidebar-nav{grid-template-columns:1fr}
-  .sidebar-dl{flex-direction:column}
   .footer-grid{grid-template-columns:1fr;gap:24px}
   .pdf-strip-inner{flex-direction:column;gap:12px}
   .next-steps{grid-template-columns:1fr}
@@ -293,27 +291,22 @@ a{color:inherit;text-decoration:none}
 
 <!-- MAIN -->
 <main class="doc-main">
-  <div class="rail-w">
-    <div class="doc-layout">
+  <div class="page-outer">
+    <div class="page-layout">
 
-      <!-- SIDEBAR -->
-      <aside class="doc-sidebar" aria-label="Page navigation">
-        <div class="sidebar-heading">On this page</div>
-        <nav class="sidebar-nav">
-          <a href="#document-record" class="sidebar-link" data-target="document-record">Document record</a>
-          <a href="#problem-statement" class="sidebar-link" data-target="problem-statement">Problem statement</a>
-          <a href="#scope" class="sidebar-link" data-target="scope">Scope</a>
-          <a href="#what-it-covers" class="sidebar-link" data-target="what-it-covers">What it covers</a>
-          <a href="#normative-instruments" class="sidebar-link" data-target="normative-instruments">Instruments</a>
-        </nav>
-        <div class="sidebar-divider"></div>
-        <div class="sidebar-dl">
+      <nav class="page-nav" aria-label="On this page">
+        <div class="page-nav-label">On this page</div>
+        <a href="#document-record"       class="page-nav-link">Document record</a>
+        <a href="#problem-statement"     class="page-nav-link">Problem statement</a>
+        <a href="#scope"                 class="page-nav-link">Scope</a>
+        <a href="#what-it-covers"        class="page-nav-link">What it covers</a>
+        <a href="#normative-instruments" class="page-nav-link">Instruments</a>
+        <div class="page-nav-dl">
           <a href="https://github.com/PresenceAuthority/DPIF/raw/main/DPIF_White_Paper_v1_3_110326.pdf" class="btn btn-p btn-sm" target="_blank" rel="noopener">Download PDF &rarr;</a>
           <a href="/framework" class="btn btn-g btn-sm">Framework &rarr;</a>
         </div>
-      </aside>
+      </nav>
 
-      <!-- BODY -->
       <article class="doc-body">
 
         <!-- NOTICE -->
@@ -505,7 +498,7 @@ a{color:inherit;text-decoration:none}
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">&copy; 2026 The Presence Authority</span>
-      <span class="footer-ver">TPA-WEB-v7.0</span>
+      <span class="footer-ver">TPA-WEB-v8.0</span>
     </div>
   </div>
 </footer>
@@ -529,20 +522,19 @@ document.getElementById('navToggle').addEventListener('click', () => {
   document.getElementById('mobMenu').classList.toggle('open');
 });
 
-/* Sidebar active tracking */
-(function() {
-  const sections = document.querySelectorAll('.doc-section[id]');
-  const links = document.querySelectorAll('.sidebar-link[data-target]');
-  if (!sections.length || !links.length) return;
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        links.forEach(l => l.classList.toggle('active', l.dataset.target === e.target.id));
-      }
-    });
-  }, { rootMargin: '-64px 0px -60% 0px', threshold: 0 });
-  sections.forEach(s => io.observe(s));
-})();
+/* Sidebar active state */
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('.page-nav-link');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.page-nav-link[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
 </script>
 
 </body>
