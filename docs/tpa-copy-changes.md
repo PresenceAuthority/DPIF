@@ -9,6 +9,7 @@
 - Branch: `main`
 - Working directory: repo root
 - Authenticated GitHub access: confirmed
+- Citation on file: Change ID 20 cites LEGALFLY "AI Governance Gap" study (General Counsels, UK/France/Germany) — 18% figure. Full source: allaboutai.com/resources/ai-statistics/ai-governance
 - Constraint: **surgical text edits only** — do not rewrite surrounding
   HTML structure, do not introduce new CSS classes, do not alter attributes,
   do not modify anything outside the quoted anchor strings. If an anchor
@@ -72,7 +73,7 @@ update the FILE column in the manifest before proceeding — do not rename files
 | 17 | `about.html` | `Between them, every dimension of what DPIF needed to be.` | Replace with: `The combination covered every dimension the framework required — domain authority, structural rigour, and deployment-level practicality.` | `autonomous` |
 | 18 | `about.html` | `The moment that made everything clear.` | Replace with: `The founding observation.` | `autonomous` |
 | 19 | `about.html` | `Real people's identities are being replicated and operated with minimal oversight, unclear accountability, and no accountability structures.` | Replace with: `Real people's identities are being replicated at scale with minimal oversight, no documented consent, and no audit trail when something goes wrong.` | `autonomous` |
-| 20 | `about.html` | `2% of AI deployments` — locate the full sentence or paragraph containing this statistic | Output the full sentence in context. Do not edit. Flag as NEEDS_CITATION for human review. | `stop` |
+| 20 | `about.html` | `2% of AI deployments` — locate the full sentence or paragraph containing this statistic | Replace the sentence (or paragraph) containing this statistic with: `Across organisations actively deploying AI, fewer than one in five has a fully implemented governance framework — and that figure covers AI broadly. For deployments involving digital representations of real people, no governance standard existed until DPIF.` Source: LEGALFLY AI Governance Gap study (UK/France/Germany GCs). Output the replaced text before writing. | `stop` |
 | 21 | `about.html` | Second instance of `13 years` in Brad Gaylard's biography section — the sentence beginning `Bradley spent 13 years leading` | Delete the sentence containing `Bradley spent 13 years leading`. Output it before deleting for confirmation. | `stop` |
 | 22 | `regulatory-alignment.html` | ISO/IEC entry — locate the sentence: `The Presence Authority is preparing a formal contribution to` followed by ISO/IEC body reference | Output both the ISO/IEC and IEEE instances of this sentence in full. Do not edit. Flag as NEEDS_DIFFERENTIATION for human review. | `stop` |
 
