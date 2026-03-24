@@ -768,7 +768,7 @@ img{display:block;max-width:100%}
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 The Presence Authority</span>
-      <span class="footer-ver">TPA-WEB-v12.0</span>
+      <span class="footer-ver">TPA-WEB-v13.0</span>
     </div>
   </div>
 </footer>
@@ -817,7 +817,7 @@ sections.forEach(s => observer.observe(s));
       bobbie-jane@thepresenceauthority.com as an additional recipient
    4. Copy the form ID from the endpoint URL and replace below
    ───────────────────────────────────────────────────────────── */
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID';
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xeerynjp';
 
 /* ── Message starters — opening sentence only, user adds their own detail ── */
 const templates = {
@@ -913,6 +913,7 @@ async function submitForm() {
         email,
         organisation: org || '—',
         enquiry_type: typeLabel,
+        _source: 'contact',
         message: msg,
         _subject: 'DPIF Enquiry — ' + typeLabel + ' (' + name + ')'
       })

@@ -442,7 +442,7 @@ img{display:block;max-width:100%}
         <option value="General">General</option>
       </select>
       <textarea id="eq-msg" placeholder="Message" rows="5" style="width:100%;background:var(--mid2);border:0.5px solid var(--br);color:var(--tx);border-radius:8px;padding:12px 16px;font-family:var(--fb);font-size:14px;margin-bottom:16px;outline:none;resize:vertical;box-sizing:border-box"></textarea>
-      <button onclick="handleEnquiry()" class="btn btn-p" style="width:100%">Send Enquiry</button>
+      <button id="eqBtn" onclick="handleEnquiry()" class="btn btn-p" style="width:100%">Send Enquiry</button><div id="eq-status" style="display:none"></div>
     </div>
   </div>
 </section>
@@ -478,12 +478,13 @@ img{display:block;max-width:100%}
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 The Presence Authority</span>
-      <span class="footer-ver">TPA-WEB-v12.0</span>
+      <span class="footer-ver">TPA-WEB-v14.0</span>
     </div>
   </div>
 </footer>
 
 <script>
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xeerynjp';
 const topbar = document.getElementById('topbar');
 let ticking = false;
 window.addEventListener('scroll', () => {
@@ -515,17 +516,91 @@ const observer = new IntersectionObserver((entries) => {
 sections.forEach(s => observer.observe(s));
 
 /* Enquiry form handler */
-function handleEnquiry(){
-  const name  = document.getElementById('eq-name').value.trim();
-  const org   = document.getElementById('eq-org').value.trim();
+async function handleEnquiry() {
+  const name = document.getElementById('eq-name').value.trim();
+  const org  = document.getElementById('eq-org').value.trim();
   const email = document.getElementById('eq-email').value.trim();
-  const type  = document.getElementById('eq-type').value;
-  const msg   = document.getElementById('eq-msg').value.trim();
-  if(!name||!email||!msg){alert('Please complete name, email, and message.');return;}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert('Please enter a valid email address.');return;}
-  const subject = encodeURIComponent((type?type+' — ':'')+'Enquiry from '+name+(org?' ('+org+')':''));
-  const body    = encodeURIComponent('Name: '+name+'\nOrganisation: '+org+'\nEmail: '+email+'\nEnquiry type: '+(type||'Not specified')+'\n\n'+msg);
-  window.location.href='mailto:bradley@thepresenceauthority.com?subject='+subject+'&body='+body;
+  const type = document.getElementById('eq-type').value;
+  const msg  = document.getElementById('eq-msg').value.trim();
+  const statusEl = document.getElementById('eq-status');
+  const btn = document.getElementById('eqBtn');
+
+  /* Reset status */
+  statusEl.style.display = 'none';
+
+  /* Validation */
+  if (!name || !email || !msg) {
+    showEqStatus('Please complete name, email, and message.', 'error');
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showEqStatus('Please enter a valid email address.', 'error');
+    return;
+  }
+
+  /* Loading state */
+  btn.textContent = 'Sending\u2026';
+  btn.disabled = true;
+  btn.style.opacity = '0.65';
+  btn.style.cursor = 'default';
+
+  try {
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        organisation: org || '\u2014',
+        enquiry_type: type || 'General',
+        message: msg,
+        _source: 'about',
+        _subject: 'TPA Enquiry \u2014 ' + (type || 'General') + ' (' + name + ')'
+      })
+    });
+
+    if (res.ok) {
+      showEqStatus('Your message has been sent. We will respond within 2 business days.', 'success');
+      ['eq-name', 'eq-org', 'eq-email', 'eq-msg'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('eq-type').value = '';
+      btn.textContent = 'Sent';
+    } else {
+      showEqStatus('Submission failed. Please email bradley@thepresenceauthority.com directly.', 'error');
+      resetBtn();
+    }
+  } catch (e) {
+    showEqStatus('Could not connect. Please email bradley@thepresenceauthority.com directly.', 'error');
+    resetBtn();
+  }
+
+  function resetBtn() {
+    btn.textContent = 'Send Enquiry';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+  }
+
+  function showEqStatus(message, type) {
+    statusEl.textContent = message;
+    statusEl.style.display = 'block';
+    statusEl.style.marginTop = '12px';
+    statusEl.style.padding = '12px 16px';
+    statusEl.style.borderRadius = '8px';
+    statusEl.style.fontSize = '13px';
+    statusEl.style.lineHeight = '1.6';
+    if (type === 'success') {
+      statusEl.style.background = 'rgba(61,122,92,0.12)';
+      statusEl.style.border = '0.5px solid rgba(90,158,122,0.35)';
+      statusEl.style.color = 'var(--gl)';
+    } else {
+      statusEl.style.background = 'rgba(201,168,184,0.08)';
+      statusEl.style.border = '0.5px solid rgba(201,168,184,0.28)';
+      statusEl.style.color = 'var(--rm)';
+    }
+    statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
 }
 </script>
 </body>
