@@ -1135,6 +1135,15 @@ body {
       <div class="submit-status" id="submitStatus">Answer all 18 questions to view your result.</div>
       <button class="btn-submit" id="submitBtn" disabled onclick="submitAssessment()">View Assessment Result</button>
       <p class="submit-note">No data is collected or transmitted. Results are calculated in your browser.</p>
+      <div id="email-results-wrap" style="display:none;margin-top:20px;padding:20px 24px;background:var(--mid1);border:0.5px solid var(--brm);border-radius:10px">
+        <p style="font-family:var(--fm);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--vs);margin-bottom:10px;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:20px;height:1px;background:var(--vs)"></span>Keep a copy</p>
+        <p style="font-size:13px;color:var(--tm);line-height:1.6;margin-bottom:14px">Optional — enter your email to send yourself a copy of these results for your governance records.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <input type="email" id="result-email" placeholder="your@email.com" style="flex:1;min-width:200px;background:var(--mid);border:0.5px solid var(--br);color:var(--tx);border-radius:8px;padding:10px 14px;font-family:var(--fb);font-size:13px;outline:none;box-sizing:border-box">
+          <button onclick="emailResults()" style="background:var(--vm);color:#f0ecf8;border:none;border-radius:100px;padding:10px 20px;font-family:var(--fb);font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background 0.2s" onmouseover="this.style.background='#7d6ca0'" onmouseout="this.style.background='var(--vm)'">Email me my results →</button>
+        </div>
+        <p style="font-size:10px;color:var(--ts);margin-top:8px;font-family:var(--fm)">No data is sent to TPA. This opens your email client with a pre-filled message to your own address.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1229,7 +1238,7 @@ body {
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 The Presence Authority</span>
-      <span class="footer-ver">TPA-WEB-v10.0</span>
+      <span class="footer-ver">TPA-WEB-v11.0</span>
     </div>
   </div>
 </footer>
@@ -1766,6 +1775,7 @@ function submitAssessment() {
   const panel  = document.getElementById('resultPanel');
   document.getElementById('resultContent').innerHTML = renderResult(result);
   panel.classList.add('visible');
+  document.getElementById('email-results-wrap').style.display = 'block';
   setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
 }
 
@@ -2012,6 +2022,29 @@ renderAssessment();
     if([...links].some(l=>l.dataset.target===s.id)) secObs.observe(s);
   });
 })();
+
+function emailResults(){
+  const email = document.getElementById('result-email').value.trim();
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    alert('Please enter a valid email address.');
+    return;
+  }
+  const resultTitle = document.querySelector('#resultPanel .section-label');
+  const resultHeading = document.querySelector('#resultContent h2, #resultContent h3, #resultContent .result-title');
+  const resultText = resultHeading ? resultHeading.innerText : (resultTitle ? resultTitle.innerText : 'DPIF Self-Assessment result');
+  const failedItems = Array.from(document.querySelectorAll('.ctrl-status.fail, .ctrl-status.unmet, [class*="fail"]')).map(el => el.closest('tr, li, div') ? el.closest('tr, li, div').innerText.trim() : el.innerText.trim()).filter(Boolean);
+  const subject = encodeURIComponent('My DPIF Self-Assessment Results');
+  const body = encodeURIComponent(
+    'DPIF Self-Assessment Results\n' +
+    '============================\n\n' +
+    'Result: ' + resultText + '\n\n' +
+    (failedItems.length ? 'Controls to review:\n' + failedItems.join('\n') + '\n\n' : '') +
+    'Full assessment: https://thepresenceauthority.pages.dev/assessment\n' +
+    'Framework reference: https://github.com/PresenceAuthority/DPIF\n\n' +
+    '— The Presence Authority · DPIF v1.3'
+  );
+  window.location.href = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
+}
 
 </script>
 </body>

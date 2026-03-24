@@ -309,7 +309,7 @@ img{display:block;max-width:100%}
         <div class="risk-list">
           <div class="risk-item">
             <div class="risk-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ri1_ig" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9888c0"/><stop offset="33%" stop-color="#7ab89a"/><stop offset="66%" stop-color="#c9a8b8"/><stop offset="100%" stop-color="#c8b890"/></linearGradient></defs><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="url(#ri1_ig)"/></svg></div>
-            <div><div class="risk-title">Regulatory Exposure</div><div class="risk-desc">EU AI Act obligations for AI systems representing real people are active and enforced. Non-compliance carries material penalties and reputational consequences.</div></div>
+            <div><div class="risk-title">Regulatory Exposure</div><div class="risk-desc">EU AI Act obligations for AI systems representing real people are active and enforced. Under Article 99, non-compliance with requirements for high-risk AI systems carries fines of up to €30 million or 6% of global annual turnover — whichever is higher. AI systems that replicate a real person's identity, voice, or communicative presence in public-facing contexts may meet the threshold for high-risk classification, triggering mandatory conformity assessment obligations before deployment.</div></div>
           </div>
           <div class="risk-item">
             <div class="risk-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ri2_ig" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9888c0"/><stop offset="33%" stop-color="#7ab89a"/><stop offset="66%" stop-color="#c9a8b8"/><stop offset="100%" stop-color="#c8b890"/></linearGradient></defs><circle cx="12" cy="8" r="4" stroke="url(#ri2_ig)"/><path d="M6 21v-1a6 6 0 0112 0v1" stroke="url(#ri2_ig)"/></svg></div>
@@ -596,6 +596,22 @@ img{display:block;max-width:100%}
           </div>
           <a href="/assessment" class="btn btn-p btn-arrow">Take the Assessment</a>
         </div>
+        <div class="consult-card" style="grid-template-columns:1fr;margin-top:16px">
+          <div class="consult-title">Speak with our team</div>
+          <p class="consult-desc" style="margin-bottom:20px">Tell us a little about your context first — it helps us make the call as useful as possible.</p>
+          <input type="text" id="cq-org" placeholder="Organisation name" style="width:100%;background:var(--mid);border:0.5px solid var(--br);color:var(--tx);border-radius:8px;padding:11px 16px;font-family:var(--fb);font-size:13px;margin-bottom:10px;outline:none;box-sizing:border-box;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--brm)'" onblur="this.style.borderColor='var(--br)'">
+          <select id="cq-type" style="width:100%;background:var(--mid);border:0.5px solid var(--br);color:var(--ts);border-radius:8px;padding:11px 16px;font-family:var(--fb);font-size:13px;margin-bottom:10px;outline:none;appearance:none;box-sizing:border-box;cursor:pointer">
+            <option value="">Deployment type</option>
+            <option value="AI avatar / digital twin">AI avatar / digital twin</option>
+            <option value="Synthetic voice clone">Synthetic voice clone</option>
+            <option value="Video synthesis / face synthesis">Video synthesis / face synthesis</option>
+            <option value="Multi-modal representation">Multi-modal representation</option>
+            <option value="Not sure / exploring">Not sure — still scoping</option>
+          </select>
+          <input type="text" id="cq-concern" placeholder="Primary concern or question" style="width:100%;background:var(--mid);border:0.5px solid var(--br);color:var(--tx);border-radius:8px;padding:11px 16px;font-family:var(--fb);font-size:13px;margin-bottom:12px;outline:none;box-sizing:border-box;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--brm)'" onblur="this.style.borderColor='var(--br)'">
+          <button onclick="handleConsultQual()" class="btn btn-p" style="width:100%;justify-content:center">Proceed to Booking →</button>
+          <p style="font-size:10px;color:var(--ts);margin-top:10px;font-family:var(--fm);letter-spacing:0.3px">Takes 30 seconds. Not a pitch. If DPIF is not the right fit, we'll say so.</p>
+        </div>
       </section>
 
     </main>
@@ -635,7 +651,7 @@ img{display:block;max-width:100%}
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 The Presence Authority</span>
-      <span class="footer-ver">TPA-WEB-v12.0</span>
+      <span class="footer-ver">TPA-WEB-v13.0</span>
     </div>
   </div>
 </footer>
@@ -688,6 +704,18 @@ const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
 }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+function handleConsultQual(){
+  const org = document.getElementById('cq-org').value.trim();
+  const type = document.getElementById('cq-type').value;
+  const concern = document.getElementById('cq-concern').value.trim();
+  if(org || type || concern){
+    const subject = encodeURIComponent('Consultation request' + (org ? ' — ' + org : ''));
+    const body = encodeURIComponent('Organisation: ' + (org||'Not provided') + '\nDeployment type: ' + (type||'Not specified') + '\nPrimary concern: ' + (concern||'Not provided'));
+    window.open('mailto:bradley@thepresenceauthority.com?subject=' + subject + '&body=' + body);
+  }
+  window.open('https://calendly.com/bradley-thepresenceauthority/30min', '_blank');
+}
 </script>
 </body>
 </html>
