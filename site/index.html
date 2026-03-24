@@ -158,7 +158,8 @@ a:hover{color:var(--tx)}
 .section{padding:96px 0;border-top:0.5px solid var(--br)}
 .section--dark{background:var(--mid1)}
 .section--darker{background:var(--mid2)}
-.section-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--vs);display:block;margin-bottom:20px}
+.section-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--vs);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.section-label::before{content:'';width:32px;height:1px;background:var(--vs);flex-shrink:0}
 .section-title{font-family:var(--fd);font-size:38px;font-weight:400;line-height:1.15;color:var(--tx);margin-bottom:16px}
 .section-title em{font-style:italic;background:linear-gradient(135deg,#9888c0,#7ab89a,#c9a8b8,#c8b890);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .section-desc{font-size:18px;font-weight:300;line-height:1.75;color:var(--td);max-width:600px;margin-bottom:48px}
@@ -264,22 +265,12 @@ a:hover{color:var(--tx)}
 .stat-strip-item:first-child::before{display:none}
 
 /* ═══════════════════════════════════════════
-   PILOT PROGRAMME
-═══════════════════════════════════════════ */
-.pilot-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:start}
-.pilot-offer{background:rgba(106,91,142,0.08);border:0.5px solid rgba(152,136,192,0.18);border-radius:14px;padding:28px 32px}
-.pilot-offer-heading{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--vs);margin-bottom:14px}
-.pilot-offer-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;font-size:14px;line-height:1.65;color:var(--td)}
-.pilot-offer-item::before{content:'→';color:var(--gl);flex-shrink:0;margin-top:2px}
-.pilot-divider{height:0.5px;background:rgba(152,136,192,0.12);margin:20px 0}
-.pilot-note{font-size:12px;line-height:1.6;color:var(--ts);font-style:italic;margin-top:16px}
-
-/* ═══════════════════════════════════════════
    INSTRUMENT MINI CARDS
 ═══════════════════════════════════════════ */
 .inst-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
 .inst-mini{display:flex;align-items:flex-start;gap:16px;padding:18px 20px;background:var(--mid2);border:0.5px solid var(--br);border-radius:12px;transition:border-color 0.2s,transform 0.2s;text-decoration:none}
 .inst-mini:hover{border-color:var(--brm);transform:translateY(-2px)}
+.inst-icon{width:28px;height:28px;flex-shrink:0}
 .inst-num{font-family:var(--fd);font-size:22px;font-weight:400;color:rgba(152,136,192,0.2);line-height:1;flex-shrink:0;min-width:28px}
 .inst-title{font-size:14px;font-weight:500;color:var(--tx);margin-bottom:2px}
 .inst-ver{font-family:var(--fm);font-size:10px;color:var(--ts)}
@@ -324,7 +315,6 @@ a:hover{color:var(--tx)}
 @media (max-width:1200px){
   .principle-grid{grid-template-columns:repeat(3,1fr)}
   .assess-inner{grid-template-columns:1fr}
-  .pilot-inner{grid-template-columns:1fr}
 }
 @media (max-width:1024px){
   :root{--gl-left:40px}
@@ -358,9 +348,39 @@ a:hover{color:var(--tx)}
   .founder-grid{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){.parallax-img{transform:none!important}}
+
+/* ═══════════════════════════════════════════
+   ON THIS PAGE SIDEBAR
+═══════════════════════════════════════════ */
+.otp-sidebar{
+  position:fixed;top:50%;transform:translateY(-50%);
+  left:max(16px, calc((100vw - 1080px) / 2 - 200px));
+  width:168px;display:flex;flex-direction:column;gap:0;
+  z-index:100;pointer-events:none;opacity:0;transition:opacity 0.3s;
+}
+.otp-sidebar.visible{opacity:1;pointer-events:auto}
+.otp-heading{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(176,162,216,0.45);margin-bottom:12px;padding-left:10px}
+.otp-nav{display:flex;flex-direction:column;gap:1px}
+.otp-link{font-family:var(--fm);font-size:11px;color:var(--ts);padding:6px 10px;border-radius:4px;transition:all 0.2s;text-decoration:none;display:block;line-height:1.35;border-left:1.5px solid transparent}
+.otp-link:hover{color:var(--td);background:rgba(152,136,192,0.07)}
+.otp-link.active{color:var(--vs);border-left-color:var(--vs);background:rgba(152,136,192,0.08)}
+@media(max-width:1340px){.otp-sidebar{display:none}}
 </style>
 </head>
 <body>
+
+<!-- ON THIS PAGE SIDEBAR -->
+<nav class="otp-sidebar" id="otpSidebar" aria-label="On this page">
+  <div class="otp-heading">On this page</div>
+  <div class="otp-nav">
+    <a href="#problem"     class="otp-link" data-target="problem">The Problem</a>
+    <a href="#framework"   class="otp-link" data-target="framework">The Framework</a>
+    <a href="#assess"      class="otp-link" data-target="assess">Self-Assessment</a>
+    <a href="#instruments" class="otp-link" data-target="instruments">Instruments</a>
+    <a href="#founders"    class="otp-link" data-target="founders">The Team</a>
+    <a href="#credentials" class="otp-link" data-target="credentials">Credentials</a>
+  </div>
+</nav>
 
 <!-- ═══════════════════════════════════════════
      TOPBAR — Framework-first nav order
@@ -379,7 +399,7 @@ a:hover{color:var(--tx)}
     <a href="/about" class="topbar-link">About</a>
     <a href="/contact" class="topbar-link">Contact</a>
   </div>
-  <a href="/contact" class="topbar-cta">Request a Consultation</a>
+  <a href="https://calendly.com/bradley-thepresenceauthority/30min" target="_blank" rel="noopener" class="topbar-cta">Request a Consultation</a>
   <button class="nav-toggle" id="navToggle" aria-label="Menu">
     <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
@@ -392,7 +412,7 @@ a:hover{color:var(--tx)}
   <a href="/regulatory-alignment" class="topbar-link">Regulatory</a>
   <a href="/about" class="topbar-link">About</a>
   <a href="/contact" class="topbar-link">Contact</a>
-  <a href="/contact" class="topbar-cta">Request a Consultation</a>
+  <a href="https://calendly.com/bradley-thepresenceauthority/30min" target="_blank" rel="noopener" class="topbar-cta">Request a Consultation</a>
 </div>
 
 <!-- ═══════════════════════════════════════════
@@ -404,7 +424,7 @@ a:hover{color:var(--tx)}
     <h1 class="t-display vr-md" style="max-width:600px">When a digital system represents a real person, <em>identity must remain intact.</em></h1>
     <p class="t-lead vr-md" style="max-width:520px">DPIF is the governance standard for enterprise legal, compliance, and risk teams deploying AI-mediated digital representations of real persons. The Presence Authority is the independent governance standards body that publishes and maintains the Digital Presence Integrity Framework — the deployment-level standard that defines what controlled, accountable digital representation looks like.</p>
     <div class="hero-actions">
-      <a href="/contact" class="btn btn-p btn-lg">Request a Consultation</a>
+      <a href="https://calendly.com/bradley-thepresenceauthority/30min" target="_blank" rel="noopener" class="btn btn-p btn-lg">Request a Consultation</a>
       <a href="/white-paper" class="btn btn-g btn-lg btn-arrow">Read the White Paper</a>
     </div>
   </div>
@@ -458,31 +478,31 @@ a:hover{color:var(--tx)}
     <p class="section-desc">DPIF is the deployment-level governance standard for AI-mediated digital representations of real persons. It specifies the controls required to preserve Presence Integrity — and defines what happens when those controls fail.</p>
     <div class="principle-grid vr-md">
       <div class="principle-card">
-        <svg class="principle-icon" viewBox="0 0 36 36" fill="none"><defs><linearGradient id="pi1a" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9888c0"/><stop offset="1" stop-color="#7ab89a"/></linearGradient></defs><circle cx="18" cy="13" r="4.5" stroke="url(#pi1a)" stroke-width="1.5"/><path d="M11 28c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="url(#pi1a)" stroke-width="1.5" stroke-linecap="round"/><path d="M7 9c3-3 6.5-4.5 11-4.5S25 6 28 9" stroke="url(#pi1a)" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/></svg>
+        <svg class="principle-icon" width="36" height="36" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="id_g1" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#9888c0"/><stop offset=".5" stop-color="#7ab89a"/><stop offset="1" stop-color="#c9a8b8"/></linearGradient></defs><circle cx="14" cy="9" r="4" stroke="url(#id_g1)" stroke-width="1.4"/><path d="M7 23c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="url(#id_g1)" stroke-width="1.4" stroke-linecap="round"/><path d="M20 7c1.2-.8 2.2-2 2.2-2M8 7C6.8 6.2 5.8 5 5.8 5" stroke="url(#id_g1)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/></svg>
         <div class="principle-num">01</div>
         <div class="principle-title">Representation carries authority</div>
         <div class="principle-body">When a system speaks using a person's face and voice, audiences attribute authority to that person. This is a communicative fact. DPIF requires that this authority be explicitly governed.</div>
       </div>
       <div class="principle-card">
-        <svg class="principle-icon" viewBox="0 0 36 36" fill="none"><defs><linearGradient id="pi2a" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9888c0"/><stop offset="1" stop-color="#7ab89a"/></linearGradient></defs><circle cx="16" cy="12" r="4" stroke="url(#pi2a)" stroke-width="1.5"/><path d="M8 28c0-4.418 3.582-8 8-8h1" stroke="url(#pi2a)" stroke-width="1.5" stroke-linecap="round"/><path d="M23 22a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 0v7m-2.5-3h5" stroke="url(#pi2a)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <svg class="principle-icon" width="36" height="36" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="au_g1" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#9888c0"/><stop offset=".5" stop-color="#7ab89a"/><stop offset="1" stop-color="#c8b890"/></linearGradient></defs><circle cx="11" cy="10" r="3.5" stroke="url(#au_g1)" stroke-width="1.4"/><path d="M5 22c0-3.314 2.686-6 6-6h1" stroke="url(#au_g1)" stroke-width="1.4" stroke-linecap="round"/><circle cx="20" cy="15" r="3" stroke="url(#au_g1)" stroke-width="1.4"/><path d="M20 18v4m-2-1.5h4" stroke="url(#au_g1)" stroke-width="1.4" stroke-linecap="round"/></svg>
         <div class="principle-num">02</div>
         <div class="principle-title">Authority must remain human-originated</div>
         <div class="principle-body">A digital representation cannot autonomously expand its communicative authority beyond what a real person has delegated. DPIF enforces boundaries that prevent unauthorised escalation.</div>
       </div>
       <div class="principle-card">
-        <svg class="principle-icon" viewBox="0 0 36 36" fill="none"><defs><linearGradient id="pi3a" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9888c0"/><stop offset="1" stop-color="#7ab89a"/></linearGradient></defs><rect x="7" y="5" width="22" height="26" rx="2" stroke="url(#pi3a)" stroke-width="1.5"/><path d="M12 13h12M12 18h8" stroke="url(#pi3a)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/><path d="M12 24l2 2 5-5" stroke="url(#pi3a)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="principle-icon" width="36" height="36" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="co_g1" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#9888c0"/><stop offset=".5" stop-color="#c9a8b8"/><stop offset="1" stop-color="#7ab89a"/></linearGradient></defs><rect x="5" y="4" width="18" height="20" rx="2" stroke="url(#co_g1)" stroke-width="1.4"/><path d="M9 10h10M9 14h6" stroke="url(#co_g1)" stroke-width="1.3" stroke-linecap="round" opacity="0.45"/><path d="M9 19l2 2 4-4" stroke="url(#co_g1)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <div class="principle-num">03</div>
         <div class="principle-title">Consent must remain bounded and revocable</div>
         <div class="principle-body">Consent to deploy must specify purpose, medium, audience, and duration. It must be revocable within defined timeframes. Consent for one context does not extend to others.</div>
       </div>
       <div class="principle-card">
-        <svg class="principle-icon" viewBox="0 0 36 36" fill="none"><defs><linearGradient id="pi4a" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9888c0"/><stop offset="1" stop-color="#7ab89a"/></linearGradient></defs><circle cx="18" cy="18" r="12" stroke="url(#pi4a)" stroke-width="1.5"/><circle cx="18" cy="18" r="7" stroke="url(#pi4a)" stroke-width="1.5" opacity="0.6"/><circle cx="18" cy="18" r="2.5" fill="url(#pi4a)"/></svg>
+        <svg class="principle-icon" width="36" height="36" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="di_g1" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#9888c0"/><stop offset=".5" stop-color="#7ab89a"/><stop offset="1" stop-color="#c9a8b8"/></linearGradient></defs><path d="M3 12s4.5-6 11-6 11 6 11 6-4.5 6-11 6S3 12 3 12z" stroke="url(#di_g1)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="14" cy="12" r="3" stroke="url(#di_g1)" stroke-width="1.4"/><path d="M6 22h16" stroke="url(#di_g1)" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/></svg>
         <div class="principle-num">04</div>
         <div class="principle-title">Identity must remain recognisable</div>
         <div class="principle-body">The person represented must remain recognisable throughout the deployment lifecycle. Identity fidelity must be validated at deployment and monitored for drift.</div>
       </div>
       <div class="principle-card">
-        <svg class="principle-icon" viewBox="0 0 36 36" fill="none"><defs><linearGradient id="pi5a" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9888c0"/><stop offset="1" stop-color="#7ab89a"/></linearGradient></defs><circle cx="18" cy="18" r="11" stroke="url(#pi5a)" stroke-width="1.5"/><path d="M18 10v8" stroke="url(#pi5a)" stroke-width="1.75" stroke-linecap="round"/><path d="M13 13.2A8 8 0 1 0 23 13.2" stroke="url(#pi5a)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <svg class="principle-icon" width="36" height="36" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="tr_g1" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#7ab89a"/><stop offset=".5" stop-color="#9888c0"/><stop offset="1" stop-color="#c8b890"/></linearGradient></defs><path d="M8 8h4a3 3 0 0 1 0 6H8V8z" stroke="url(#tr_g1)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 14h4a3 3 0 0 1 0 6h-4v-6z" stroke="url(#tr_g1)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 11h4M12 17h4" stroke="url(#tr_g1)" stroke-width="1.4" stroke-linecap="round"/></svg>
         <div class="principle-num">05</div>
         <div class="principle-title">Revocation must be operationally feasible</div>
         <div class="principle-body">The ability to halt a deployment is not a policy aspiration — it is a technical requirement. DPIF mandates functional suspension mechanisms with verified response times.</div>
@@ -493,40 +513,6 @@ a:hover{color:var(--tx)}
 </section>
 
 
-
-<!-- ═══════════════════════════════════════════
-     PILOT PROGRAMME — the explicit ask
-═══════════════════════════════════════════ -->
-<section class="section section--dark" id="pilot">
-  <div class="rail-w">
-    <div class="pilot-inner">
-      <div>
-        <span class="section-label">Pilot Programme</span>
-        <h2 class="section-title" style="margin-bottom:20px">We are currently recruiting pilot organisations.</h2>
-        <p class="t-lead vr-md" style="max-width:520px">We are onboarding a limited first cohort of pilot organisations. Applications are reviewed individually. Each participant receives a full 18-control DPIF assessment, written gap analysis, and certification readiness report — at no cost. In return, participants contribute to a documented case study. Cohort places are limited.</p>
-        <div style="display:flex;gap:16px;flex-wrap:wrap">
-          <a href="/contact" class="btn btn-p btn-lg">Apply to join the pilot</a>
-          <a href="/framework" class="btn btn-g btn-arrow">Review the standard first</a>
-        </div>
-      </div>
-      <div>
-        <div class="pilot-offer">
-          <div class="pilot-offer-heading">What pilot organisations receive</div>
-          <div class="pilot-offer-item">Full assessment against all 18 DPIF controls</div>
-          <div class="pilot-offer-item">Written gap analysis with prioritised remediation recommendations</div>
-          <div class="pilot-offer-item">Formal certification readiness report</div>
-          <div class="pilot-offer-item">No charge</div>
-          <div class="pilot-divider"></div>
-          <div class="pilot-offer-heading">What we ask in return</div>
-          <div class="pilot-offer-item">Permission to document the process as a case study</div>
-          <div class="pilot-offer-item">Editorial review and sign-off before any publication</div>
-          <div class="pilot-offer-item">Public acknowledgement of participation, timing and format agreed in advance</div>
-          <div class="pilot-note">Participation does not imply endorsement of DPIF. Case study publication is contingent on sign-off by the participating organisation.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ═══════════════════════════════════════════
      SELF-ASSESSMENT — reframed as demonstration
@@ -583,13 +569,13 @@ a:hover{color:var(--tx)}
     <h2 class="section-title">Seven governance documents. Open access.</h2>
     <p class="section-desc">The DPIF instrument suite is published under CC BY 4.0. No paywall. No registration. The standard is public — the services that implement it are not.</p>
     <div class="inst-grid vr-md">
-      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">01</span><div><div class="inst-title">Control Model</div><div class="inst-ver">v1.1</div><div class="inst-desc">The authoritative control architecture.</div></div></a>
-      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">02</span><div><div class="inst-title">Control Checklist</div><div class="inst-ver">v2.0</div><div class="inst-desc">14 CPCs + 4 SPCs. Evidence-mapped.</div></div></a>
-      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">03</span><div><div class="inst-title">Context Risk Annex</div><div class="inst-ver">v1.0</div><div class="inst-desc">Deployment risk classification criteria.</div></div></a>
-      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">04</span><div><div class="inst-title">Deployment Lifecycle</div><div class="inst-ver">v1.0</div><div class="inst-desc">The DRRP deployment state machine.</div></div></a>
-      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">05</span><div><div class="inst-title">Conflict Resolution</div><div class="inst-ver">v1.0</div><div class="inst-desc">Multi-deployment conflict governance.</div></div></a>
-      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">06</span><div><div class="inst-title">Posthumous Governance</div><div class="inst-ver">v1.0</div><div class="inst-desc">Incapacitated principal controls.</div></div></a>
-      <a href="/framework#instruments" class="inst-mini"><span class="inst-num">07</span><div><div class="inst-title">Scoring Rubric</div><div class="inst-ver">v1.0</div><div class="inst-desc">SPC maturity scoring methodology.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><svg class="inst-icon" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="fm_g1" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#9888c0"/><stop offset="1" stop-color="#7ab89a"/></linearGradient></defs><rect x="4" y="3" width="20" height="22" rx="2" stroke="url(#fm_g1)" stroke-width="1.3"/><path d="M9 9h10M9 13h10M9 17h6" stroke="url(#fm_g1)" stroke-width="1.2" stroke-linecap="round"/></svg><span class="inst-num">01</span><div><div class="inst-title">Control Model</div><div class="inst-ver">v1.1</div><div class="inst-desc">The authoritative control architecture.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><svg class="inst-icon" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="ve_g1" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#9888c0"/><stop offset="1" stop-color="#7ab89a"/></linearGradient></defs><rect x="5" y="4" width="18" height="20" rx="2" stroke="url(#ve_g1)" stroke-width="1.3"/><path d="M9 11l2.5 2.5L16 9" stroke="url(#ve_g1)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18h10" stroke="url(#ve_g1)" stroke-width="1.2" stroke-linecap="round" opacity="0.45"/></svg><span class="inst-num">02</span><div><div class="inst-title">Control Checklist</div><div class="inst-ver">v2.0</div><div class="inst-desc">14 CPCs + 4 SPCs. Evidence-mapped.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><svg class="inst-icon" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="rt_g1" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#c8b890"/><stop offset="1" stop-color="#9888c0"/></linearGradient></defs><path d="M14 5l8 4.5v9L14 23l-8-4.5v-9L14 5z" stroke="url(#rt_g1)" stroke-width="1.3" stroke-linejoin="round"/><path d="M14 12v5M11 14h6" stroke="url(#rt_g1)" stroke-width="1.3" stroke-linecap="round"/></svg><span class="inst-num">03</span><div><div class="inst-title">Context Risk Annex</div><div class="inst-ver">v1.0</div><div class="inst-desc">Deployment risk classification criteria.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><svg class="inst-icon" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="lc_g1" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#7ab89a"/><stop offset="1" stop-color="#c9a8b8"/></linearGradient></defs><circle cx="7" cy="14" r="3" stroke="url(#lc_g1)" stroke-width="1.3"/><circle cx="21" cy="14" r="3" stroke="url(#lc_g1)" stroke-width="1.3"/><circle cx="14" cy="6" r="2.5" stroke="url(#lc_g1)" stroke-width="1.3"/><circle cx="14" cy="22" r="2.5" stroke="url(#lc_g1)" stroke-width="1.3"/><path d="M10 14h4M16.5 8.5L11 12M16.5 19.5L11 16" stroke="url(#lc_g1)" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/></svg><span class="inst-num">04</span><div><div class="inst-title">Deployment Lifecycle</div><div class="inst-ver">v1.0</div><div class="inst-desc">The DRRP deployment state machine.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><svg class="inst-icon" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="cf_g1" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#c9a8b8"/><stop offset="1" stop-color="#9888c0"/></linearGradient></defs><path d="M8 8l6 6M20 8l-6 6" stroke="url(#cf_g1)" stroke-width="1.4" stroke-linecap="round"/><path d="M14 14v8" stroke="url(#cf_g1)" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="7" r="2.5" stroke="url(#cf_g1)" stroke-width="1.3"/><circle cx="20" cy="7" r="2.5" stroke="url(#cf_g1)" stroke-width="1.3"/><circle cx="14" cy="23" r="2.5" stroke="url(#cf_g1)" stroke-width="1.3"/></svg><span class="inst-num">05</span><div><div class="inst-title">Conflict Resolution</div><div class="inst-ver">v1.0</div><div class="inst-desc">Multi-deployment conflict governance.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><svg class="inst-icon" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="po_g1" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#9888c0"/><stop offset="1" stop-color="#c9a8b8"/></linearGradient></defs><circle cx="14" cy="9" r="4" stroke="url(#po_g1)" stroke-width="1.3"/><path d="M7 23c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="url(#po_g1)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 15l8-8" stroke="url(#po_g1)" stroke-width="1.2" stroke-linecap="round" opacity="0.35"/></svg><span class="inst-num">06</span><div><div class="inst-title">Posthumous Governance</div><div class="inst-ver">v1.0</div><div class="inst-desc">Incapacitated principal controls.</div></div></a>
+      <a href="/framework#instruments" class="inst-mini"><svg class="inst-icon" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="ad_g1" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#7ab89a"/><stop offset="1" stop-color="#c8b890"/></linearGradient></defs><rect x="5" y="4" width="18" height="20" rx="2" stroke="url(#ad_g1)" stroke-width="1.3"/><path d="M9 10h4M9 14h10M9 18h7" stroke="url(#ad_g1)" stroke-width="1.2" stroke-linecap="round"/><circle cx="19" cy="10" r="2" stroke="url(#ad_g1)" stroke-width="1.2"/></svg><span class="inst-num">07</span><div><div class="inst-title">Scoring Rubric</div><div class="inst-ver">v1.0</div><div class="inst-desc">SPC maturity scoring methodology.</div></div></a>
     </div>
     <a href="/framework" class="btn btn-g btn-arrow">View the full framework</a>
   </div>
@@ -683,7 +669,7 @@ a:hover{color:var(--tx)}
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 The Presence Authority</span>
-      <span class="footer-ver">TPA-WEB-v6.0</span>
+      <span class="footer-ver">TPA-WEB-v7.0</span>
     </div>
   </div>
 </footer>
@@ -692,6 +678,29 @@ a:hover{color:var(--tx)}
      SCRIPTS
 ═══════════════════════════════════════════ -->
 <script>
+/* On this page sidebar */
+(function(){
+  const sidebar = document.getElementById('otpSidebar');
+  const hero = document.querySelector('.hero');
+  const links = document.querySelectorAll('.otp-link[data-target]');
+  if(hero && sidebar){
+    const heroObs = new IntersectionObserver((entries)=>{
+      sidebar.classList.toggle('visible', !entries[0].isIntersecting);
+    },{threshold:0});
+    heroObs.observe(hero);
+  }
+  const secObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.toggle('active', l.dataset.target===e.target.id));
+      }
+    });
+  },{rootMargin:'-64px 0px -60% 0px',threshold:0});
+  document.querySelectorAll('[id]').forEach(s=>{
+    if([...links].some(l=>l.dataset.target===s.id)) secObs.observe(s);
+  });
+})();
+
 /* Topbar scroll */
 const topbar = document.getElementById('topbar');
 let ticking = false;
@@ -746,7 +755,7 @@ if (!prefersReduced) {
       }
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-  document.querySelectorAll('.section, .principle-card, .inst-mini, .cred-card, .founder-card, .pilot-offer').forEach(el => {
+  document.querySelectorAll('.section, .principle-card, .inst-mini, .cred-card, .founder-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
